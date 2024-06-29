@@ -10,6 +10,7 @@ const AdminLayout = lazy(() => import("../Layout/AdminLayout"));
 const Dashboard = lazy(() => import("../Pages/Admin/Dashboard/Dashboard"));
 const Packsges = lazy(() => import("../Pages/Admin/Packages/Packages"));
 const AddPackage = lazy(() => import("../Pages/Admin/Packages/AddPackage"));
+const EditPackage = lazy(() => import("../Pages/Admin/Packages/EditPackage"));
 
 export default function Routers() {
   return (
@@ -33,6 +34,7 @@ export default function Routers() {
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="packages" element={<Packsges />} />
           <Route path="packages/add" element={<AddPackage />} />
+          <Route path="packages/edit/:id" element={<EditPackage />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -1,153 +1,33 @@
-import { useEffect, useState } from "react";
-import {
-  useEditRentMutation,
-  useGetRentByIdQuery,
-} from "../../../Redux/rent/rentApi";
-import Swal from "sweetalert2";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
+import { IoClose } from "react-icons/io5";
 
-export default function EditRent() {
-  const navigate = useNavigate();
-  const { id } = useParams();
-  const { data } = useGetRentByIdQuery(id);
-  const rent = data?.data;
-
+export default function EditPackage() {
   const [feature, setFeature] = useState("");
-  const [features, setFeatures] = useState(rent?.features || []);
+  const [features, setFeatures] = useState([]);
 
-  useEffect(() => {
-    setFeatures(rent?.features);
-  }, [rent]);
-
-  const [editRent, { isLoading }] = useEditRentMutation();
-
-  const handleEditRent = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const title = form.title.value;
-    const price = form.price.value;
-    const time = form.time.value;
-    const company = form.company.value;
-    const size = form.size.value;
-    const height = form.height.value;
-    const weight = form.weight.value;
-    const pressure = form.pressure.value;
-    const backup = form.backup.value;
-
-    const rentInfo = {
-      title,
-      price,
-      time,
-      company,
-      size,
-      height,
-      weight,
-      pressure,
-      backup,
-      features,
-    };
-
-    const res = await editRent({ id, rentInfo });
-    if (res?.data?.success) {
-      Swal.fire("", "Rent edit success", "success");
-      form.reset();
-      navigate("/admin/rental/all");
-      setFeatures([]);
-    } else {
-      Swal.fire("", "something went wront", "error");
-    }
+  const handleDelete = (feature) => {
+    const newFeatures = features.filter((f) => f !== feature);
+    setFeatures(newFeatures);
   };
 
   return (
     <section>
-      <div className="bg-base-100rounded shadow">
-        <h2 className="p-2 border-b text-lg font-medium">Add Rental</h2>
+      <div className="bg-base-100 rounded shadow">
+        <h2 className="p-2 border-b text-lg font-medium">Edit Package</h2>
 
-        <form onSubmit={handleEditRent} className="p-4">
+        <form className="p-4">
           <div className="grid sm:grid-cols-3 gap-4">
             <div>
               <p className="mb-1">Title</p>
-              <input
-                type="text"
-                name="title"
-                required
-                defaultValue={rent?.title}
-              />
+              <input type="text" name="title" required />
             </div>
             <div>
               <p className="mb-1">Price</p>
-              <input
-                type="number"
-                name="price"
-                required
-                defaultValue={rent?.price}
-              />
+              <input type="number" name="price" required />
             </div>
             <div>
-              <p className="mb-1">Rent Time</p>
-              <input
-                type="text"
-                name="time"
-                required
-                placeholder="30 days"
-                defaultValue={rent?.time}
-              />
-            </div>
-            <div>
-              <p className="mb-1">Company Name</p>
-              <input
-                type="text"
-                name="company"
-                required
-                defaultValue={rent?.company}
-              />
-            </div>
-            <div>
-              <p className="mb-1">Size</p>
-              <input
-                type="text"
-                name="size"
-                required
-                defaultValue={rent?.size}
-              />
-            </div>
-            <div>
-              <p className="mb-1">Height</p>
-              <input
-                type="text"
-                name="height"
-                required
-                defaultValue={rent?.height}
-              />
-            </div>
-            <div>
-              <p className="mb-1">Weight</p>
-              <input
-                type="text"
-                name="weight"
-                required
-                defaultValue={rent?.weight}
-              />
-            </div>
-            <div>
-              <p className="mb-1">Pressure</p>
-              <input
-                type="text"
-                name="pressure"
-                required
-                placeholder="2000 Litters+"
-                defaultValue={rent?.pressure}
-              />
-            </div>
-            <div>
-              <p className="mb-1">Backup</p>
-              <input
-                type="text"
-                name="backup"
-                required
-                placeholder="Par min 2 liter 12 hours"
-                defaultValue={rent?.backup}
-              />
+              <p className="mb-1">Discount(%)</p>
+              <input type="number" name="time" required placeholder="0" />
             </div>
           </div>
 
@@ -161,27 +41,40 @@ export default function EditRent() {
                 value={feature}
               />
               <div
-                className="secondary_btn cursor-pointer"
+                className="primary_btn cursor-pointer"
                 onClick={() => {
-                  setFeatures([...features, feature]);
-                  setFeature("");
+                  if (feature !== "") {
+                    setFeatures([...features, feature]);
+                    setFeature("");
+                  }
                 }}
               >
                 +
               </div>
             </div>
 
-            <ul className="mt-4 list-disc list-inside">
+            <ul className="mt-4 flex flex-col gap-3">
               {features?.map((feature, i) => (
-                <li key={i}>{feature}</li>
+                <div key={i} className="flex items-center gap-4">
+                  <input
+                    type="checkbox"
+                    value=""
+                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2 rounded-full"
+                  />
+                  <p>{feature}</p>
+                  <div
+                    onClick={() => handleDelete(feature)}
+                    className="cursor-pointer"
+                  >
+                    <IoClose className="text-red-500" />
+                  </div>
+                </div>
               ))}
             </ul>
           </div>
 
           <div className="mt-6">
-            <button disabled={isLoading && "disabled"} className="primary_btn">
-              {isLoading ? "Loading..." : "Edit Rent"}
-            </button>
+            <button className="primary_btn">Add Package</button>
           </div>
         </form>
       </div>
