@@ -42,7 +42,7 @@ html {
 }
 
 .primary_btn {
-  background: -webkit-linear-gradient(120deg, #0e4677e8, #063f70, #f0344ab1);
+  background: var(--primary);
   color: #fff;
   padding: 9px 40px;
   border-radius: 6px;
@@ -53,4 +53,48 @@ html {
 
 .primary_btn:hover {
   transform: scale(1);
+}
+
+/* -------------Form------------- */
+form {
+  font-size: 15px;
+}
+
+form input,
+form textarea,
+form select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #979797;
+  border-radius: 4px;
+  outline: none;
+  color: #3a3a3a;
+}
+
+table {
+  width: 100%;
+  font-size: 15px;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+table thead th {
+  background: #dddddd5c;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #404145e6;
+  text-transform: uppercase;
+  text-align: start;
+  white-space: nowrap;
+}
+
+table tbody td {
+  padding: 10px;
+  text-align: start;
+  border-bottom: 1px solid #dddddd94;
+}
+
+table tbody tr:nth-child(even) {
+  background: #dddddd34;
 }

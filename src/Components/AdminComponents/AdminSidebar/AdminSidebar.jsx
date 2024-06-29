@@ -3,11 +3,15 @@ import { Link } from "react-router-dom";
 import {
   MdMonitor,
   MdOutlineDashboard,
-  MdOutlineCategory,
+  MdFeaturedPlayList,
 } from "react-icons/md";
+import { FaSchool, FaReadme } from "react-icons/fa";
+
 import { RiAdminFill } from "react-icons/ri";
 import { FaChartLine } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
+import { TbPackages } from "react-icons/tb";
+import { IoSchool } from "react-icons/io5";
 
 import SidebarItems from "./SidebarItems";
 
@@ -19,22 +23,76 @@ const adminSidebarItems = [
   },
 
   {
-    icon: <MdOutlineCategory />,
-    title: "Categories",
+    icon: <FaSchool />,
+    title: "Academy",
     subMenu: [
       {
         title: "Categories",
-        path: "/admin/categories/categories",
+        path: "/admin/academy/categories",
       },
       {
-        title: "Sub Categories",
-        path: "/admin/categories/sub-categories",
+        title: "Classes",
+        path: "/admin/academy/classes",
       },
       {
-        title: "Sub Sub Categories",
-        path: "/admin/categories/sub-sub-categories",
+        title: "Subjects",
+        path: "/admin/academy/subjects",
+      },
+      {
+        title: "Chapters",
+        path: "/admin/academy/chapters",
+      },
+      {
+        title: "Content",
+        path: "/admin/academy/Content",
+      },
+      {
+        title: "Model Test",
+        path: "/admin/academy/modeltest",
       },
     ],
+  },
+
+  {
+    icon: <FaReadme />,
+    title: "Admission",
+    subMenu: [
+      {
+        title: "Categories",
+        path: "/admin/admission/categories",
+      },
+      {
+        title: "Model Test",
+        path: "/admin/admission/modeltest",
+      },
+    ],
+  },
+
+  {
+    icon: <IoSchool />,
+    title: "Job",
+    subMenu: [
+      {
+        title: "Categories",
+        path: "/admin/admission/categories",
+      },
+      {
+        title: "Model Test",
+        path: "/admin/admission/modeltest",
+      },
+    ],
+  },
+
+  {
+    icon: <MdFeaturedPlayList />,
+    title: "Features",
+    path: "/admin/features",
+  },
+
+  {
+    icon: <TbPackages />,
+    title: "Packages",
+    path: "/admin/packages",
   },
 
   {
