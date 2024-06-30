@@ -98,7 +98,7 @@ const adminSidebarItems = [
   {
     icon: <RiAdminFill />,
     title: "Administrator",
-    path: "/admin/administrator/all-administrator",
+    path: "/admin/admins",
   },
 
   {
@@ -110,16 +110,16 @@ const adminSidebarItems = [
         path: "/admin/front-end/logo",
       },
       {
-        title: "Favicon",
-        path: "/admin/front-end/favicon",
-      },
-      {
         title: "Banner",
         path: "/admin/front-end/banner",
       },
       {
-        title: "Themes",
-        path: "/admin/front-end/themes",
+        title: "About",
+        path: "/admin/front-end/about",
+      },
+      {
+        title: "Contact",
+        path: "/admin/front-end/contact",
       },
     ],
   },
@@ -129,12 +129,8 @@ const adminSidebarItems = [
     title: "General Setting",
     subMenu: [
       {
-        title: "Business Info",
-        path: "/admin/general-setting/business-info",
-      },
-      {
-        title: "Other Services",
-        path: "/admin/general-setting/other-services",
+        title: "profile",
+        path: "/admin/general-setting/profile",
       },
     ],
   },
