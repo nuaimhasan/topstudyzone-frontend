@@ -44,7 +44,7 @@ const adminSidebarItems = [
       },
       {
         title: "Content",
-        path: "/admin/academy/Content",
+        path: "/admin/academy/contents",
       },
       {
         title: "Model Test",

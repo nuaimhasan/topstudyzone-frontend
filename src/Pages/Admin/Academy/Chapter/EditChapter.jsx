@@ -12,7 +12,9 @@ export default function EditChapter() {
             </div>
             <div>
               <p className="mb-1">Subject Name</p>
-              <input type="text" name="title" required />
+              <select name="subject" required>
+                <option value=""></option>
+              </select>
             </div>
             <div>
               <p className="mb-1">Class Name</p>
