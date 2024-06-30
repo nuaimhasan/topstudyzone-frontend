@@ -16,7 +16,6 @@ export default function SEO() {
     const form = e.target;
     const title = form.title.value;
     const author = form.author.value;
-    const sitemapLink = form.sitemapLink.value;
     const metaContent = form.metaContent.value;
     const description = form.description.value;
 
@@ -24,7 +23,6 @@ export default function SEO() {
       title,
       keywords,
       author,
-      sitemapLink,
       metaContent,
       description,
     };
@@ -106,11 +104,6 @@ export default function SEO() {
           <div>
             <p className="mb-1">Author</p>
             <input type="text" name="author" />
-          </div>
-
-          <div>
-            <p className="mb-1">Sitemap Link</p>
-            <input type="text" name="sitemapLink" />
           </div>
 
           <div>

@@ -8,6 +8,17 @@ import MainLayout from "../Layout/MainLayout";
 //--------------------------------------Admin Routes
 const AdminLayout = lazy(() => import("../Layout/AdminLayout"));
 const Dashboard = lazy(() => import("../Pages/Admin/Dashboard/Dashboard"));
+
+const Categories = lazy(() =>
+  import("../Pages/Admin/Academy/Category/Categories")
+);
+const AddCategory = lazy(() =>
+  import("../Pages/Admin/Academy/Category/AddCategory")
+);
+const EditCategory = lazy(() =>
+  import("../Pages/Admin/Academy/Category/EditCategory")
+);
+
 const Packsges = lazy(() => import("../Pages/Admin/Packages/Packages"));
 const AddPackage = lazy(() => import("../Pages/Admin/Packages/AddPackage"));
 const EditPackage = lazy(() => import("../Pages/Admin/Packages/EditPackage"));
@@ -54,6 +65,11 @@ export default function Routers() {
           }
         >
           <Route path="dashboard" element={<Dashboard />} />
+
+          <Route path="academy/categories" element={<Categories />} />
+          <Route path="academy/category/add" element={<AddCategory />} />
+          <Route path="academy/category/edit/:id" element={<EditCategory />} />
+
           <Route path="packages" element={<Packsges />} />
           <Route path="packages/add" element={<AddPackage />} />
           <Route path="packages/edit/:id" element={<EditPackage />} />
