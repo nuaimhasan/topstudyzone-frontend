@@ -23,6 +23,22 @@ const Classes = lazy(() => import("../Pages/Admin/Academy/Class/Classes"));
 const AddClass = lazy(() => import("../Pages/Admin/Academy/Class/AddClass"));
 const EditClass = lazy(() => import("../Pages/Admin/Academy/Class/EditClass"));
 
+const Subject = lazy(() => import("../Pages/Admin/Academy/Subject/Subject"));
+const AddSubject = lazy(() =>
+  import("../Pages/Admin/Academy/Subject/AddSubject")
+);
+const EditSubject = lazy(() =>
+  import("../Pages/Admin/Academy/Subject/EditSubject")
+);
+
+const Chapters = lazy(() => import("../Pages/Admin/Academy/Chapter/Chapters"));
+const AddChapter = lazy(() =>
+  import("../Pages/Admin/Academy/Chapter/AddChapter")
+);
+const EditChapter = lazy(() =>
+  import("../Pages/Admin/Academy/Chapter/EditChapter")
+);
+
 const Packsges = lazy(() => import("../Pages/Admin/Packages/Packages"));
 const AddPackage = lazy(() => import("../Pages/Admin/Packages/AddPackage"));
 const EditPackage = lazy(() => import("../Pages/Admin/Packages/EditPackage"));
@@ -74,9 +90,17 @@ export default function Routers() {
           <Route path="academy/category/add" element={<AddCategory />} />
           <Route path="academy/category/edit/:id" element={<EditCategory />} />
 
-          <Route path="academy/Classes" element={<Classes />} />
+          <Route path="academy/classes" element={<Classes />} />
           <Route path="academy/class/add" element={<AddClass />} />
           <Route path="academy/class/edit/:id" element={<EditClass />} />
+
+          <Route path="academy/subjects" element={<Subject />} />
+          <Route path="academy/subject/add" element={<AddSubject />} />
+          <Route path="academy/subject/edit/:id" element={<EditSubject />} />
+
+          <Route path="academy/chapters" element={<Chapters />} />
+          <Route path="academy/chapter/add" element={<AddChapter />} />
+          <Route path="academy/chapter/edit/:id" element={<EditChapter />} />
 
           <Route path="packages" element={<Packsges />} />
           <Route path="packages/add" element={<AddPackage />} />
