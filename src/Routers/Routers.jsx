@@ -19,6 +19,10 @@ const EditCategory = lazy(() =>
   import("../Pages/Admin/Academy/Category/EditCategory")
 );
 
+const Classes = lazy(() => import("../Pages/Admin/Academy/Class/Classes"));
+const AddClass = lazy(() => import("../Pages/Admin/Academy/Class/AddClass"));
+const EditClass = lazy(() => import("../Pages/Admin/Academy/Class/EditClass"));
+
 const Packsges = lazy(() => import("../Pages/Admin/Packages/Packages"));
 const AddPackage = lazy(() => import("../Pages/Admin/Packages/AddPackage"));
 const EditPackage = lazy(() => import("../Pages/Admin/Packages/EditPackage"));
@@ -69,6 +73,10 @@ export default function Routers() {
           <Route path="academy/categories" element={<Categories />} />
           <Route path="academy/category/add" element={<AddCategory />} />
           <Route path="academy/category/edit/:id" element={<EditCategory />} />
+
+          <Route path="academy/Classes" element={<Classes />} />
+          <Route path="academy/class/add" element={<AddClass />} />
+          <Route path="academy/class/edit/:id" element={<EditClass />} />
 
           <Route path="packages" element={<Packsges />} />
           <Route path="packages/add" element={<AddPackage />} />
