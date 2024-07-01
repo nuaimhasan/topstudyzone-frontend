@@ -1,8 +1,12 @@
 import { MdDeleteForever } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
 
 export default function Subject() {
+  const { data } = useGetAcademySubjectsQuery();
+  const subjects = data?.data;
+
   return (
     <section className="bg-base-100 shadow rounded">
       <div className="border-b p-3 flex justify-between items-center">
@@ -24,22 +28,24 @@ export default function Subject() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>Subject 1</td>
-              <td>Class 1</td>
-              <td>Category 1</td>
-              <td>
-                <div className="flex items-center gap-2 text-lg">
-                  <button>
-                    <FaEdit />
-                  </button>
-                  <button>
-                    <MdDeleteForever className="text-xl hover:text-red-500 duration-200" />
-                  </button>
-                </div>
-              </td>
-            </tr>
+            {subjects?.map((subject) => (
+              <tr key={subject?._id}>
+                <td>{subject?.order}</td>
+                <td>{subject?.name}</td>
+                <td>{subject?.class?.name}</td>
+                <td>{subject?.category?.name}</td>
+                <td>
+                  <div className="flex items-center gap-2 text-lg">
+                    <Link to={`/admin/academy/subject/edit/${subject?._id}`}>
+                      <FaEdit />
+                    </Link>
+                    <button>
+                      <MdDeleteForever className="text-xl hover:text-red-500 duration-200" />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
