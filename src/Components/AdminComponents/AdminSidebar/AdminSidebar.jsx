@@ -43,12 +43,16 @@ const adminSidebarItems = [
         path: "/admin/academy/chapters",
       },
       {
-        title: "Content",
+        title: "Contents",
         path: "/admin/academy/contents",
       },
       {
-        title: "Model Test",
-        path: "/admin/academy/modeltest",
+        title: "MCQ",
+        path: "/admin/academy/mcq",
+      },
+      {
+        title: "Writtens",
+        path: "/admin/academy/writtens",
       },
     ],
   },

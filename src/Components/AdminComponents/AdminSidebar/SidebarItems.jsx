@@ -41,8 +41,8 @@ export default function SidebarItems({ item }) {
     return (
       <li>
         <NavLink to={item?.path}>
-          {item.icon}
-          {item.title}
+          {item?.icon}
+          {item?.title}
         </NavLink>
       </li>
     );

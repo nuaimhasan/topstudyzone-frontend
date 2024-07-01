@@ -47,6 +47,18 @@ const EditContent = lazy(() =>
   import("../Pages/Admin/Academy/Content/EditContent")
 );
 
+const MCQ = lazy(() => import("../Pages/Admin/Academy/MCQ/MCQ"));
+const AddMCQ = lazy(() => import("../Pages/Admin/Academy/MCQ/AddMCQ"));
+const EditMCQ = lazy(() => import("../Pages/Admin/Academy/MCQ/EditMCQ"));
+
+const Writtens = lazy(() => import("../Pages/Admin/Academy/Written/Writtens"));
+const AddWritten = lazy(() =>
+  import("../Pages/Admin/Academy/Written/AddWritten")
+);
+const EditWritten = lazy(() =>
+  import("../Pages/Admin/Academy/Written/EditWritten")
+);
+
 const Packsges = lazy(() => import("../Pages/Admin/Packages/Packages"));
 const AddPackage = lazy(() => import("../Pages/Admin/Packages/AddPackage"));
 const EditPackage = lazy(() => import("../Pages/Admin/Packages/EditPackage"));
@@ -113,6 +125,14 @@ export default function Routers() {
           <Route path="academy/contents" element={<Contents />} />
           <Route path="academy/content/add" element={<AddContent />} />
           <Route path="academy/content/edit/:id" element={<EditContent />} />
+
+          <Route path="academy/mcq" element={<MCQ />} />
+          <Route path="academy/mcq/add" element={<AddMCQ />} />
+          <Route path="academy/mcq/edit/:id" element={<EditMCQ />} />
+
+          <Route path="academy/writtens" element={<Writtens />} />
+          <Route path="academy/written/add" element={<AddWritten />} />
+          <Route path="academy/written/edit/:id" element={<EditWritten />} />
 
           <Route path="packages" element={<Packsges />} />
           <Route path="packages/add" element={<AddPackage />} />
