@@ -98,3 +98,11 @@ table tbody td {
 table tbody tr:nth-child(even) {
   background: #dddddd34;
 }
+
+.jodit-status-bar {
+  display: none !important;
+}
+
+.content .jodit-wysiwyg {
+  min-height: 80vh !important;
+}

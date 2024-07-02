@@ -7,10 +7,6 @@ export default function EditContent() {
         <form className="p-4">
           <div className="grid sm:grid-cols-3 gap-4">
             <div>
-              <p className="mb-1">Content</p>
-              <input type="text" name="content" required />
-            </div>
-            <div>
               <p className="mb-1">Chapter Name</p>
               <select name="chapter" required>
                 <option value=""></option>
