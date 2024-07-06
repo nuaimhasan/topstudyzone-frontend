@@ -5,7 +5,27 @@ import Home from "../Pages/Home/Home";
 import NotFound from "../Pages/NotFound/NotFound";
 import MainLayout from "../Layout/MainLayout";
 
-//--------------------------------------Admin Routes
+//------------------------------------------------------------------------------
+//User Layout Routes
+//------------------------------------------------------------------------------
+const UserLayout = lazy(() => import("../Layout/UserLayout"));
+const UserHome = lazy(() =>
+  import("../Pages/UserLayoutPages/UserHome/UserHome")
+);
+const Academy = lazy(() => import("../Pages/UserLayoutPages/Academy/Academy"));
+const SubjectsF = lazy(() =>
+  import("../Pages/UserLayoutPages/Academy/SubjectsF/SubjectsF")
+);
+const ChaptersF = lazy(() =>
+  import("../Pages/UserLayoutPages/Academy/ChaptersF/ChaptersF")
+);
+const Content = lazy(() =>
+  import("../Pages/UserLayoutPages/Academy/Content/Content")
+);
+
+//------------------------------------------------------------------------------
+//Admin Routes
+//------------------------------------------------------------------------------
 const AdminLayout = lazy(() => import("../Layout/AdminLayout"));
 const Dashboard = lazy(() => import("../Pages/Admin/Dashboard/Dashboard"));
 
@@ -93,6 +113,22 @@ export default function Routers() {
 
         <Route path="/" element={<MainLayout />}>
           <Route path="/" element={<Home />} />
+        </Route>
+
+        {/* ---------User Layout Routes----- */}
+        <Route
+          path="/"
+          element={
+            <Suspense fallback="Loading...">
+              <UserLayout />
+            </Suspense>
+          }
+        >
+          <Route path="/home" element={<UserHome />} />
+          <Route path="/academy" element={<Academy />} />
+          <Route path="/academy/:classId/subjects" element={<SubjectsF />} />
+          <Route path="/academy/:subjectId/chapters" element={<ChaptersF />} />
+          <Route path="/academy/:chapterId/content" element={<Content />} />
         </Route>
 
         {/* ---------Admin Routes----------- */}

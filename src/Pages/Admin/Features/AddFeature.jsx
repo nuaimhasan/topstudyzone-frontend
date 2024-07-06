@@ -5,12 +5,29 @@ import { AiFillDelete } from "react-icons/ai";
 export default function AddFeature() {
   const [images, setImages] = useState([]);
 
+  const handleAdd = (e) => {
+    e.preventDefault();
+
+    const icon = images[0]?.file;
+
+    const form = e.target;
+    const title = form.title.value;
+    const subTitle = form.subTitle.value;
+    const link = form.link.value;
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("subTitle", subTitle);
+    formData.append("link", link);
+    formData.append("icon", icon);
+  };
+
   return (
     <section>
       <div className="bg-base-100 rounded shadow">
         <h2 className="p-2 border-b text-lg font-medium">Add Feature</h2>
 
-        <form className="p-4 md:w-1/2 mx-auto">
+        <form onSubmit={handleAdd} className="p-4 md:w-1/2 mx-auto">
           <div className="flex flex-col gap-3">
             <div>
               <p className="mb-1">Title</p>

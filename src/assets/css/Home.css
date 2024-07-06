@@ -1,0 +1,13 @@
+.hero_wrap {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  /* background: linear-gradient(0deg, #031a2f, #031a2f),
+      url(/public/images/hero/hero_bg.png); */
+  background: var(--accent-color);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}

@@ -27,12 +27,16 @@ h2 {
 
 @media only screen and (min-width: 1250px) {
   .container {
-    max-width: 1200px !important;
+    max-width: 1180px !important;
   }
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+.active {
+  color: var(--secondary);
 }
 
 .primary_text {
@@ -53,6 +57,23 @@ html {
 
 .primary_btn:hover {
   transform: scale(1);
+}
+
+.section_line {
+  position: relative;
+  width: max-content;
+  margin: auto;
+}
+
+.section_line::after {
+  position: absolute;
+  content: "";
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 1.5px;
+  background: linear-gradient(90deg, #e7eae8, #2da343, #dee2df);
 }
 
 /* -------------Form------------- */
