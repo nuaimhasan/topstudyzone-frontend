@@ -5,6 +5,9 @@ import Home from "../Pages/Home/Home";
 import NotFound from "../Pages/NotFound/NotFound";
 import MainLayout from "../Layout/MainLayout";
 
+const Login = lazy(() => import("../Pages/Login/Login"));
+const Signup = lazy(() => import("../Pages/Signup/Signup"));
+
 //------------------------------------------------------------------------------
 //User Layout Routes
 //------------------------------------------------------------------------------
@@ -113,6 +116,22 @@ export default function Routers() {
 
         <Route path="/" element={<MainLayout />}>
           <Route path="/" element={<Home />} />
+          <Route
+            path="/login"
+            element={
+              <Suspense fallback="Loading...">
+                <Login />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <Suspense fallback="Loading...">
+                <Signup />
+              </Suspense>
+            }
+          />
         </Route>
 
         {/* ---------User Layout Routes----- */}

@@ -10,7 +10,7 @@ export default function Hero() {
         />
 
         {/* Content */}
-        <div className="w-full h-full flex flex-col justify-center items-center relative z-30 bg-[#00000057]">
+        <div className="w-full h-full flex flex-col justify-center items-center relative z-30 bg-[#0000006f]">
           <div className="flex flex-col items-center justify-center gap-3">
             <h2 className="text-3xl md:text-5xl font-bold text-base-100">
               টপ স্টাডি জোন
