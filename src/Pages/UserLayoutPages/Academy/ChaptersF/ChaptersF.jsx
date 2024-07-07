@@ -1,9 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { FaHive } from "react-icons/fa";
+import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
 
 export default function ChaptersF() {
   const { subjectId } = useParams();
-  console.log(subjectId);
+  const subject = subjectId?.split("-")[1];
+  const { data } = useGetAcademyChaptersQuery(subject);
+  const chapters = data?.data;
 
   return (
     <div>
@@ -14,55 +17,20 @@ export default function ChaptersF() {
           </div>
 
           <ul className="p-4 text-[15px]">
-            <li className="flex items-center justify-between border-t border-dashed">
-              <Link
-                to={`/academy/chapter-1/content`}
-                className="flex gap-4 items-center py-2.5 text-secondary"
+            {chapters?.map((chapter) => (
+              <li
+                key={chapter?._id}
+                className="flex items-center justify-between border-t border-dashed"
               >
-                <FaHive />
-                <p>আমার পরিচয়</p>
-              </Link>
-            </li>
-
-            <li className="flex items-center justify-between border-t border-dashed">
-              <Link
-                to={`/academy/chapter-2/content`}
-                className="flex gap-4 items-center py-2.5 text-secondary"
-              >
-                <FaHive />
-                <p>এসো রং করি ও আঁকি</p>
-              </Link>
-            </li>
-
-            <li className="flex items-center justify-between border-t border-dashed">
-              <Link
-                to=""
-                className="flex gap-4 items-center py-2.5 text-secondary"
-              >
-                <FaHive />
-                <p>আমি ও আমার বিদ্যালয়</p>
-              </Link>
-            </li>
-
-            <li className="flex items-center justify-between border-t border-dashed">
-              <Link
-                to=""
-                className="flex gap-4 items-center py-2.5 text-secondary"
-              >
-                <FaHive />
-                <p>আমি ও আমার সহপাঠীরা</p>
-              </Link>
-            </li>
-
-            <li className="flex items-center justify-between border-t border-dashed">
-              <Link
-                to=""
-                className="flex gap-4 items-center py-2.5 text-secondary"
-              >
-                <FaHive />
-                <p>আঁকাআঁকি</p>
-              </Link>
-            </li>
+                <Link
+                  to={`/academy/chapter-${chapter?._id}/content`}
+                  className="flex gap-4 items-center py-2.5 text-secondary"
+                >
+                  <FaHive />
+                  <p>{chapter?.name}</p>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
 

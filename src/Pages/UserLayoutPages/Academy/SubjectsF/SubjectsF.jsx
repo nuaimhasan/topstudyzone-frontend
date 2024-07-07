@@ -1,9 +1,12 @@
 import { Link, useParams } from "react-router-dom";
 import { FaBook, FaPrint } from "react-icons/fa";
+import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
 
 export default function SubjectsF() {
   const { classId } = useParams();
-  console.log(classId);
+  const cls = classId?.split("-")[1];
+  const { data } = useGetAcademySubjectsQuery(cls);
+  const subjects = data?.data;
 
   return (
     <div>
@@ -24,107 +27,44 @@ export default function SubjectsF() {
             </div>
 
             <ul className="mt-4 p-2 flex flex-col gap-6">
-              <li className="flex justify-between items-center border-b pb-6">
-                <div className="flex items-center gap-5">
-                  <FaBook className="text-neutral-content text-4xl" />
-                  <div>
-                    <Link
-                      to="/academy/subject-1/chapters"
-                      className="hover:text-secondary duration-200"
-                    >
-                      আমার বাংলা বই
-                    </Link>
-                    <div className="mt-1 flex items-center gap-16 text-xs">
+              {subjects?.map((subject) => (
+                <li
+                  key={subject?._id}
+                  className="flex justify-between items-center border-b pb-6"
+                >
+                  <div className="flex items-center gap-5">
+                    <FaBook className="text-neutral-content text-4xl" />
+                    <div>
                       <Link
-                        to=""
-                        className="bg-gray-100 p-1 rounded text-neutral-content"
+                        to={`/academy/subject-${subject?._id}/chapters`}
+                        className="hover:text-secondary duration-200"
                       >
-                        MCQ
+                        {subject?.name}
                       </Link>
-                      <Link
-                        to=""
-                        className="bg-gray-100 p-1 rounded text-neutral-content"
-                      >
-                        Written (0)
-                      </Link>
+                      <div className="mt-1 flex items-center gap-16 text-xs">
+                        <Link
+                          to=""
+                          className="bg-gray-100 p-1 rounded text-neutral-content"
+                        >
+                          MCQ
+                        </Link>
+                        <Link
+                          to=""
+                          className="bg-gray-100 p-1 rounded text-neutral-content"
+                        >
+                          Written (0)
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div>
-                  <button className="flex items-center gap-2 text-sm text-neutral">
-                    <FaPrint /> Print
-                  </button>
-                </div>
-              </li>
-
-              <li className="flex justify-between items-center border-b pb-6">
-                <div className="flex items-center gap-5">
-                  <FaBook className="text-neutral-content text-4xl" />
                   <div>
-                    <Link
-                      to="/academy/subject-2/chapters"
-                      className="hover:text-secondary duration-200"
-                    >
-                      প্রাথমিক গণিত
-                    </Link>
-                    <div className="mt-1 flex items-center gap-16 text-xs">
-                      <Link
-                        to=""
-                        className="bg-gray-100 p-1 rounded text-neutral-content"
-                      >
-                        MCQ
-                      </Link>
-                      <Link
-                        to=""
-                        className="bg-gray-100 p-1 rounded text-neutral-content"
-                      >
-                        Written (0)
-                      </Link>
-                    </div>
+                    <button className="flex items-center gap-2 text-sm text-neutral">
+                      <FaPrint /> Print
+                    </button>
                   </div>
-                </div>
-
-                <div>
-                  <button className="flex items-center gap-2 text-sm text-neutral">
-                    <FaPrint /> Print
-                  </button>
-                </div>
-              </li>
-
-              <li className="flex justify-between items-center">
-                <div className="flex items-center gap-5">
-                  <FaBook className="text-neutral-content text-4xl" />
-                  <div>
-                    <Link
-                      to="/academy/subject-3/chapters"
-                      className="hover:text-secondary duration-200"
-                    >
-                      English For Today
-                    </Link>
-                    <div className="mt-1 flex items-center gap-16 text-xs">
-                      <Link
-                        to=""
-                        className="bg-gray-100 p-1 rounded text-neutral-content"
-                      >
-                        MCQ
-                      </Link>
-                      <Link
-                        to=""
-                        className="bg-gray-100 p-1 rounded text-neutral-content"
-                      >
-                        Written (0)
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <button className="flex items-center gap-2 text-sm text-neutral">
-                    <FaPrint /> Print
-                  </button>
-                </div>
-              </li>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
