@@ -166,7 +166,7 @@ export default function Routers() {
           <Route path="academy/category/edit/:id" element={<EditCategory />} />
 
           <Route path="academy/classes" element={<Classes />} />
-          <Route path="academy/class/add" element={<AddClass />} />
+          <Route path="academy/:categoryId/class/add" element={<AddClass />} />
           <Route path="academy/class/edit/:id" element={<EditClass />} />
 
           <Route path="academy/subjects" element={<Subject />} />

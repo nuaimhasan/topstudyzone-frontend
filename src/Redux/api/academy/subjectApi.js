@@ -3,8 +3,8 @@ import { baseApi } from "../baseApi";
 export const subjectApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAcademySubjects: builder.query({
-      query: () => ({
-        url: `/api/academy/subject/all`,
+      query: (cls) => ({
+        url: `/api/academy/subject/all?cls=${cls}`,
         method: "GET",
       }),
       providesTags: ["academySubject"],

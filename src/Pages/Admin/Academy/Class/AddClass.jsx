@@ -3,16 +3,20 @@ import {
   useAddAcademyClassMutation,
   useGetAcademyClassesQuery,
 } from "../../../../Redux/api/academy/classApi";
-import { useNavigate } from "react-router-dom";
-import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetSingleAcademyCategoryQuery } from "../../../../Redux/api/academy/categoryApi";
 
 export default function AddClass() {
+  const { categoryId } = useParams();
   const navigate = useNavigate();
-  const { data } = useGetAcademyClassesQuery();
+
+  const crgId = categoryId.split("-")[1];
+
+  const { data } = useGetAcademyClassesQuery(crgId);
   const classes = data?.data;
 
-  const { data: categoryData } = useGetAcademyCategoriesQuery();
-  const categories = categoryData?.data;
+  const { data: categoryData } = useGetSingleAcademyCategoryQuery(crgId);
+  const category = categoryData?.data;
 
   const [addAcademyClass, { isLoading }] = useAddAcademyClassMutation();
 
@@ -61,11 +65,7 @@ export default function AddClass() {
             <div>
               <p className="mb-1">Category Name</p>
               <select name="category" required>
-                {categories?.map((category) => (
-                  <option key={category?._id} value={category?._id}>
-                    {category?.name}
-                  </option>
-                ))}
+                <option value={category?._id}>{category?.name}</option>
               </select>
             </div>
           </div>
