@@ -1,32 +1,43 @@
-import { useState } from "react";
-import {
-  useGetAcademyCategoriesQuery,
-  useGetSingleAcademyCategoryQuery,
-} from "../../../../Redux/api/academy/categoryApi";
-import { useGetSingleAcademyClassQuery } from "../../../../Redux/api/academy/classApi";
+import { useEffect, useState } from "react";
+import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
+import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classApi";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import {
   useAddAcademyChapterMutation,
   useGetAcademyChaptersQuery,
 } from "../../../../Redux/api/academy/chapterApi";
+import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
 
 export default function AddChapter() {
   const navigate = useNavigate();
-  const { data: chapters } = useGetAcademyChaptersQuery();
 
+  //------------------------Category
   const { data: category } = useGetAcademyCategoriesQuery();
   const categories = category?.data;
-
   const [selectedCategory, setSelectedCategory] = useState("");
+  useEffect(() => {
+    setSelectedCategory(category?.data[0]?._id);
+  }, [category?.data]);
 
-  const { data: c } = useGetSingleAcademyCategoryQuery(selectedCategory);
-  const classes = c?.data?.classes;
-
+  //------------------------Classes
+  const { data: cls } = useGetAcademyClassesQuery(selectedCategory);
+  const classes = cls?.data;
   const [selectedClass, setSelectedClass] = useState("");
+  useEffect(() => {
+    setSelectedClass(cls?.data[0]?._id);
+  }, [cls?.data]);
 
-  const { data: clas } = useGetSingleAcademyClassQuery(selectedClass);
-  const subjects = clas?.data?.subjects;
+  //---------------------Subject
+  const { data: subject } = useGetAcademySubjectsQuery(selectedClass);
+  const subjects = subject?.data;
+  const [selectedSubject, setSelectedSubject] = useState("");
+  useEffect(() => {
+    setSelectedSubject(subject?.data[0]?._id);
+  }, [subject?.data]);
+
+  const { data } = useGetAcademyChaptersQuery(selectedSubject);
+  const chapters = data?.data;
 
   const [addAcademyChapter, { isLoading }] = useAddAcademyChapterMutation();
 
@@ -63,24 +74,6 @@ export default function AddChapter() {
 
         <form onSubmit={handleAdd} className="p-4">
           <div className="grid sm:grid-cols-3 gap-4">
-            <div className="sm:col-span-2">
-              <p className="mb-1">Chapter Name</p>
-              <input type="text" name="name" required />
-            </div>
-            <div>
-              <p className="mb-1">Order</p>
-              <input
-                type="number"
-                name="order"
-                required
-                defaultValue={
-                  chapters?.data?.length ? chapters?.data?.length + 1 : 1
-                }
-              />
-            </div>
-          </div>
-
-          <div className="mt-4 grid sm:grid-cols-3 gap-4">
             <div>
               <p className="mb-1">Category Name</p>
               <select
@@ -88,7 +81,6 @@ export default function AddChapter() {
                 required
                 onChange={(e) => setSelectedCategory(e.target.value)}
               >
-                <option value="">Select Category</option>
                 {categories?.map((category) => (
                   <option key={category?._id} value={category?._id}>
                     {category?.name}
@@ -114,13 +106,33 @@ export default function AddChapter() {
 
             <div>
               <p className="mb-1">Subject Name</p>
-              <select name="subject" required>
+              <select
+                name="subject"
+                required
+                onChange={(e) => setSelectedSubject(e.target.value)}
+              >
                 {subjects?.map((subject) => (
                   <option key={subject?._id} value={subject?._id}>
                     {subject?.name}
                   </option>
                 ))}
               </select>
+            </div>
+          </div>
+
+          <div className="mt-4 grid sm:grid-cols-3 gap-4">
+            <div className="sm:col-span-2">
+              <p className="mb-1">Chapter Name</p>
+              <input type="text" name="name" required />
+            </div>
+            <div>
+              <p className="mb-1">Order</p>
+              <input
+                type="number"
+                name="order"
+                required
+                value={chapters?.data?.length ? chapters?.data?.length + 1 : 1}
+              />
             </div>
           </div>
 
