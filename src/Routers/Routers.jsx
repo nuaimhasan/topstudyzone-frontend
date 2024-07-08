@@ -22,6 +22,7 @@ const SubjectsF = lazy(() =>
 const ChaptersF = lazy(() =>
   import("../Pages/UserLayoutPages/Academy/ChaptersF/ChaptersF")
 );
+const McqF = lazy(() => import("../Pages/UserLayoutPages/Academy/McqF/McqF"));
 const Content = lazy(() =>
   import("../Pages/UserLayoutPages/Academy/Content/Content")
 );
@@ -147,6 +148,8 @@ export default function Routers() {
           <Route path="/academy" element={<Academy />} />
           <Route path="/academy/:classId/subjects" element={<SubjectsF />} />
           <Route path="/academy/:subjectId/chapters" element={<ChaptersF />} />
+          <Route path="/academy/:subjectId/mcq" element={<McqF />} />
+
           <Route path="/academy/:chapterId/content" element={<Content />} />
         </Route>
 

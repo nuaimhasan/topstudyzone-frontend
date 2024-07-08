@@ -3,10 +3,14 @@ import JoditEditor from "jodit-react";
 import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
 import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classApi";
 import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
+import { useAddAcademyMCQMutation } from "../../../../Redux/api/academy/mcqApi";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function AddMCQ() {
   const editor = useRef(null);
-  const [content, setContent] = useState("");
+  const navigate = useNavigate();
+  const [explain, setExplain] = useState("");
 
   //------------------------Category
   const { data: category } = useGetAcademyCategoriesQuery();
@@ -27,19 +31,59 @@ export default function AddMCQ() {
   //---------------------Subject
   const { data: subject } = useGetAcademySubjectsQuery(selectedClass);
   const subjects = subject?.data;
-  const [selectedSubject, setSelectedSubject] = useState("");
-  useEffect(() => {
-    setSelectedSubject(subject?.data[0]?._id);
-  }, [subject?.data]);
 
-  console.log(selectedSubject, content);
+  const [addAcademyMCQ, { isLoading }] = useAddAcademyMCQMutation();
+
+  const handleAdd = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const category = form.category.value;
+    const cls = form.class.value;
+    const subject = form.subject.value;
+    const question = form.question.value;
+    const pointA = form.pointA.value;
+    const pointB = form.pointB.value;
+    const pointC = form.pointC.value;
+    const pointD = form.pointD.value;
+    const ans = form.ans.value;
+    const videoLink = form.videoLink.value;
+
+    const info = {
+      category,
+      class: cls,
+      subject,
+      question,
+      points: [
+        { name: "A", title: pointA },
+        { name: "B", title: pointB },
+        { name: "C", title: pointC },
+        { name: "D", title: pointD },
+      ],
+      ans,
+      videoLink,
+      explain,
+    };
+
+    const res = await addAcademyMCQ(info);
+
+    console.log(res);
+
+    if (res?.data?.success) {
+      Swal.fire("", "MCQ add success", "success");
+      navigate("/admin/academy/mcq");
+    } else {
+      Swal.fire("", "something went wront!", "error");
+      console.log(res);
+    }
+  };
 
   return (
     <section>
       <div className="bg-base-100 rounded shadow">
         <h2 className="p-2 border-b text-lg font-medium">Add MCQ</h2>
 
-        <form className="p-4">
+        <form onSubmit={handleAdd} className="p-4">
           <div className="grid sm:grid-cols-3 gap-4">
             <div>
               <p className="mb-1">Category Name</p>
@@ -73,11 +117,7 @@ export default function AddMCQ() {
 
             <div>
               <p className="mb-1">Subject Name</p>
-              <select
-                name="subject"
-                required
-                onChange={(e) => setSelectedSubject(e.target.value)}
-              >
+              <select name="subject" required>
                 {subjects?.map((subject) => (
                   <option key={subject?._id} value={subject?._id}>
                     {subject?.name}
@@ -87,24 +127,64 @@ export default function AddMCQ() {
             </div>
           </div>
 
-          <div className="mt-4 grid sm:grid-cols-3 gap-4">
-            <div>
-              <p className="mb-1">Question</p>
-              <input type="text" name="question" required />
+          <div className="mt-4">
+            <p className="mb-1">Question</p>
+            <input type="text" name="question" required />
+          </div>
+
+          {/* points */}
+          <div className="mt-4 border rounded p-3">
+            <p className="mb-4">Points</p>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div>
+                <p className="mb-1">A</p>
+                <input type="text" name="pointA" required />
+              </div>
+              <div>
+                <p className="mb-1">B</p>
+                <input type="text" name="pointB" required />
+              </div>
+              <div>
+                <p className="mb-1">C</p>
+                <input type="text" name="pointC" required />
+              </div>
+              <div>
+                <p className="mb-1">D</p>
+                <input type="text" name="pointD" required />
+              </div>
+              <div>
+                <p className="mb-1">Ans</p>
+                <select name="ans">
+                  <option value="A">A</option>
+                  <option value="B">B</option>
+                  <option value="C">C</option>
+                  <option value="D">D</option>
+                </select>
+              </div>
             </div>
           </div>
 
-          <div className=" mt-4 content">
+          <div className="mt-4">
+            <p className="mb-1">
+              Video Link{" "}
+              <span className="text-neutral-content">(optional)</span>
+            </p>
+            <input type="text" name="videoLink" />
+          </div>
+
+          <div className=" mt-4">
             <p className="mb-1">ব্যাখ্যা</p>
             <JoditEditor
               ref={editor}
               value=""
-              onBlur={(text) => setContent(text)}
+              onBlur={(text) => setExplain(text)}
             />
           </div>
 
           <div className="mt-2">
-            <button className="primary_btn">Add MCQ</button>
+            <button disabled={isLoading && "disabled"} className="primary_btn">
+              {isLoading ? "Loading..." : "Add MCQ"}
+            </button>
           </div>
         </form>
       </div>
