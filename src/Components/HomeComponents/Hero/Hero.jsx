@@ -22,9 +22,9 @@ export default function Hero() {
 
           {/* Counter */}
           <div className="mt-20 w-[90%] lg:w-2/3 bg-primary/5 rounded-lg mx-auto py-6 md:py-10 px-2 md:px-4 grid grid-cols-3 gap-6">
-            <div className="border-r border-primary/20 flex items-center justify-center gap-1 md:gap-3">
+            <div className="border-r border-primary/40 flex items-center justify-center gap-1 md:gap-3">
               <img
-                src="/images/hero/question_countdown.png"
+                src="/src/assets/images/banner/question_countdown.png"
                 alt=""
                 className="w-8 h-8 md:w-14 md:h-12 rounded-full"
               />
@@ -35,9 +35,9 @@ export default function Hero() {
                 </h3>
               </div>
             </div>
-            <div className="border-r border-primary/20 flex items-center justify-center gap-1 md:gap-3">
+            <div className="border-r border-primary/40 flex items-center justify-center gap-1 md:gap-3">
               <img
-                src="/images/hero/student_countdown.png"
+                src="/src/assets/images/banner/student_countdown.png"
                 alt=""
                 className="w-8 h-8 md:w-14 md:h-12 rounded-full"
               />
@@ -50,7 +50,7 @@ export default function Hero() {
             </div>
             <div className="flex items-center justify-center gap-1 md:gap-3">
               <img
-                src="/images/hero/exam_countdown.png"
+                src="/src/assets/images/banner/exam_countdown.png"
                 alt=""
                 className="w-8 h-8 md:w-14 md:h-12 rounded-full"
               />

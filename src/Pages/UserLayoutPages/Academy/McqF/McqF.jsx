@@ -11,7 +11,9 @@ export default function McqF() {
   const { data } = useGetSingleAcademySubjectQuery(subjectId?.split("-")[1]);
   const subejct = data?.data;
 
-  const { data: mcq } = useGetAcademyMCQQuery(subjectId?.split("-")[1]);
+  let query = {};
+  query["subject"] = subjectId?.split("-")[1];
+  const { data: mcq } = useGetAcademyMCQQuery({ ...query });
   const mcqs = mcq?.data;
 
   return (
@@ -26,7 +28,10 @@ export default function McqF() {
           <div className="p-4 bg-base-100">
             <ul className="flex items-center justify-center gap-2 text-xs text-base-100">
               <li>
-                <Link to="" className="bg-primary px-4 py-2 rounded">
+                <Link
+                  to={`/academy/subejct-${subjectId}/chapters`}
+                  className="bg-primary px-4 py-2 rounded"
+                >
                   Read
                 </Link>
               </li>

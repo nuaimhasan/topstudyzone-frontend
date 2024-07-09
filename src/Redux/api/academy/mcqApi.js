@@ -3,9 +3,10 @@ import { baseApi } from "../baseApi";
 export const mcqApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAcademyMCQ: builder.query({
-      query: (subject) => ({
-        url: `/api/academy/mcq/all?subject=${subject}`,
+      query: (query) => ({
+        url: `/api/academy/mcq/all`,
         method: "GET",
+        params: query,
       }),
       providesTags: ["mcq"],
     }),
