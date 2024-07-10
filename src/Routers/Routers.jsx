@@ -31,6 +31,11 @@ const ModelTest = lazy(() =>
   import("../Pages/UserLayoutPages/Academy/ModelTest/ModelTest")
 );
 
+// Exam
+const ExamResult = lazy(() =>
+  import("../Pages/UserLayoutPages/Exam/ExamResult/ExamResult")
+);
+
 //------------------------------------------------------------------------------
 //Admin Routes
 //------------------------------------------------------------------------------
@@ -157,6 +162,8 @@ export default function Routers() {
           <Route path="/academy/:subjectId/test" element={<ModelTest />} />
 
           <Route path="/academy/:chapterId/content" element={<Content />} />
+
+          <Route path="/exam/exam-result" element={<ExamResult />} />
         </Route>
 
         {/* ---------Admin Routes----------- */}

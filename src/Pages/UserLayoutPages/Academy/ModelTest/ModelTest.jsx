@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 import { FaQuestion } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa";
-import { CgEditBlackPoint } from "react-icons/cg";
 import { MdRadioButtonUnchecked, MdRadioButtonChecked } from "react-icons/md";
 
 export default function ModelTest() {
@@ -108,6 +107,23 @@ export default function ModelTest() {
   };
 
   const completed = (100 / totalQuestion) * examQuetion?.length;
+
+  const handleExamSubmit = () => {
+    const examInfo = {
+      totalQuestion,
+      totalMark,
+      passMark,
+      examDuration,
+      negativeMark,
+      date: today,
+      mcqs: examQuetion,
+    };
+
+    setTime(0);
+
+    console.log(examInfo);
+  };
+
   return (
     <div>
       {isExamStart ? (
@@ -237,7 +253,9 @@ export default function ModelTest() {
           </div>
 
           <div className="mt-5">
-            <button className="secondary_btn">Submit</button>
+            <button onClick={handleExamSubmit} className="secondary_btn">
+              Submit
+            </button>
           </div>
         </section>
       ) : (
