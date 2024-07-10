@@ -29,14 +29,17 @@ export default function McqF() {
             <ul className="flex items-center justify-center gap-2 text-xs text-base-100">
               <li>
                 <Link
-                  to={`/academy/subejct-${subjectId}/chapters`}
+                  to={`/academy/${subjectId}/chapters`}
                   className="bg-primary px-4 py-2 rounded"
                 >
                   Read
                 </Link>
               </li>
               <li>
-                <Link to="" className="bg-rose-700 px-4 py-2 rounded">
+                <Link
+                  to={`/academy/${subjectId}/test`}
+                  className="bg-rose-700 px-4 py-2 rounded"
+                >
                   Test
                 </Link>
               </li>

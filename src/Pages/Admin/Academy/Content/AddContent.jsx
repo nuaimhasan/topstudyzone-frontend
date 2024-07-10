@@ -16,7 +16,10 @@ export default function AddContent() {
   const [content, setContent] = useState("");
 
   const config = {
-    uploader: { insertImageAsBase64URI: true },
+    uploader: {
+      insertImageAsBase64URI: true,
+      imagesExtensions: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
+    },
   };
 
   const { data: category } = useGetAcademyCategoriesQuery();

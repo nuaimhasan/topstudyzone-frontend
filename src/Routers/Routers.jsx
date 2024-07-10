@@ -22,9 +22,13 @@ const SubjectsF = lazy(() =>
 const ChaptersF = lazy(() =>
   import("../Pages/UserLayoutPages/Academy/ChaptersF/ChaptersF")
 );
-const McqF = lazy(() => import("../Pages/UserLayoutPages/Academy/McqF/McqF"));
 const Content = lazy(() =>
   import("../Pages/UserLayoutPages/Academy/Content/Content")
+);
+
+const McqF = lazy(() => import("../Pages/UserLayoutPages/Academy/McqF/McqF"));
+const ModelTest = lazy(() =>
+  import("../Pages/UserLayoutPages/Academy/ModelTest/ModelTest")
 );
 
 //------------------------------------------------------------------------------
@@ -149,6 +153,8 @@ export default function Routers() {
           <Route path="/academy/:classId/subjects" element={<SubjectsF />} />
           <Route path="/academy/:subjectId/chapters" element={<ChaptersF />} />
           <Route path="/academy/:subjectId/mcq" element={<McqF />} />
+
+          <Route path="/academy/:subjectId/test" element={<ModelTest />} />
 
           <Route path="/academy/:chapterId/content" element={<Content />} />
         </Route>
