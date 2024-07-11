@@ -1,20 +1,24 @@
 import { Link, useParams } from "react-router-dom";
-
+import { useState } from "react";
 import { useGetSingleAcademySubjectQuery } from "../../../../Redux/api/academy/subjectApi";
 import { useGetAcademyMCQQuery } from "../../../../Redux/api/academy/mcqApi";
 
 import Mcq from "./Mcq";
+import ExamInfoModal from "../ModelTest/ExamInfoModal";
 
 export default function McqF() {
-  const { subjectId } = useParams();
+  const { subjectId: subject } = useParams();
+  const subjectId = subject?.split("-")[1];
 
-  const { data } = useGetSingleAcademySubjectQuery(subjectId?.split("-")[1]);
+  const { data } = useGetSingleAcademySubjectQuery(subjectId);
   const subejct = data?.data;
 
   let query = {};
-  query["subject"] = subjectId?.split("-")[1];
+  query["subject"] = subjectId;
   const { data: mcq } = useGetAcademyMCQQuery({ ...query });
   const mcqs = mcq?.data;
+
+  const [examInfoModal, setExamInfoModal] = useState(false);
 
   return (
     <div>
@@ -36,12 +40,20 @@ export default function McqF() {
                 </Link>
               </li>
               <li>
-                <Link
-                  to={`/academy/${subjectId}/test`}
+                <button
+                  onClick={() => setExamInfoModal(true)}
                   className="bg-rose-700 px-4 py-2 rounded"
                 >
                   Test
-                </Link>
+                </button>
+
+                {/* model */}
+                <ExamInfoModal
+                  examInfoModal={examInfoModal}
+                  setExamInfoModal={setExamInfoModal}
+                  mcqs={mcqs}
+                  subjectId={subjectId}
+                />
               </li>
               <li>
                 <Link to="" className="bg-secondary px-4 py-2 rounded">

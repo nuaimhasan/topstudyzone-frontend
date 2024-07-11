@@ -1,14 +1,18 @@
-import { Link, useParams } from "react-router-dom";
-import { IoArrowBack } from "react-icons/io5";
-import { useGetAcademyMCQQuery } from "../../../../Redux/api/academy/mcqApi";
-import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 import { FaQuestion } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa";
 import { MdRadioButtonUnchecked, MdRadioButtonChecked } from "react-icons/md";
 
+import { useGetAcademyMCQQuery } from "../../../../Redux/api/academy/mcqApi";
+import { useAddAcademyModelTestMutation } from "../../../../Redux/api/academy/modeltestApi";
+
+import ExitTimeModal from "./ExitTimeModal";
+
 export default function ModelTest() {
+  const navigate = useNavigate();
   const { subjectId: id } = useParams();
   const subjectId = id?.split("-")[1];
 
@@ -17,18 +21,20 @@ export default function ModelTest() {
   const { data: mcq } = useGetAcademyMCQQuery({ ...query });
   const mcqs = mcq?.data;
 
-  const [totalQuestion, setTotalQuestion] = useState("");
-  const [totalMark, setTotalMark] = useState("");
-  const [passMark, setPassMark] = useState("");
-  const [examDuration, setExamDuration] = useState("");
-  const [negativeMark, setNegativeMark] = useState("");
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const totalQuestion = queryParams.get("nq");
+  const totalMark = queryParams.get("tm");
+  const passMark = queryParams.get("pm");
+  const examDuration = queryParams.get("ed");
+  const negativeMark = queryParams.get("nm");
 
   const formatDate = (date) => {
     let day = date.getDate();
-    let month = date.getMonth() + 1; // Months are zero-indexed
+    let month = date.getMonth() + 1;
     let year = date.getFullYear();
 
-    // Add leading zero to day and month if needed
     if (day < 10) {
       day = "0" + day;
     }
@@ -42,24 +48,7 @@ export default function ModelTest() {
   const date = new Date();
   const today = formatDate(date);
 
-  const [isExamStart, setIsExamStart] = useState(false);
   const [randomMcq, setRandomMcq] = useState([]);
-
-  const [examQuetion, setExamQuestion] = useState([]);
-  const [selectedAnswers, setSelectedAnswers] = useState({});
-
-  const handleSetAns = (mcqId, point, ans) => {
-    setExamQuestion([
-      ...examQuetion,
-      { mcqId, selectedAns: point?.name, rightAns: ans },
-    ]);
-
-    setSelectedAnswers({
-      ...selectedAnswers,
-      [mcqId]: point?.name,
-    });
-  };
-
   useEffect(() => {
     if (mcqs?.length) {
       let copiedArray = [...mcqs];
@@ -73,28 +62,36 @@ export default function ModelTest() {
     }
   }, [mcqs, totalQuestion]);
 
-  const handleStartExam = (e) => {
-    e.preventDefault();
+  const [examQuetion, setExamQuestion] = useState([]);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
 
-    if (totalQuestion > mcqs?.length)
-      return Swal.fire("", `${totalQuestion} MCQ not found`, "warning");
+  useEffect(() => {
+    const allExamQuestion = randomMcq?.map((mcq) => ({
+      mcq: mcq?._id,
+      rightAns: mcq?.ans,
+    }));
+    setExamQuestion(allExamQuestion);
+  }, [randomMcq]);
 
-    if (!negativeMark)
-      return Swal.fire("", `please select negetive mark`, "warning");
+  const handleSetAns = (mcqId, point) => {
+    const updatedArray = examQuetion?.map((item) =>
+      item?.mcq == mcqId ? { ...item, selectedAns: point?.name } : item
+    );
 
-    if (examDuration) {
-      const initialTime = examDuration * 60;
-      setTime(initialTime);
-    }
+    setExamQuestion(updatedArray);
+
+    setSelectedAnswers({
+      ...selectedAnswers,
+      [mcqId]: point?.name,
+    });
   };
 
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(examDuration * 60);
 
   useEffect(() => {
     if (time > 0) {
       const timer = setTimeout(() => {
         setTime(time - 1);
-        setIsExamStart(true);
       }, 1000);
       return () => clearTimeout(timer);
     }
@@ -106,9 +103,34 @@ export default function ModelTest() {
     return `${m < 10 ? "0" : ""}${m}:${s < 10 ? "0" : ""}${s}`;
   };
 
-  const completed = (100 / totalQuestion) * examQuetion?.length;
+  let keys = Object.keys(selectedAnswers);
+  let length = keys?.length;
 
-  const handleExamSubmit = () => {
+  const completed = (100 / totalQuestion) * parseInt(length);
+
+  const [addAcademyModelTest, { isLoading }] = useAddAcademyModelTestMutation();
+
+  //----------Handle Submite
+  const handleExamSubmit = async () => {
+    const totalRight = examQuetion.filter(
+      (question) =>
+        question?.selectedAns && question?.rightAns == question?.selectedAns
+    );
+    const totalWrong = examQuetion.filter(
+      (question) =>
+        question?.selectedAns && question?.rightAns != question?.selectedAns
+    );
+
+    const noAns = examQuetion.filter((question) => !question?.selectedAns);
+
+    const totalRightAns = totalRight?.length;
+    const totalWrongAns = totalWrong?.length;
+    const totalNoAns = noAns?.length;
+    const singleQuestionMark = totalMark / totalQuestion;
+    const totalNegativeMark = negativeMark * totalWrongAns;
+    const obtainMark = totalRightAns * singleQuestionMark - totalNegativeMark;
+    const resultType = obtainMark >= passMark ? "PASS" : "Fail";
+
     const examInfo = {
       totalQuestion,
       totalMark,
@@ -117,242 +139,182 @@ export default function ModelTest() {
       negativeMark,
       date: today,
       mcqs: examQuetion,
+      result: {
+        obtainMark,
+        resultType,
+        totalRightAns,
+        totalWrongAns,
+        totalNoAns,
+        totalNegativeMark,
+      },
+      subject: subjectId,
     };
 
-    setTime(0);
+    const res = await addAcademyModelTest(examInfo);
+    if (res?.data?.success) {
+      Swal.fire("", "Exam successfully submitted", "success");
+      navigate("/exam/exam-result");
+    } else {
+      Swal.fire("", "something went wrong", "error");
+    }
 
-    console.log(examInfo);
+    setTime(0);
+    setExitTimeModal(false);
   };
+
+  const [exitTimeModal, setExitTimeModal] = useState(false);
+
+  useEffect(() => {
+    if (time <= 0) {
+      setExitTimeModal(true);
+    }
+  }, [time]);
 
   return (
     <div>
-      {isExamStart ? (
-        <section>
-          <div className="shadow rounded overflow-hidden bg-base-100">
-            <div className="bg-primary text-base-100 p-4 flex justify-between items-center">
-              <h2 className="text-lg font-medium">On Demand Test</h2>
+      <section>
+        <div className="shadow rounded overflow-hidden bg-base-100">
+          <div className="bg-primary text-base-100 p-4 flex justify-between items-center">
+            <h2 className="text-lg font-medium">On Demand Test</h2>
 
-              <div className="text-base-100">{formatTime(time)}</div>
-            </div>
-            <div className="p-4 grid grid-cols-2 gap-4 text-[13px] lg:w-1/2 mx-auto">
-              <div className="flex items-center gap-2">
-                <div className="bg-primary text-base-100 p-2 rounded">
-                  <FaQuestion />
-                </div>
-                <div>
-                  <p>{totalQuestion}</p>
-                  <p className="text-neutral-content">TOTAL QUESTION</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className="bg-secondary text-base-100 p-2 rounded">
-                  <FaBookmark />
-                </div>
-                <div>
-                  <p>{totalMark}</p>
-                  <p className="text-neutral-content">TOTAL MARK</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className="bg-secondary text-base-100 p-2 rounded">
-                  <FaBookmark />
-                </div>
-                <div>
-                  <p>{passMark}</p>
-                  <p className="text-neutral-content">PASS MARK</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className="bg-secondary text-base-100 p-2 rounded">
-                  <FaBookmark />
-                </div>
-                <div>
-                  <p>{examDuration} min.</p>
-                  <p className="text-neutral-content">DURATION</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className="bg-secondary text-base-100 p-2 rounded">
-                  <FaBookmark />
-                </div>
-                <div>
-                  <p>{negativeMark}</p>
-                  <p className="text-neutral-content">NEGATIVE MARK</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className="bg-secondary text-base-100 p-2 rounded">
-                  <FaBookmark />
-                </div>
-                <div>
-                  <p>{today}</p>
-                  <p className="text-neutral-content">EXAM DATE</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className="bg-secondary text-base-100 p-2 rounded">
-                  <FaBookmark />
-                </div>
-                <div>
-                  <p>
-                    {examQuetion?.length}/{totalQuestion}
-                  </p>
-                  <p className="text-neutral-content">SELECTED QUESTION</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-2">
-                <div className="bg-secondary text-base-100 p-2 rounded">
-                  <FaBookmark />
-                </div>
-                <div>
-                  <p>{completed}%</p>
-                  <p className="text-neutral-content">COMPLETED</p>
-                </div>
-              </div>
-            </div>
+            <div className="text-base-100">{formatTime(time)}</div>
           </div>
-
-          {/* Questions */}
-          <div className="mt-4 grid grid-cols-2 gap-6">
-            {randomMcq?.map((mcq, i) => (
-              <div
-                className="shadow bg-base-100 rounded overflow-hidden"
-                key={mcq?._id}
-              >
-                <h2 className="bg-secondary/20 font-medium p-3">
-                  {i + 1}. {mcq?.question}
-                </h2>
-
-                <div className="p-3 grid grid-cols-2 gap-2 text-[15px]">
-                  {mcq?.points?.map((point, i) => (
-                    <button
-                      onClick={() => handleSetAns(mcq?._id, point, mcq?.ans)}
-                      key={i}
-                      className="flex items-center gap-2 w-max"
-                      disabled={selectedAnswers[mcq?._id] !== undefined}
-                    >
-                      {selectedAnswers[mcq?._id] === point?.name ? (
-                        <MdRadioButtonChecked />
-                      ) : (
-                        <MdRadioButtonUnchecked />
-                      )}
-
-                      <span>{point?.title}</span>
-                    </button>
-                  ))}
-                </div>
+          <div className="p-4 grid grid-cols-2 gap-4 text-[13px] lg:w-1/2 mx-auto">
+            <div className="flex items-center gap-2">
+              <div className="bg-primary text-base-100 p-2 rounded">
+                <FaQuestion />
               </div>
-            ))}
-          </div>
-
-          <div className="mt-5">
-            <button onClick={handleExamSubmit} className="secondary_btn">
-              Submit
-            </button>
-          </div>
-        </section>
-      ) : (
-        <section className="border rounded p-3 bg-base-100 shadow">
-          <div className="text-center mb-5">
-            <h2 className="text-xl">Self Test</h2>
-            <p className="text-neutral-content text-sm">
-              Fill up the form and submit
-            </p>
-          </div>
-
-          <form onSubmit={handleStartExam}>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6 gap-4">
               <div>
-                <p className="text-neutral-content text-[15px] mb-1">
-                  Subject Total Question
-                </p>
-                <input
-                  type="number"
-                  disabled
-                  className="bg-secondary text-base-100 border-secondary"
-                  value={mcqs?.length}
-                />
-              </div>
-
-              <div>
-                <p className="text-neutral-content text-[15px] mb-1">
-                  Number of Question *
-                </p>
-                <input
-                  type="number"
-                  onChange={(e) => setTotalQuestion(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <p className="text-neutral-content text-[15px] mb-1">
-                  Total Mark *
-                </p>
-                <input
-                  type="number"
-                  onChange={(e) => setTotalMark(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <p className="text-neutral-content text-[15px] mb-1">
-                  Pass Mark *
-                </p>
-                <input
-                  type="number"
-                  onChange={(e) => setPassMark(e.target.value)}
-                />
-              </div>
-
-              <div>
-                <p className="text-neutral-content text-[15px] mb-1">
-                  Exam Duration *
-                </p>
-                <div className="flex items-center">
-                  <input
-                    type="number"
-                    className="rounded-r-none"
-                    onChange={(e) => setExamDuration(e.target.value)}
-                  />
-                  <p className="bg-gray-200 px-2 py-1.5 rounded-r">min</p>
-                </div>
-              </div>
-
-              <div>
-                <p className="text-neutral-content text-[15px] mb-1">
-                  Negative Mark *
-                </p>
-                <select onChange={(e) => setNegativeMark(e.target.value)}>
-                  <option>select mark</option>
-                  <option value="0">0.00</option>
-                  <option value="0.25">0.25</option>
-                  <option value="0.50">0.50</option>
-                  <option value="1">1.00</option>
-                </select>
+                <p>{totalQuestion}</p>
+                <p className="text-neutral-content">TOTAL QUESTION</p>
               </div>
             </div>
 
-            <div className="mt-4 flex items-center gap-3 text-base-100">
-              <Link
-                to={`/academy/subject-${subjectId}/mcq`}
-                className="bg-red-500 px-4 py-2 rounded-md flex items-center gap-1"
-              >
-                <IoArrowBack className="text-lg" /> Go Back
-              </Link>
+            <div className="flex items-center gap-2">
+              <div className="bg-secondary text-base-100 p-2 rounded">
+                <FaBookmark />
+              </div>
               <div>
-                <button className="secondary_btn">Start Exam</button>
+                <p>{totalMark}</p>
+                <p className="text-neutral-content">TOTAL MARK</p>
               </div>
             </div>
-          </form>
-        </section>
-      )}
+
+            <div className="flex items-center gap-2">
+              <div className="bg-secondary text-base-100 p-2 rounded">
+                <FaBookmark />
+              </div>
+              <div>
+                <p>{passMark}</p>
+                <p className="text-neutral-content">PASS MARK</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="bg-secondary text-base-100 p-2 rounded">
+                <FaBookmark />
+              </div>
+              <div>
+                <p>{examDuration} min.</p>
+                <p className="text-neutral-content">DURATION</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="bg-secondary text-base-100 p-2 rounded">
+                <FaBookmark />
+              </div>
+              <div>
+                <p>{negativeMark}</p>
+                <p className="text-neutral-content">NEGATIVE MARK</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="bg-secondary text-base-100 p-2 rounded">
+                <FaBookmark />
+              </div>
+              <div>
+                <p>{today}</p>
+                <p className="text-neutral-content">EXAM DATE</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="bg-secondary text-base-100 p-2 rounded">
+                <FaBookmark />
+              </div>
+              <div>
+                <p>
+                  {keys?.length ? keys?.length : 0}/{totalQuestion}
+                </p>
+                <p className="text-neutral-content">SELECTED QUESTION</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <div className="bg-secondary text-base-100 p-2 rounded">
+                <FaBookmark />
+              </div>
+              <div>
+                <p>{parseInt(completed)}%</p>
+                <p className="text-neutral-content">COMPLETED</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Questions */}
+        <div className="mt-4 grid grid-cols-2 gap-6">
+          {randomMcq?.map((mcq, i) => (
+            <div
+              className="shadow bg-base-100 rounded overflow-hidden"
+              key={mcq?._id}
+            >
+              <h2 className="bg-secondary/20 font-medium p-3">
+                {i + 1}. {mcq?.question}
+              </h2>
+
+              <div className="p-3 grid grid-cols-2 gap-2 text-[15px]">
+                {mcq?.points?.map((point, i) => (
+                  <button
+                    onClick={() => handleSetAns(mcq?._id, point)}
+                    key={i}
+                    className="flex items-center gap-2 w-max"
+                    disabled={selectedAnswers[mcq?._id] !== undefined}
+                  >
+                    {selectedAnswers[mcq?._id] === point?.name ? (
+                      <MdRadioButtonChecked />
+                    ) : (
+                      <MdRadioButtonUnchecked />
+                    )}
+
+                    <span>{point?.title}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-5">
+          <button
+            disabled={isLoading && "disabled"}
+            onClick={handleExamSubmit}
+            className="secondary_btn"
+          >
+            {isLoading ? "Loading..." : "Submit"}
+          </button>
+        </div>
+      </section>
+
+      <ExitTimeModal
+        exitTimeModal={exitTimeModal}
+        setExitTimeModal={setExitTimeModal}
+        subjectId={subjectId}
+        handleExamSubmit={handleExamSubmit}
+        isLoading={isLoading}
+      />
     </div>
   );
 }

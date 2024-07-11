@@ -17,7 +17,7 @@ export default function CategoryClass({ category }) {
               alt=""
               className="w-8 h-8"
             />
-            <hp>{cls?.name}</hp>
+            <h2>{cls?.name}</h2>
           </Link>
         </li>
       ))}
