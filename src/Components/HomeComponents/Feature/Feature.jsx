@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import EducationIcon from "/src/assets/images/education_icon.png";
 
 export default function Feature() {
   return (
@@ -24,7 +25,28 @@ export default function Feature() {
               </div>
 
               <img
-                src="/src/assets/images/education_icon.png"
+                src={EducationIcon}
+                alt="Education Icon"
+                className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
+              />
+            </div>
+          </Link>
+          <Link
+            to=""
+            className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
+          >
+            <div className="sm:flex items-center justify-between gap-3">
+              <div>
+                <h3 className="text-base sm:text-lg text-neutral">
+                  ১ম-দ্বাদশ শ্রেণি
+                </h3>
+                <p className="mt-1 text-[11px] text-neutral-content">
+                  স্কুল এখন আঙ্গুলের ডগায়
+                </p>
+              </div>
+
+              <img
+                src={EducationIcon}
                 alt=""
                 className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
               />
@@ -45,7 +67,7 @@ export default function Feature() {
               </div>
 
               <img
-                src="/src/assets/images/education_icon.png"
+                src={EducationIcon}
                 alt=""
                 className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
               />
@@ -66,7 +88,7 @@ export default function Feature() {
               </div>
 
               <img
-                src="/src/assets/images/education_icon.png"
+                src={EducationIcon}
                 alt=""
                 className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
               />
@@ -87,7 +109,7 @@ export default function Feature() {
               </div>
 
               <img
-                src="/src/assets/images/education_icon.png"
+                src={EducationIcon}
                 alt=""
                 className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
               />
@@ -108,28 +130,7 @@ export default function Feature() {
               </div>
 
               <img
-                src="/src/assets/images/education_icon.png"
-                alt=""
-                className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
-              />
-            </div>
-          </Link>
-          <Link
-            to=""
-            className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
-          >
-            <div className="sm:flex items-center justify-between gap-3">
-              <div>
-                <h3 className="text-base sm:text-lg text-neutral">
-                  ১ম-দ্বাদশ শ্রেণি
-                </h3>
-                <p className="mt-1 text-[11px] text-neutral-content">
-                  স্কুল এখন আঙ্গুলের ডগায়
-                </p>
-              </div>
-
-              <img
-                src="/src/assets/images/education_icon.png"
+                src={EducationIcon}
                 alt=""
                 className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
               />

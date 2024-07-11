@@ -4,6 +4,7 @@ import { Suspense, lazy } from "react";
 import Home from "../Pages/Home/Home";
 import NotFound from "../Pages/NotFound/NotFound";
 import MainLayout from "../Layout/MainLayout";
+import Spinner from "../Components/Loader/Spinner/Spinner";
 
 const Login = lazy(() => import("../Pages/Login/Login"));
 const Signup = lazy(() => import("../Pages/Signup/Signup"));
@@ -129,7 +130,7 @@ export default function Routers() {
           <Route
             path="/login"
             element={
-              <Suspense fallback="Loading...">
+              <Suspense fallback={<Spinner />}>
                 <Login />
               </Suspense>
             }
@@ -137,7 +138,7 @@ export default function Routers() {
           <Route
             path="/signup"
             element={
-              <Suspense fallback="Loading...">
+              <Suspense fallback={<Spinner />}>
                 <Signup />
               </Suspense>
             }
@@ -148,7 +149,7 @@ export default function Routers() {
         <Route
           path="/"
           element={
-            <Suspense fallback="Loading...">
+            <Suspense fallback={<Spinner />}>
               <UserLayout />
             </Suspense>
           }
@@ -170,7 +171,7 @@ export default function Routers() {
         <Route
           path="/admin"
           element={
-            <Suspense fallback="Loading...">
+            <Suspense fallback={<Spinner />}>
               <AdminLayout />
             </Suspense>
           }

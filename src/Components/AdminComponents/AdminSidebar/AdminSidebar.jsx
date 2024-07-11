@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Logo from "/src/assets/images/logo/logo.png";
 
 import {
   MdMonitor,
@@ -152,11 +153,7 @@ export default function AdminSidebar() {
       <div>
         <nav className="admin_siderbar">
           <Link to="/admin/dashboard" className="py-3 block">
-            <img
-              src="/src/assets/images/logo/logo.png"
-              alt="logo"
-              className="w-3/5 mx-auto"
-            />
+            <img src={Logo} alt="logo" className="w-3/5 mx-auto" />
           </Link>
 
           <ul>

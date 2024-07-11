@@ -4,6 +4,8 @@ import { Link, NavLink } from "react-router-dom";
 import { MdOutlineLogin, MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { AiOutlineMenu } from "react-icons/ai";
 
+import Logo from "/src/assets/images/logo/logo.png";
+
 export default function Header() {
   const [fixedHeader, setFixedHeader] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -38,11 +40,7 @@ export default function Header() {
       <div className="container">
         <div className="flex justify-between items-center">
           <Link to="/">
-            <img
-              src="/src/assets/images/logo/logo.png"
-              alt="logo"
-              className="w-32 sm:w-44"
-            />
+            <img src={Logo} alt="logo" className="w-32 sm:w-44" />
           </Link>
 
           <div className="flex items-center gap-4">

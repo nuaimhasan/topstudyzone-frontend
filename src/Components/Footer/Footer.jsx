@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Logo from "/src/assets/images/logo/logo.png";
 import { BiLogoFacebook, BiLogoLinkedin } from "react-icons/bi";
 import { FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa";
 
@@ -8,11 +9,7 @@ export default function Footer() {
       <div className="container">
         <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10 pb-14">
           <div>
-            <img
-              src="/src/assets/images/logo/logo.png"
-              alt=""
-              className="w-48 md:w-56"
-            />
+            <img src={Logo} alt="logo" className="w-48 md:w-56" />
           </div>
 
           <div>

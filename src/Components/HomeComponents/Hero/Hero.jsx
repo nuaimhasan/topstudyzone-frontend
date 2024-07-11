@@ -1,13 +1,14 @@
+import BannerBg from "/src/assets/images/banner/banner_bg.webp";
+import QuestionCountdown from "/src/assets/images/banner/question_countdown.png";
+import StudentCountdown from "/src/assets/images/banner/student_countdown.png";
+import ExamCountdown from "/src/assets/images/banner/exam_countdown.png";
+
 export default function Hero() {
   return (
     <div className="hero_wrap h-[90vh] md:h-[98vh] overflow-hidden">
       <div className="relative h-full">
         {/* bg */}
-        <img
-          src="/src/assets/images/banner/banner_bg.webp"
-          alt=""
-          className="absolute w-full"
-        />
+        <img src={BannerBg} alt="" className="absolute w-full" />
 
         {/* Content */}
         <div className="w-full h-full flex flex-col justify-center items-center relative z-30 bg-[#0000006f]">
@@ -24,7 +25,7 @@ export default function Hero() {
           <div className="mt-20 w-[90%] lg:w-2/3 bg-primary/5 rounded-lg mx-auto py-6 md:py-10 px-2 md:px-4 grid grid-cols-3 gap-6">
             <div className="border-r border-primary/40 flex items-center justify-center gap-1 md:gap-3">
               <img
-                src="/src/assets/images/banner/question_countdown.png"
+                src={QuestionCountdown}
                 alt=""
                 className="w-8 h-8 md:w-14 md:h-12 rounded-full"
               />
@@ -37,8 +38,8 @@ export default function Hero() {
             </div>
             <div className="border-r border-primary/40 flex items-center justify-center gap-1 md:gap-3">
               <img
-                src="/src/assets/images/banner/student_countdown.png"
-                alt=""
+                src={StudentCountdown}
+                alt="Student Countdown"
                 className="w-8 h-8 md:w-14 md:h-12 rounded-full"
               />
               <div>
@@ -50,8 +51,8 @@ export default function Hero() {
             </div>
             <div className="flex items-center justify-center gap-1 md:gap-3">
               <img
-                src="/src/assets/images/banner/exam_countdown.png"
-                alt=""
+                src={ExamCountdown}
+                alt="Exam Countdown"
                 className="w-8 h-8 md:w-14 md:h-12 rounded-full"
               />
               <div>

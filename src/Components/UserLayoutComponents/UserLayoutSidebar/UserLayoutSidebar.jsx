@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Logo from "/src/assets/images/logo/logo.png";
 import UserSidebarLists from "./UserSidebarLists";
 import { MdOutlineLogin } from "react-icons/md";
 
@@ -7,11 +8,7 @@ export default function UserLayoutSidebar() {
     <div className="h-full flex flex-col justify-between">
       <div>
         <Link to="/" className="block pt-1">
-          <img
-            src="/src/assets/images/logo/logo.png"
-            alt="logo"
-            className="w-2/3 mx-auto"
-          />
+          <img src={Logo} alt="logo" className="w-2/3 mx-auto" />
         </Link>
 
         <nav className="sidebar_lists mt-6 h-[78vh] overflow-y-auto">
