@@ -1,12 +1,15 @@
 import { FaBook, FaPrint } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useGetAcademyMCQQuery } from "../../../../Redux/api/academy/mcqApi";
+import { useGetAcademyWrittenQuery } from "../../../../Redux/api/academy/writtenApi";
 
 export default function Subject({ subject }) {
   const subjectId = subject?._id;
   let query = {};
   query["subject"] = subjectId;
   const { data } = useGetAcademyMCQQuery({ ...query });
+  const { data: written } = useGetAcademyWrittenQuery({ ...query });
+  const writtens = written?.data;
 
   return (
     <li className="flex justify-between items-center border-b pb-6">
@@ -30,7 +33,7 @@ export default function Subject({ subject }) {
               to={`/academy/written?subject=${subjectId}`}
               className="bg-gray-100 p-1 rounded text-neutral-content"
             >
-              Written (0)
+              Written ({writtens?.length})
             </Link>
           </div>
         </div>

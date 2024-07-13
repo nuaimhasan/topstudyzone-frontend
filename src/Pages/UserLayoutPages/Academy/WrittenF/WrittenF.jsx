@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import WrittenCard from "./WrittenCard";
+import { useGetAcademyWrittenQuery } from "../../../../Redux/api/academy/writtenApi";
 
 export default function WrittenF() {
   const location = useLocation();
@@ -7,13 +8,32 @@ export default function WrittenF() {
   const subjectId = queryParams.get("subject");
   const chapterId = queryParams.get("chapter");
 
+  let query = {};
+  query["subject"] = subjectId;
+  query["chapter"] = chapterId;
+
+  const { data: written } = useGetAcademyWrittenQuery({ ...query });
+  const writtens = written?.data;
+
   return (
     <div>
       <section className="grid grid-cols-3 items-start gap-6">
         <div className="col-span-2 rounded overflow-hidden">
           <div className="bg-secondary text-base-100 text-center py-4">
-            <h2 className="text-xl font-semibold mb-1">বাংলা</h2>
-            <p className="text-sm">একাদশ- দ্বাদশ শ্রেণি - বাংলা | NCTB BOOK</p>
+            <h2 className="text-xl font-semibold mb-1">
+              {subjectId
+                ? writtens?.length > 0 && writtens[0]?.subject?.name
+                : chapterId &&
+                  writtens?.length > 0 &&
+                  writtens[0]?.chapter?.name}
+            </h2>
+            <p className="text-sm">
+              {writtens?.length > 0 && writtens[0]?.class?.name}
+              {!subjectId &&
+                writtens?.length > 0 &&
+                " - " + writtens[0]?.subject?.name}{" "}
+              | NCTB BOOK
+            </p>
           </div>
 
           <div className="p-2 bg-base-100 flex justify-center gap-3 uppercase text-[10px] font-semibold">
@@ -34,9 +54,9 @@ export default function WrittenF() {
 
           <div className="mt-4">
             <ul className="flex flex-col gap-6">
-              <li>
-                <WrittenCard />
-              </li>
+              {writtens?.map((written, i) => (
+                <WrittenCard key={written?._id} written={written} i={i} />
+              ))}
             </ul>
           </div>
         </div>

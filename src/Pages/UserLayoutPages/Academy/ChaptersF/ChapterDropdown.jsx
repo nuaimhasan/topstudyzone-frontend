@@ -53,7 +53,7 @@ export default function ChapterDropdown({
       </Link>
 
       <Link
-        to=""
+        to={`/academy/written?chapter=${chapter?._id}`}
         className="px-2 py-1.5 block hover:bg-primary duration-300 hover:text-base-100 border-b"
       >
         Written
