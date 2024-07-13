@@ -11,7 +11,7 @@ export default function CategoryWise() {
         ক্যাটাগরি ভিত্তিক
       </h2>
 
-      <div className="mt-8 grid grid-cols-3 gap-6 items-start">
+      <div className="mt-4 sm:mt-8 grid sm:grid-cols-3 gap-6 items-start">
         {categories?.map((category) => (
           <div key={category?._id} className="rounded overflow-hidden shadow">
             <div className="bg-primary text-base-100 p-3">

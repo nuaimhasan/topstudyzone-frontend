@@ -12,9 +12,9 @@ export default function Content() {
 
   return (
     <div>
-      <section className="grid grid-cols-3 gap-6 items-start">
-        <div className="col-span-2 bg-base-100 shadow rounded overflow-hidden">
-          <div className="bg-secondary text-base-100 text-center text-lg font-medium py-3">
+      <section className="grid md:grid-cols-3 gap-6 items-start">
+        <div className="md:col-span-2 bg-base-100 shadow rounded overflow-hidden">
+          <div className="bg-secondary text-base-100 text-center sm:text-lg font-medium py-3">
             {chapterInfo?.data?.name}
           </div>
 

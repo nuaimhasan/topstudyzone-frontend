@@ -29,13 +29,15 @@ export default function McqF() {
 
   return (
     <div>
-      <section className="grid grid-cols-3 items-start gap-6">
-        <div className="col-span-2 rounded overflow-hidden">
+      <section className="grid md:grid-cols-3 items-start gap-6">
+        <div className="md:col-span-2 rounded overflow-hidden">
           <div className="bg-secondary text-base-100 text-center py-4">
-            <h2 className="text-2xl font-medium">
+            <h2 className="sm:text-2xl font-medium">
               {subjectId ? subejct?.name : chapterId && chapter?.name}
             </h2>
-            <p>All Question - ({mcqs?.length})</p>
+            <p className="text-sm sm:text-base">
+              All Question - ({mcqs?.length})
+            </p>
           </div>
 
           <div className="p-4 bg-base-100">
@@ -69,7 +71,14 @@ export default function McqF() {
                 />
               </li>
               <li>
-                <Link to="" className="bg-secondary px-4 py-2 rounded">
+                <Link
+                  to={`${
+                    subjectId
+                      ? `/academy/written?subject=${subjectId}`
+                      : chapterId && `/academy/written?chapter=${chapterId}`
+                  }`}
+                  className="bg-secondary px-4 py-2 rounded"
+                >
                   Written
                 </Link>
               </li>

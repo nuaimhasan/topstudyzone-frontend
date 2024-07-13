@@ -265,7 +265,7 @@ export default function ModelTest() {
         </div>
 
         {/* Questions */}
-        <div className="mt-4 grid grid-cols-2 gap-6">
+        <div className="mt-4 grid sm:grid-cols-2 gap-6">
           {randomMcq?.map((mcq, i) => (
             <div
               className="shadow bg-base-100 rounded overflow-hidden"

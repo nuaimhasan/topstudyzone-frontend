@@ -14,11 +14,11 @@ export default function Subject({ subject }) {
   return (
     <li className="flex justify-between items-center border-b pb-6">
       <div className="flex items-center gap-5">
-        <FaBook className="text-neutral-content text-4xl" />
+        <FaBook className="text-neutral-content text-2xl sm:text-4xl" />
         <div>
           <Link
             to={`/academy/subject-${subjectId}/chapters`}
-            className="hover:text-secondary duration-200"
+            className="hover:text-secondary duration-200 text-sm sm:tetx-base"
           >
             {subject?.name}
           </Link>
@@ -39,11 +39,11 @@ export default function Subject({ subject }) {
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <button className="flex items-center gap-2 text-sm text-neutral">
           <FaPrint /> Print
         </button>
-      </div>
+      </div> */}
     </li>
   );
 }

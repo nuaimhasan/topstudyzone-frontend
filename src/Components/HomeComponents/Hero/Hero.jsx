@@ -5,24 +5,24 @@ import ExamCountdown from "/src/assets/images/banner/exam_countdown.png";
 
 export default function Hero() {
   return (
-    <div className="hero_wrap h-[90vh] md:h-[98vh] overflow-hidden">
+    <div className="hero_wrap h-[80vh] md:h-[98vh] overflow-hidden">
       <div className="relative h-full">
         {/* bg */}
-        <img src={BannerBg} alt="" className="absolute w-full" />
+        <img src={BannerBg} alt="" className="absolute w-full h-full" />
 
         {/* Content */}
         <div className="w-full h-full flex flex-col justify-center items-center relative z-30 bg-[#0000006f]">
-          <div className="flex flex-col items-center justify-center gap-3">
+          <div className="flex flex-col items-center justify-center sm:gap-3">
             <h2 className="text-3xl md:text-5xl font-bold text-base-100">
               টপ স্টাডি জোন
             </h2>
-            <h3 className="text-2xl md:text-4xl font-medium text-primary">
+            <h3 className="sm:text-2xl md:text-4xl font-medium text-primary">
               শিক্ষামূলক উন্মুক্ত প্ল্যাটফর্ম
             </h3>
           </div>
 
           {/* Counter */}
-          <div className="mt-20 w-[90%] lg:w-2/3 bg-primary/5 rounded-lg mx-auto py-6 md:py-10 px-2 md:px-4 grid grid-cols-3 gap-6">
+          <div className="mt-6 sm:mt-20 w-[90%] lg:w-2/3 bg-primary/5 rounded-lg mx-auto py-6 md:py-10 px-2 md:px-4 grid grid-cols-3 gap-6">
             <div className="border-r border-primary/40 flex items-center justify-center gap-1 md:gap-3">
               <img
                 src={QuestionCountdown}

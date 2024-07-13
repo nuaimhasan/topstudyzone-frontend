@@ -40,8 +40,8 @@ export default function ChaptersF() {
 
   return (
     <div>
-      <section className="grid grid-cols-3 gap-6 items-start">
-        <div className="col-span-2 bg-base-100 rounded shadow min-h-[85vh]">
+      <section className="grid md:grid-cols-3 gap-6 items-start">
+        <div className="md:col-span-2 bg-base-100 rounded shadow min-h-[85vh]">
           <div className="bg-secondary text-base-100 py-4 text-center rounded-t">
             <h2 className="text-lg font-medium">{subjectData?.data?.name}</h2>
           </div>
@@ -84,7 +84,7 @@ export default function ChaptersF() {
 
         <div className="bg-base-100 rounded overflow-hidden shadow">
           <div className="bg-primary text-base-100 py-4 text-center">
-            <h2 className="text-lg font-medium">
+            <h2 className="sm:text-lg font-medium">
               {subjectData?.data?.class?.name} - MCQ
             </h2>
           </div>

@@ -14,7 +14,7 @@ export default function Feature() {
             to=""
             className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
           >
-            <div className="sm:flex items-center justify-between gap-3">
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
               <div>
                 <h3 className="text-base sm:text-lg text-neutral">
                   ১ম-দ্বাদশ শ্রেণি
@@ -27,7 +27,7 @@ export default function Feature() {
               <img
                 src={EducationIcon}
                 alt="Education Icon"
-                className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
               />
             </div>
           </Link>
@@ -35,7 +35,7 @@ export default function Feature() {
             to=""
             className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
           >
-            <div className="sm:flex items-center justify-between gap-3">
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
               <div>
                 <h3 className="text-base sm:text-lg text-neutral">
                   ১ম-দ্বাদশ শ্রেণি
@@ -47,8 +47,8 @@ export default function Feature() {
 
               <img
                 src={EducationIcon}
-                alt=""
-                className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
               />
             </div>
           </Link>
@@ -56,7 +56,7 @@ export default function Feature() {
             to=""
             className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
           >
-            <div className="sm:flex items-center justify-between gap-3">
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
               <div>
                 <h3 className="text-base sm:text-lg text-neutral">
                   ১ম-দ্বাদশ শ্রেণি
@@ -68,8 +68,8 @@ export default function Feature() {
 
               <img
                 src={EducationIcon}
-                alt=""
-                className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
               />
             </div>
           </Link>
@@ -77,7 +77,7 @@ export default function Feature() {
             to=""
             className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
           >
-            <div className="sm:flex items-center justify-between gap-3">
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
               <div>
                 <h3 className="text-base sm:text-lg text-neutral">
                   ১ম-দ্বাদশ শ্রেণি
@@ -89,8 +89,8 @@ export default function Feature() {
 
               <img
                 src={EducationIcon}
-                alt=""
-                className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
               />
             </div>
           </Link>
@@ -98,7 +98,7 @@ export default function Feature() {
             to=""
             className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
           >
-            <div className="sm:flex items-center justify-between gap-3">
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
               <div>
                 <h3 className="text-base sm:text-lg text-neutral">
                   ১ম-দ্বাদশ শ্রেণি
@@ -110,8 +110,8 @@ export default function Feature() {
 
               <img
                 src={EducationIcon}
-                alt=""
-                className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
               />
             </div>
           </Link>
@@ -119,7 +119,7 @@ export default function Feature() {
             to=""
             className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
           >
-            <div className="sm:flex items-center justify-between gap-3">
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
               <div>
                 <h3 className="text-base sm:text-lg text-neutral">
                   ১ম-দ্বাদশ শ্রেণি
@@ -131,8 +131,176 @@ export default function Feature() {
 
               <img
                 src={EducationIcon}
-                alt=""
-                className="w-10 h-10 md:w-12 md:h-12 rounded-lg"
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
+              />
+            </div>
+          </Link>
+          <Link
+            to=""
+            className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
+          >
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+              <div>
+                <h3 className="text-base sm:text-lg text-neutral">
+                  ১ম-দ্বাদশ শ্রেণি
+                </h3>
+                <p className="mt-1 text-[11px] text-neutral-content">
+                  স্কুল এখন আঙ্গুলের ডগায়
+                </p>
+              </div>
+
+              <img
+                src={EducationIcon}
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
+              />
+            </div>
+          </Link>
+          <Link
+            to=""
+            className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
+          >
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+              <div>
+                <h3 className="text-base sm:text-lg text-neutral">
+                  ১ম-দ্বাদশ শ্রেণি
+                </h3>
+                <p className="mt-1 text-[11px] text-neutral-content">
+                  স্কুল এখন আঙ্গুলের ডগায়
+                </p>
+              </div>
+
+              <img
+                src={EducationIcon}
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
+              />
+            </div>
+          </Link>
+          <Link
+            to=""
+            className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
+          >
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+              <div>
+                <h3 className="text-base sm:text-lg text-neutral">
+                  ১ম-দ্বাদশ শ্রেণি
+                </h3>
+                <p className="mt-1 text-[11px] text-neutral-content">
+                  স্কুল এখন আঙ্গুলের ডগায়
+                </p>
+              </div>
+
+              <img
+                src={EducationIcon}
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
+              />
+            </div>
+          </Link>
+          <Link
+            to=""
+            className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
+          >
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+              <div>
+                <h3 className="text-base sm:text-lg text-neutral">
+                  ১ম-দ্বাদশ শ্রেণি
+                </h3>
+                <p className="mt-1 text-[11px] text-neutral-content">
+                  স্কুল এখন আঙ্গুলের ডগায়
+                </p>
+              </div>
+
+              <img
+                src={EducationIcon}
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
+              />
+            </div>
+          </Link>
+          <Link
+            to=""
+            className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
+          >
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+              <div>
+                <h3 className="text-base sm:text-lg text-neutral">
+                  ১ম-দ্বাদশ শ্রেণি
+                </h3>
+                <p className="mt-1 text-[11px] text-neutral-content">
+                  স্কুল এখন আঙ্গুলের ডগায়
+                </p>
+              </div>
+
+              <img
+                src={EducationIcon}
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
+              />
+            </div>
+          </Link>
+          <Link
+            to=""
+            className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
+          >
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+              <div>
+                <h3 className="text-base sm:text-lg text-neutral">
+                  ১ম-দ্বাদশ শ্রেণি
+                </h3>
+                <p className="mt-1 text-[11px] text-neutral-content">
+                  স্কুল এখন আঙ্গুলের ডগায়
+                </p>
+              </div>
+
+              <img
+                src={EducationIcon}
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
+              />
+            </div>
+          </Link>
+          <Link
+            to=""
+            className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
+          >
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+              <div>
+                <h3 className="text-base sm:text-lg text-neutral">
+                  ১ম-দ্বাদশ শ্রেণি
+                </h3>
+                <p className="mt-1 text-[11px] text-neutral-content">
+                  স্কুল এখন আঙ্গুলের ডগায়
+                </p>
+              </div>
+
+              <img
+                src={EducationIcon}
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
+              />
+            </div>
+          </Link>
+          <Link
+            to=""
+            className="bg-base-100 shadow p-4 rounded hover:bg-primary/10 duration-300"
+          >
+            <div className="flex flex-col-reverse sm:flex-row items-center justify-between gap-3">
+              <div>
+                <h3 className="text-base sm:text-lg text-neutral">
+                  ১ম-দ্বাদশ শ্রেণি
+                </h3>
+                <p className="mt-1 text-[11px] text-neutral-content">
+                  স্কুল এখন আঙ্গুলের ডগায়
+                </p>
+              </div>
+
+              <img
+                src={EducationIcon}
+                alt="Education Icon"
+                className="w-8 h-8 md:w-12 md:h-12 rounded-lg"
               />
             </div>
           </Link>

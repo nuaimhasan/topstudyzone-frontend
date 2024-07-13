@@ -15,9 +15,9 @@ export default function SubjectsF() {
 
   return (
     <div>
-      <section className="grid grid-cols-3 items-start gap-6">
-        <div className="col-span-2 rounded overflow-hidden shadow">
-          <div className="bg-secondary text-base-100 text-center py-4 text-xl font-medium">
+      <section className="grid md:grid-cols-3 items-start gap-6">
+        <div className="md:col-span-2 rounded overflow-hidden shadow">
+          <div className="bg-secondary text-base-100 text-center py-4 sm:text-xl font-medium">
             {clsData?.data?.name} - All Subjects
           </div>
 
@@ -31,7 +31,7 @@ export default function SubjectsF() {
         </div>
 
         <div className="rounded overflow-hidden shadow bg-base-100">
-          <div className="bg-primary text-base-100 text-center py-4 text-xl font-medium">
+          <div className="bg-primary text-base-100 text-center py-4 sm:text-xl font-medium">
             Subject MCQ
           </div>
 

@@ -15,10 +15,14 @@ export default function WrittenF() {
   const { data: written } = useGetAcademyWrittenQuery({ ...query });
   const writtens = written?.data;
 
+  const subjectNewId = subjectId
+    ? subjectId
+    : writtens?.length > 0 && writtens[0]?.subject?._id;
+
   return (
     <div>
-      <section className="grid grid-cols-3 items-start gap-6">
-        <div className="col-span-2 rounded overflow-hidden">
+      <section className="grid md:grid-cols-3 items-start gap-6">
+        <div className="md:col-span-2 rounded overflow-hidden">
           <div className="bg-secondary text-base-100 text-center py-4">
             <h2 className="text-xl font-semibold mb-1">
               {subjectId
@@ -38,13 +42,13 @@ export default function WrittenF() {
 
           <div className="p-2 bg-base-100 flex justify-center gap-3 uppercase text-[10px] font-semibold">
             <Link
-              to={`/academy/subject-${subjectId}/chapters`}
+              to={`/academy/subject-${subjectNewId}/chapters`}
               className="bg-gray-100 px-4 py-2 rounded hover:bg-secondary hover:text-base-100 duration-300"
             >
               view chapter
             </Link>
             <Link
-              to={`/academy/mcq?subject=${subjectId}`}
+              to={`/academy/mcq?subject=${subjectNewId}`}
               className="bg-gray-100 px-4 py-2 rounded hover:bg-secondary
               hover:text-base-100 duration-300"
             >
