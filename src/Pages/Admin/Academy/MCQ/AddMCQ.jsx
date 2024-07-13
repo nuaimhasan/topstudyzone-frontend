@@ -6,10 +6,16 @@ import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjec
 import { useAddAcademyMCQMutation } from "../../../../Redux/api/academy/mcqApi";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
 
 export default function AddMCQ() {
   const editor = useRef(null);
   const navigate = useNavigate();
+  const [question, setQuestion] = useState("");
+  const [pointA, setPointA] = useState("");
+  const [pointB, setPointB] = useState("");
+  const [pointC, setPointC] = useState("");
+  const [pointD, setPointD] = useState("");
   const [explain, setExplain] = useState("");
 
   //------------------------Category
@@ -32,6 +38,14 @@ export default function AddMCQ() {
   const { data: subject } = useGetAcademySubjectsQuery(selectedClass);
   const subjects = subject?.data;
 
+  const [selectedSubject, setSelectedSubject] = useState("");
+  useEffect(() => {
+    setSelectedSubject(subject?.data[0]?._id);
+  }, [subject?.data]);
+
+  const { data: chapter } = useGetAcademyChaptersQuery(selectedSubject);
+  const chapters = chapter?.data;
+
   const [addAcademyMCQ, { isLoading }] = useAddAcademyMCQMutation();
 
   const handleAdd = async (e) => {
@@ -41,11 +55,7 @@ export default function AddMCQ() {
     const category = form.category.value;
     const cls = form.class.value;
     const subject = form.subject.value;
-    const question = form.question.value;
-    const pointA = form.pointA.value;
-    const pointB = form.pointB.value;
-    const pointC = form.pointC.value;
-    const pointD = form.pointD.value;
+    const chapter = form.chapter.value;
     const ans = form.ans.value;
     const videoLink = form.videoLink.value;
 
@@ -53,6 +63,7 @@ export default function AddMCQ() {
       category,
       class: cls,
       subject,
+      chapter,
       question,
       points: [
         { name: "A", title: pointA },
@@ -84,7 +95,7 @@ export default function AddMCQ() {
         <h2 className="p-2 border-b text-lg font-medium">Add MCQ</h2>
 
         <form onSubmit={handleAdd} className="p-4">
-          <div className="grid sm:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
             <div>
               <p className="mb-1">Category Name</p>
               <select
@@ -117,10 +128,25 @@ export default function AddMCQ() {
 
             <div>
               <p className="mb-1">Subject Name</p>
-              <select name="subject" required>
+              <select
+                name="subject"
+                onChange={(e) => setSelectedSubject(e.target.value)}
+                required
+              >
                 {subjects?.map((subject) => (
                   <option key={subject?._id} value={subject?._id}>
                     {subject?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <p className="mb-1">Chapter Name</p>
+              <select name="chapter" required>
+                {chapters?.map((chapter) => (
+                  <option key={chapter?._id} value={chapter?._id}>
+                    {chapter?.name}
                   </option>
                 ))}
               </select>
@@ -129,28 +155,48 @@ export default function AddMCQ() {
 
           <div className="mt-4">
             <p className="mb-1">Question</p>
-            <input type="text" name="question" required />
+            <JoditEditor
+              ref={editor}
+              value=""
+              onBlur={(text) => setQuestion(text)}
+            />
           </div>
 
           {/* points */}
           <div className="mt-4 border rounded p-3">
             <p className="mb-4">Points</p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 md:grid-cols-2 gap-4">
               <div>
                 <p className="mb-1">A</p>
-                <input type="text" name="pointA" required />
+                <JoditEditor
+                  ref={editor}
+                  value=""
+                  onBlur={(text) => setPointA(text)}
+                />
               </div>
               <div>
                 <p className="mb-1">B</p>
-                <input type="text" name="pointB" required />
+                <JoditEditor
+                  ref={editor}
+                  value=""
+                  onBlur={(text) => setPointB(text)}
+                />
               </div>
               <div>
                 <p className="mb-1">C</p>
-                <input type="text" name="pointC" required />
+                <JoditEditor
+                  ref={editor}
+                  value=""
+                  onBlur={(text) => setPointC(text)}
+                />
               </div>
               <div>
                 <p className="mb-1">D</p>
-                <input type="text" name="pointD" required />
+                <JoditEditor
+                  ref={editor}
+                  value=""
+                  onBlur={(text) => setPointD(text)}
+                />
               </div>
               <div>
                 <p className="mb-1">Ans</p>

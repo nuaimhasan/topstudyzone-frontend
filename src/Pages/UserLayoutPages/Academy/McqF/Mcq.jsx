@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import perser from "html-react-parser";
 import moment from "moment";
+import perser from "html-react-parser";
 
 import { FaShareAlt } from "react-icons/fa";
 import { FaCircleCheck, FaEye, FaHeart, FaVideo } from "react-icons/fa6";
@@ -23,9 +23,9 @@ export default function Mcq({ mcq, i }) {
       <div className="border-b p-3">
         <Link
           to=""
-          className="hover:text-secondary duration-300 font-semibold text-[15px]"
+          className="hover:text-secondary duration-300 font-semibold text-[15px] flex items-start gap-1"
         >
-          {i + 1}. {mcq?.question}
+          {i + 1}. {mcq?.question && perser(mcq?.question)}
         </Link>
         <p className="text-[11px] text-neutral-content mt-1">
           Created: {timeAgoCreatedAt} | Updated: {timeAgoUpdatedAt}
@@ -42,7 +42,7 @@ export default function Mcq({ mcq, i }) {
                 <CgEditBlackPoint className="text-base" />
               )}
               <span className={`${point?.name == mcq?.ans && "text-primary"}`}>
-                {point?.title}
+                {point?.title && perser(point?.title)}
               </span>
             </p>
           ))}

@@ -1,6 +1,7 @@
 import { MdDeleteForever } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import perser from "html-react-parser";
 import {
   useDeleteAcademyMCQMutation,
   useGetAcademyMCQQuery,
@@ -119,6 +120,7 @@ export default function MCQ() {
               <th>Category Name</th>
               <th>Class Name</th>
               <th>Subject Name</th>
+              <th>Chapter Name</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -126,10 +128,11 @@ export default function MCQ() {
             {mcqs?.map((mcq, i) => (
               <tr key={mcq?._id}>
                 <td>{i + 1}</td>
-                <td>{mcq?.question}</td>
+                <td>{mcq?.question && perser(mcq?.question)}</td>
                 <td>{mcq?.category?.name}</td>
                 <td>{mcq?.class?.name}</td>
                 <td>{mcq?.subject?.name}</td>
+                <td>{mcq?.chapter?.name}</td>
                 <td>
                   <div className="flex items-center gap-2 text-lg">
                     <button>

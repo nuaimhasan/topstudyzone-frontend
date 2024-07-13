@@ -7,6 +7,7 @@ export default function ExamInfoModal({
   setExamInfoModal,
   mcqs,
   subjectId,
+  chapter,
 }) {
   const navigate = useNavigate();
 
@@ -24,9 +25,16 @@ export default function ExamInfoModal({
     if (totalQuestion > mcqs?.length)
       return setError(`${totalQuestion} MCQ not found`);
 
-    navigate(
-      `/academy/subject-${subjectId}/test?nq=${totalQuestion}&tm=${totalMark}&pm=${passMark}&ed=${examDuration}&nm=${negativeMark}`
-    );
+    let url =
+      subjectId && !chapter
+        ? `/academy/test?subject=${subjectId}&nq=${totalQuestion}&tm=${totalMark}&pm=${passMark}&ed=${examDuration}&nm=${negativeMark}`
+        : subjectId && chapter
+        ? `/academy/test?chapter=${chapter}&nq=${totalQuestion}&tm=${totalMark}&pm=${passMark}&ed=${examDuration}&nm=${negativeMark}`
+        : !subjectId &&
+          chapter &&
+          `/academy/test?chapter=${chapter}&nq=${totalQuestion}&tm=${totalMark}&pm=${passMark}&ed=${examDuration}&nm=${negativeMark}`;
+
+    navigate(url);
   };
 
   return (
@@ -53,7 +61,7 @@ export default function ExamInfoModal({
           </p>
         </div>
 
-        <form className="mt-8" onSubmit={handleStartExam}>
+        <form className="mt-8 text-start text-sm" onSubmit={handleStartExam}>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             <div>
               <p className="text-neutral-content text-[15px] mb-1">
@@ -133,7 +141,7 @@ export default function ExamInfoModal({
 
           {error && <p className="mt-4 text-sm text-red-500">{error}</p>}
 
-          <div className="mt-14 flex items-center justify-center gap-3 text-base-100">
+          <div className="mt-10 flex items-center justify-center gap-3 text-base-100">
             <div>
               <div
                 onClick={() => setExamInfoModal(false)}

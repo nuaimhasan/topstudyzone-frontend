@@ -97,6 +97,7 @@ export default function AddContent() {
                 required
                 onChange={(e) => setSelectedClass(e.target.value)}
               >
+                <option value="">Select class</option>
                 {classes?.map((clas) => (
                   <option key={clas?._id} value={clas?._id}>
                     {clas?.name}
@@ -112,6 +113,7 @@ export default function AddContent() {
                 required
                 onChange={(e) => setSelectedSubject(e.target.value)}
               >
+                <option value="">Select subject</option>
                 {subjects?.map((subject) => (
                   <option key={subject?._id} value={subject?._id}>
                     {subject?.name}
@@ -123,6 +125,7 @@ export default function AddContent() {
             <div>
               <p className="mb-1">Chapter Name</p>
               <select name="chapter" required>
+                <option value="">Select chapter</option>
                 {chapters?.map((chapter) => (
                   <option key={chapter?._id} value={chapter?._id}>
                     {chapter?.name}

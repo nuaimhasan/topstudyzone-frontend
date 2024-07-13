@@ -1,9 +1,13 @@
+import { useParams } from "react-router-dom";
 import { useGetAcademyContentsQuery } from "../../../../Redux/api/academy/contentApi";
 import perser from "html-react-parser";
 
 export default function Content() {
-  const { data } = useGetAcademyContentsQuery();
-  console.log(data?.data[0]?.content);
+  const { chapterId } = useParams();
+  const chapter = chapterId.split("-")[1];
+
+  const { data } = useGetAcademyContentsQuery(chapter);
+
   return (
     <div>
       <section className="grid grid-cols-3 gap-6 items-start">
@@ -12,7 +16,9 @@ export default function Content() {
             আমার পরিচয়
           </div>
 
-          <div className="p-3">{perser(data?.data[0]?.content)}</div>
+          <div className="p-3">
+            {data?.data?.length > 0 && perser(data?.data[0]?.content)}
+          </div>
         </div>
         <div className="bg-base-100 shadow rounded overflow-hidden"></div>
       </section>

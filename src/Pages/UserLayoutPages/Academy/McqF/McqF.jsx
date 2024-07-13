@@ -1,20 +1,27 @@
-import { Link, useParams } from "react-router-dom";
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useGetSingleAcademySubjectQuery } from "../../../../Redux/api/academy/subjectApi";
 import { useGetAcademyMCQQuery } from "../../../../Redux/api/academy/mcqApi";
 
 import Mcq from "./Mcq";
 import ExamInfoModal from "../ModelTest/ExamInfoModal";
+import { useGetSingleAcademyChapterQuery } from "../../../../Redux/api/academy/chapterApi";
 
 export default function McqF() {
-  const { subjectId: subject } = useParams();
-  const subjectId = subject?.split("-")[1];
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const subjectId = queryParams.get("subject");
+  const chapterId = queryParams.get("chapter");
 
   const { data } = useGetSingleAcademySubjectQuery(subjectId);
   const subejct = data?.data;
 
+  const { data: chapterInfo } = useGetSingleAcademyChapterQuery(chapterId);
+  const chapter = chapterInfo?.data;
+
   let query = {};
   query["subject"] = subjectId;
+  query["chapter"] = chapterId;
   const { data: mcq } = useGetAcademyMCQQuery({ ...query });
   const mcqs = mcq?.data;
 
@@ -25,7 +32,9 @@ export default function McqF() {
       <section className="grid grid-cols-3 items-start gap-6">
         <div className="col-span-2 rounded overflow-hidden">
           <div className="bg-secondary text-base-100 text-center py-4">
-            <h2 className="text-2xl font-medium">{subejct?.name}</h2>
+            <h2 className="text-2xl font-medium">
+              {subjectId ? subejct?.name : chapterId && chapter?.name}
+            </h2>
             <p>All Question - ({mcqs?.length})</p>
           </div>
 
@@ -33,7 +42,11 @@ export default function McqF() {
             <ul className="flex items-center justify-center gap-2 text-xs text-base-100">
               <li>
                 <Link
-                  to={`/academy/${subjectId}/chapters`}
+                  to={`${
+                    subjectId
+                      ? `/academy/subject-${subjectId}/chapters`
+                      : chapterId && `/academy/chapter-${chapterId}/content`
+                  }`}
                   className="bg-primary px-4 py-2 rounded"
                 >
                   Read

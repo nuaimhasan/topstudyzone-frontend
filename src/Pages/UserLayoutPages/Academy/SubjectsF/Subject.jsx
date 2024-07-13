@@ -21,7 +21,7 @@ export default function Subject({ subject }) {
           </Link>
           <div className="mt-1 flex items-center gap-16 text-xs">
             <Link
-              to={`/academy/subject-${subjectId}/mcq`}
+              to={`/academy/mcq?subject=${subjectId}`}
               className="bg-gray-100 p-1 rounded text-neutral-content"
             >
               MCQ ({data?.data?.length})

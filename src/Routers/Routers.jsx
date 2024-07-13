@@ -158,9 +158,10 @@ export default function Routers() {
           <Route path="/academy" element={<Academy />} />
           <Route path="/academy/:classId/subjects" element={<SubjectsF />} />
           <Route path="/academy/:subjectId/chapters" element={<ChaptersF />} />
-          <Route path="/academy/:subjectId/mcq" element={<McqF />} />
 
-          <Route path="/academy/:subjectId/test" element={<ModelTest />} />
+          <Route path="/academy/mcq" element={<McqF />} />
+
+          <Route path="/academy/test" element={<ModelTest />} />
 
           <Route path="/academy/:chapterId/content" element={<Content />} />
 
