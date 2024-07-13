@@ -21,17 +21,8 @@ export default function SubjectsF() {
             {clsData?.data?.name} - All Subjects
           </div>
 
-          <div className="p-2 bg-base-100">
-            <div>
-              <input
-                type="text"
-                name=""
-                className="w-full px-2 py-2 text-sm bg-gray-100 outline-none rounded"
-                placeholder="search"
-              />
-            </div>
-
-            <ul className="mt-4 p-2 flex flex-col gap-6">
+          <div className="p-4 bg-base-100">
+            <ul className="flex flex-col gap-6">
               {subjects?.map((subject) => (
                 <Subject key={subject?._id} subject={subject} />
               ))}

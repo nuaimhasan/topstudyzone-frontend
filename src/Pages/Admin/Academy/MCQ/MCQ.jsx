@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
 import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classApi";
 import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
+import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
 
 export default function MCQ() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,7 +47,17 @@ export default function MCQ() {
     setSelectedSubject(subject?.data[0]?._id);
   }, [subject?.data]);
 
+  //------------Subject
+  const { data: chapter } = useGetAcademyChaptersQuery(selectedSubject);
+  const chapters = chapter?.data;
+  const [selectedChapter, setSelectedChapter] = useState("");
+
+  useEffect(() => {
+    setSelectedChapter(chapter?.data[0]?._id);
+  }, [chapter?.data]);
+
   query["subject"] = selectedSubject;
+  query["chapter"] = selectedChapter;
 
   useEffect(() => {
     if (query?.subject) setCurrentPage(1);
@@ -72,7 +83,7 @@ export default function MCQ() {
 
   return (
     <section className="bg-base-100 shadow rounded pb-4">
-      <div className="md:w-2/3 grid sm:grid-cols-3 gap-4 p-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
         <select
           name="category"
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -101,6 +112,19 @@ export default function MCQ() {
               {subject?.name}
             </option>
           ))}
+        </select>
+
+        <select
+          name="chapter"
+          onChange={(e) => setSelectedChapter(e.target.value)}
+          value={selectedChapter}
+        >
+          {chapters?.map((chapter) => (
+            <option key={chapter?._id} value={chapter?._id}>
+              {chapter?.name}
+            </option>
+          ))}
+          <option value="">All</option>
         </select>
       </div>
 
@@ -135,9 +159,9 @@ export default function MCQ() {
                 <td>{mcq?.chapter?.name}</td>
                 <td>
                   <div className="flex items-center gap-2 text-lg">
-                    <button>
+                    <Link to={`/admin/academy/mcq/edit/${mcq?._id}`}>
                       <FaEdit />
-                    </button>
+                    </Link>
                     <button onClick={() => handleDelete(mcq?._id)}>
                       <MdDeleteForever className="text-xl hover:text-red-500 duration-200" />
                     </button>
