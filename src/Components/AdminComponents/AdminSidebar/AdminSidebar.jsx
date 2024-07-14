@@ -13,6 +13,7 @@ import { FaChartLine } from "react-icons/fa";
 import { IoMdSettings } from "react-icons/io";
 import { TbPackages } from "react-icons/tb";
 import { IoSchool } from "react-icons/io5";
+import { BiSolidReceipt } from "react-icons/bi";
 
 import SidebarItems from "./SidebarItems";
 
@@ -63,29 +64,95 @@ const adminSidebarItems = [
     title: "Admission",
     subMenu: [
       {
-        title: "Categories",
-        path: "/admin/admission/categories",
+        title: "Subject Wise",
+        subSubMenu: [
+          {
+            title: "Subjects",
+            path: "/admin/admission/subject/subjects",
+          },
+          {
+            title: "Chapters",
+            path: "/admin/admission/subject/chapter",
+          },
+          {
+            title: "Contents",
+            path: "/admin/admission/subject/content",
+          },
+        ],
       },
       {
-        title: "Model Test",
-        path: "/admin/admission/modeltest",
+        title: "University Wise",
+        subSubMenu: [
+          {
+            title: "Universities",
+            path: "/admin/admission/university/universities",
+          },
+          {
+            title: "Question Set",
+            path: "/admin/admission/university/question-set",
+          },
+        ],
+      },
+      {
+        title: "MCQ",
+        path: "/admin/admission/mcq",
+      },
+      {
+        title: "Written",
+        path: "/admin/admission/written",
       },
     ],
   },
 
   {
     icon: <IoSchool />,
-    title: "Job",
+    title: "Job Assistant",
     subMenu: [
       {
-        title: "Categories",
-        path: "/admin/admission/categories",
+        title: "Subject Wise",
+        subSubMenu: [
+          {
+            title: "Subjects",
+            path: "/admin/admission/job/subjects",
+          },
+          {
+            title: "Chapters",
+            path: "/admin/admission/job/chapter",
+          },
+          {
+            title: "Contents",
+            path: "/admin/admission/job/content",
+          },
+        ],
       },
       {
-        title: "Model Test",
-        path: "/admin/admission/modeltest",
+        title: "Institute Wise",
+        subSubMenu: [
+          {
+            title: "Institutes",
+            path: "/admin/admission/institute/institutes",
+          },
+          {
+            title: "Question Set",
+            path: "/admin/admission/institute/question-set",
+          },
+        ],
+      },
+      {
+        title: "MCQ",
+        path: "/admin/institute/mcq",
+      },
+      {
+        title: "Written",
+        path: "/admin/institute/written",
       },
     ],
+  },
+
+  {
+    icon: <BiSolidReceipt />,
+    title: "Current Affairs",
+    path: "/admin/features",
   },
 
   {
