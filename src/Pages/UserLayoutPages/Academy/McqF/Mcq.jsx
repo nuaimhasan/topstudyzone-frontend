@@ -22,7 +22,7 @@ export default function Mcq({ mcq, i }) {
     <div className="bg-base-100 shadow rounded">
       <div className="border-b p-3">
         <Link
-          to=""
+          to={`/academy/mcq/${mcq?._id}`}
           className="hover:text-secondary duration-300 font-semibold text-[15px] flex items-start gap-1"
         >
           {i + 1}. {mcq?.question && perser(mcq?.question)}

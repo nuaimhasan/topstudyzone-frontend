@@ -5,6 +5,7 @@ import Home from "../Pages/Home/Home";
 import NotFound from "../Pages/NotFound/NotFound";
 import MainLayout from "../Layout/MainLayout";
 import Spinner from "../Components/Loader/Spinner/Spinner";
+import McqDetails from "../Pages/UserLayoutPages/Academy/McqDetails/McqDetails";
 
 const Login = lazy(() => import("../Pages/Login/Login"));
 const Signup = lazy(() => import("../Pages/Signup/Signup"));
@@ -170,6 +171,7 @@ export default function Routers() {
           <Route path="/academy/:chapterId/content" element={<Content />} />
 
           <Route path="/academy/mcq" element={<McqF />} />
+          <Route path="/academy/mcq/:id" element={<McqDetails />} />
 
           <Route path="/academy/written" element={<WrittenF />} />
           <Route path="/academy/test" element={<ModelTest />} />
