@@ -68,15 +68,15 @@ const adminSidebarItems = [
         subSubMenu: [
           {
             title: "Subjects",
-            path: "/admin/admission/subject/subjects",
+            path: "/admin/admission/subjects",
           },
           {
             title: "Chapters",
-            path: "/admin/admission/subject/chapter",
+            path: "/admin/admission/chapters",
           },
           {
             title: "Contents",
-            path: "/admin/admission/subject/content",
+            path: "/admin/admission/contents",
           },
         ],
       },

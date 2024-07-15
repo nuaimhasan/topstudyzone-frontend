@@ -5,7 +5,26 @@ import Home from "../Pages/Home/Home";
 import NotFound from "../Pages/NotFound/NotFound";
 import MainLayout from "../Layout/MainLayout";
 import Spinner from "../Components/Loader/Spinner/Spinner";
-import McqDetails from "../Pages/UserLayoutPages/Academy/McqDetails/McqDetails";
+
+import Universities from "../Pages/Admin/Admission/UniversityWise/Universities/Universities";
+import AddUniversity from "../Pages/Admin/Admission/UniversityWise/Universities/AddUniversity";
+import EditUniversity from "../Pages/Admin/Admission/UniversityWise/Universities/EditUniversity";
+
+import QuestionSet from "../Pages/Admin/Admission/UniversityWise/QuestionSet/QuestionSet";
+import AddQuestionSet from "../Pages/Admin/Admission/UniversityWise/QuestionSet/AddQuestionSet/AddQuestionSet";
+import EditQuestionSet from "../Pages/Admin/Admission/UniversityWise/QuestionSet/EditQuestionSet/EditQuestionSet";
+
+import AdmissionMCQ from "../Pages/Admin/Admission/AdmissionMCQ/AdmissionMCQ";
+
+import AdmissionSubjects from "../Pages/Admin/Admission/SubjectWise/AdmissionSubjects/AdmissionSubjects";
+import AdmissionAddSubject from "../Pages/Admin/Admission/SubjectWise/AdmissionSubjects/AdmissionAddSubject";
+import AdmissionEditSubject from "../Pages/Admin/Admission/SubjectWise/AdmissionSubjects/AdmissionEditSubject";
+import AdmissionAddChapter from "../Pages/Admin/Admission/SubjectWise/AdmissionChapter/AdmissionAddChapter";
+import AdmissionEditChapter from "../Pages/Admin/Admission/SubjectWise/AdmissionChapter/AdmissionEditChapter";
+import AdmissionChapters from "../Pages/Admin/Admission/SubjectWise/AdmissionChapter/AdmissionChapters";
+import AdmissionContent from "../Pages/Admin/Admission/SubjectWise/AdmissionContent/AdmissionContent";
+import AdmissionAddContent from "../Pages/Admin/Admission/SubjectWise/AdmissionContent/AdmissionAddContent";
+import AdmissionEditContent from "../Pages/Admin/Admission/SubjectWise/AdmissionContent/AdmissionEditContent";
 
 const Login = lazy(() => import("../Pages/Login/Login"));
 const Signup = lazy(() => import("../Pages/Signup/Signup"));
@@ -29,6 +48,10 @@ const Content = lazy(() =>
 );
 
 const McqF = lazy(() => import("../Pages/UserLayoutPages/Academy/McqF/McqF"));
+const McqDetails = lazy(() =>
+  import("../Pages/UserLayoutPages/Academy/McqDetails/McqDetails")
+);
+
 const WrittenF = lazy(() =>
   import("../Pages/UserLayoutPages/Academy/WrittenF/WrittenF")
 );
@@ -220,6 +243,72 @@ export default function Routers() {
           <Route path="academy/writtens" element={<Writtens />} />
           <Route path="academy/written/add" element={<AddWritten />} />
           <Route path="academy/written/edit/:id" element={<EditWritten />} />
+
+          {/*-----------------Admission----------------------*/}
+
+          {/* subjects */}
+          <Route path="admission/subjects" element={<AdmissionSubjects />} />
+          <Route
+            path="admission/subjects/add"
+            element={<AdmissionAddSubject />}
+          />
+          <Route
+            path="admission/subjects/edit/:id"
+            element={<AdmissionEditSubject />}
+          />
+
+          {/* chapters */}
+          <Route path="admission/chapters" element={<AdmissionChapters />} />
+          <Route
+            path="admission/chapters/add"
+            element={<AdmissionAddChapter />}
+          />
+          <Route
+            path="admission/chapters/edit/:id"
+            element={<AdmissionEditChapter />}
+          />
+
+          {/* contents */}
+          <Route path="admission/contents" element={<AdmissionContent />} />
+          <Route
+            path="admission/contents/add"
+            element={<AdmissionAddContent />}
+          />
+          <Route
+            path="admission/contents/edit/:id"
+            element={<AdmissionEditContent />}
+          />
+
+          {/* university */}
+          <Route
+            path="admission/university/universities"
+            element={<Universities />}
+          />
+          <Route
+            path="admission/university/universities/add"
+            element={<AddUniversity />}
+          />
+          <Route
+            path="admission/university/universities/edit/:id"
+            element={<EditUniversity />}
+          />
+
+          {/* question-set */}
+          <Route
+            path="admission/university/question-set"
+            element={<QuestionSet />}
+          />
+          <Route
+            path="admission/university/question-set/add"
+            element={<AddQuestionSet />}
+          />
+          <Route
+            path="admission/university/question-set/edit/:id"
+            element={<EditQuestionSet />}
+          />
+
+          {/* mcq */}
+          <Route path="admission/mcq" element={<AdmissionMCQ />} />
 
           <Route path="packages" element={<Packsges />} />
           <Route path="packages/add" element={<AddPackage />} />
