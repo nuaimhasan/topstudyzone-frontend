@@ -15,7 +15,7 @@ export default function AdmissionEditSubject() {
   const [updateAdmissionSubject, { isLoading: editLoading }] =
     useUpdateAdmissionSubjectMutation();
 
-  const handleAdd = async (e) => {
+  const handleEdit = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const info = { name };
@@ -39,7 +39,7 @@ export default function AdmissionEditSubject() {
         <h2>Edit Admission Subject</h2>
       </div>
       <div className="p-4">
-        <form onSubmit={handleAdd}>
+        <form onSubmit={handleEdit}>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <p className="mb-1.5">Subject Name</p>

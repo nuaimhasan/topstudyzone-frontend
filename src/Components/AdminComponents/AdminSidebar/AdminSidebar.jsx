@@ -85,11 +85,11 @@ const adminSidebarItems = [
         subSubMenu: [
           {
             title: "Universities",
-            path: "/admin/admission/university/universities",
+            path: "/admin/admission/universities",
           },
           {
             title: "Question Set",
-            path: "/admin/admission/university/question-set",
+            path: "/admin/admission/question-set",
           },
         ],
       },

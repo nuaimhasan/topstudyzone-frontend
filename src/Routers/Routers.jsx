@@ -280,30 +280,24 @@ export default function Routers() {
           />
 
           {/* university */}
+          <Route path="admission/universities" element={<Universities />} />
           <Route
-            path="admission/university/universities"
-            element={<Universities />}
-          />
-          <Route
-            path="admission/university/universities/add"
+            path="admission/universities/add"
             element={<AddUniversity />}
           />
           <Route
-            path="admission/university/universities/edit/:id"
+            path="admission/universities/edit/:id"
             element={<EditUniversity />}
           />
 
           {/* question-set */}
+          <Route path="admission/question-set" element={<QuestionSet />} />
           <Route
-            path="admission/university/question-set"
-            element={<QuestionSet />}
-          />
-          <Route
-            path="admission/university/question-set/add"
+            path="admission/question-set/add"
             element={<AddQuestionSet />}
           />
           <Route
-            path="admission/university/question-set/edit/:id"
+            path="admission/question-set/edit/:id"
             element={<EditQuestionSet />}
           />
 
