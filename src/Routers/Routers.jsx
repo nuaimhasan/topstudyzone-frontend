@@ -25,6 +25,8 @@ import AdmissionChapters from "../Pages/Admin/Admission/SubjectWise/AdmissionCha
 import AdmissionContent from "../Pages/Admin/Admission/SubjectWise/AdmissionContent/AdmissionContent";
 import AdmissionAddContent from "../Pages/Admin/Admission/SubjectWise/AdmissionContent/AdmissionAddContent";
 import AdmissionEditContent from "../Pages/Admin/Admission/SubjectWise/AdmissionContent/AdmissionEditContent";
+import AddAdmissionMCQ from "../Pages/Admin/Admission/AdmissionMCQ/AddAdmissionMCQ";
+import EditAdmissionMCQ from "../Pages/Admin/Admission/AdmissionMCQ/EditAdmissionMCQ";
 
 const Login = lazy(() => import("../Pages/Login/Login"));
 const Signup = lazy(() => import("../Pages/Signup/Signup"));
@@ -303,6 +305,8 @@ export default function Routers() {
 
           {/* mcq */}
           <Route path="admission/mcq" element={<AdmissionMCQ />} />
+          <Route path="admission/mcq/add" element={<AddAdmissionMCQ />} />
+          <Route path="admission/mcq/edit/:id" element={<EditAdmissionMCQ />} />
 
           <Route path="packages" element={<Packsges />} />
           <Route path="packages/add" element={<AddPackage />} />
