@@ -3,9 +3,10 @@ import { baseApi } from "../baseApi";
 export const classApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAcademyClasses: builder.query({
-      query: (selectedCategory) => ({
-        url: `/api/academy/class/all?category=${selectedCategory}`,
+      query: (query) => ({
+        url: `/api/academy/class/all`,
         method: "GET",
+        params: query,
       }),
       providesTags: ["academyClass"],
     }),

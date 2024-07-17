@@ -3,9 +3,10 @@ import { baseApi } from "../baseApi";
 export const chapterApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAcademyChapters: builder.query({
-      query: (subject) => ({
-        url: `/api/academy/chapter/all?subject=${subject}`,
+      query: (query) => ({
+        url: `/api/academy/chapter/all`,
         method: "GET",
+        params: query,
       }),
       providesTags: ["academyChapter"],
     }),

@@ -14,47 +14,39 @@ export default function AddSubject() {
   const { data: category } = useGetAcademyCategoriesQuery();
   const categories = category?.data;
 
-  const [selectedCategory, setSelectedCategory] = useState(
-    category?.data[0]?._id
-  );
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
     setSelectedCategory(category?.data[0]?._id);
   }, [category?.data]);
 
-  const { data: cls } = useGetAcademyClassesQuery(selectedCategory);
+  let query = {};
+  query["category"] = selectedCategory;
+  const { data: cls } = useGetAcademyClassesQuery({ ...query });
   const classes = cls?.data;
-
-  const [selectedClass, setSelectedClass] = useState(cls?.data[0]?._id);
+  const [selectedClass, setSelectedClass] = useState("");
 
   useEffect(() => {
     setSelectedClass(cls?.data[0]?._id);
   }, [cls?.data]);
 
-  const { data: subject, isLoading: subjectLoading } =
-    useGetAcademySubjectsQuery(selectedClass);
+  let clsQuery = {};
+  clsQuery["subject"] = selectedClass;
+  const { data: subject } = useGetAcademySubjectsQuery({ ...clsQuery });
   const subjects = subject?.data;
 
-  const [order, setOrder] = useState(1);
-
-  useEffect(() => {
-    if (!subjectLoading) setOrder(subjects?.length + 1);
-  }, [selectedClass, subjects?.length, subjectLoading]);
-
-  console.log(order);
+  console.log(subjects);
 
   const [addAcademySubject, { isLoading }] = useAddAcademySubjectMutation();
 
   const handleAdd = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
-    const order = e.target.order.value;
     const category = e.target.category.value;
     const clas = e.target.class.value;
 
     const info = {
       name,
-      order,
       category,
       class: clas,
     };
@@ -111,10 +103,6 @@ export default function AddSubject() {
             <div>
               <p className="mb-1">Subject Name</p>
               <input type="text" name="name" required />
-            </div>
-            <div>
-              <p className="mb-1">Order</p>
-              <input type="number" name="order" required value={order} />
             </div>
           </div>
 

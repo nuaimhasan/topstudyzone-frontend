@@ -22,7 +22,7 @@ export default function EditClass() {
     e.preventDefault();
 
     const name = e.target.name.value;
-    const order = e.target.order.value;
+    const order = clas?.order;
     const category = e.target.category.value;
 
     const info = {
@@ -56,15 +56,7 @@ export default function EditClass() {
                 defaultValue={clas?.name}
               />
             </div>
-            <div>
-              <p className="mb-1">order</p>
-              <input
-                type="number"
-                name="order"
-                required
-                defaultValue={clas?.order}
-              />
-            </div>
+
             <div>
               <p className="mb-1">Category Name</p>
               <select

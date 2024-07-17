@@ -53,14 +53,18 @@ export default function Categories() {
                 <td>{category?.order}</td>
                 <td>{category?.name}</td>
                 <td>
-                  <div className="flex items-center gap-2 text-lg">
-                    <Link to={`/admin/academy/category/edit/${category?._id}`}>
-                      <FaEdit />
-                    </Link>
-                    <button onClick={() => handleDelete(category?._id)}>
-                      <MdDeleteForever className="text-xl hover:text-red-500 duration-200" />
-                    </button>
-                  </div>
+                  {!category?.fixed && (
+                    <div className="flex items-center gap-2 text-lg">
+                      <Link
+                        to={`/admin/academy/category/edit/${category?._id}`}
+                      >
+                        <FaEdit />
+                      </Link>
+                      <button onClick={() => handleDelete(category?._id)}>
+                        <MdDeleteForever className="text-xl hover:text-red-500 duration-200" />
+                      </button>
+                    </div>
+                  )}
                 </td>
               </tr>
             ))}

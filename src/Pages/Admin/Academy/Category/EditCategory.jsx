@@ -18,7 +18,7 @@ export default function EditCategory() {
     e.preventDefault();
 
     const name = e.target.name.value;
-    const order = e.target.order.value;
+    const order = category?.order;
 
     const info = {
       name,
@@ -49,16 +49,6 @@ export default function EditCategory() {
                 name="name"
                 required
                 defaultValue={category?.name}
-              />
-            </div>
-
-            <div>
-              <p className="mb-1">Order</p>
-              <input
-                type="number"
-                name="order"
-                required
-                defaultValue={category?.order}
               />
             </div>
           </div>

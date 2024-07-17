@@ -27,6 +27,12 @@ import AdmissionAddContent from "../Pages/Admin/Admission/SubjectWise/AdmissionC
 import AdmissionEditContent from "../Pages/Admin/Admission/SubjectWise/AdmissionContent/AdmissionEditContent";
 import AddAdmissionMCQ from "../Pages/Admin/Admission/AdmissionMCQ/AddAdmissionMCQ";
 import EditAdmissionMCQ from "../Pages/Admin/Admission/AdmissionMCQ/EditAdmissionMCQ";
+import SubChapters from "../Pages/Admin/Academy/Chapter/SubChapters/SubChapters";
+import AddSubChapter from "../Pages/Admin/Academy/Chapter/SubChapters/AddSubChapter";
+import EditSubChapter from "../Pages/Admin/Academy/Chapter/SubChapters/EditSubChapter";
+import SubSubChapters from "../Pages/Admin/Academy/Chapter/SubSubChapters/SubSubChapters";
+import AddSubSubChapter from "../Pages/Admin/Academy/Chapter/SubSubChapters/AddSubSubChapter";
+import EditSubSubChapter from "../Pages/Admin/Academy/Chapter/SubSubChapters/EditSubSubChapter";
 
 const Login = lazy(() => import("../Pages/Login/Login"));
 const Signup = lazy(() => import("../Pages/Signup/Signup"));
@@ -233,6 +239,23 @@ export default function Routers() {
           <Route path="academy/chapters" element={<Chapters />} />
           <Route path="academy/chapter/add" element={<AddChapter />} />
           <Route path="academy/chapter/edit/:id" element={<EditChapter />} />
+
+          <Route path="academy/sub-chapters" element={<SubChapters />} />
+          <Route path="academy/sub-chapter/add" element={<AddSubChapter />} />
+          <Route
+            path="academy/sub-chapter/edit/:id"
+            element={<EditSubChapter />}
+          />
+
+          <Route path="academy/sub-sub-chapters" element={<SubSubChapters />} />
+          <Route
+            path="academy/sub-sub-chapter/add"
+            element={<AddSubSubChapter />}
+          />
+          <Route
+            path="academy/sub-sub-chapter/edit/:id"
+            element={<EditSubSubChapter />}
+          />
 
           <Route path="academy/contents" element={<Contents />} />
           <Route path="academy/content/add" element={<AddContent />} />

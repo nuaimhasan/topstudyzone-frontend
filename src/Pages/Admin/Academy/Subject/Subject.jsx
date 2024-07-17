@@ -13,25 +13,30 @@ import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classAp
 export default function Subject() {
   const { data: category } = useGetAcademyCategoriesQuery();
   const categories = category?.data;
-
-  const [selectedCategory, setSelectedCategory] = useState(
-    category?.data[0]?._id
-  );
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    setSelectedCategory(category?.data[0]?._id);
-  }, [category?.data]);
+    if (category?.data?.length > 0) setSelectedCategory(category?.data[0]?._id);
+  }, [category]);
 
-  const { data: cls } = useGetAcademyClassesQuery(selectedCategory);
+  let query = {};
+  query["category"] = selectedCategory;
+  const { data: cls } = useGetAcademyClassesQuery({ ...query });
   const classes = cls?.data;
 
-  const [selectedClass, setSelectedClass] = useState(cls?.data[0]?._id);
-
+  const [selectedClass, setSelectedClass] = useState("");
   useEffect(() => {
-    setSelectedClass(cls?.data[0]?._id);
-  }, [cls?.data]);
+    if (cls?.data?.length > 0) {
+      setSelectedClass(cls?.data[0]?._id);
+    } else {
+      setSelectedClass("");
+    }
+  }, [category, cls]);
 
-  const { data, isLoading } = useGetAcademySubjectsQuery(selectedClass);
+  let subjectQuery = {};
+  subjectQuery["category"] = selectedCategory;
+  subjectQuery["cls"] = selectedClass;
+  const { data, isLoading } = useGetAcademySubjectsQuery({ ...subjectQuery });
   const subjects = data?.data;
 
   const [deleteAcademySubject] = useDeleteAcademySubjectMutation();
@@ -95,24 +100,34 @@ export default function Subject() {
               </tr>
             </thead>
             <tbody>
-              {subjects?.map((subject) => (
-                <tr key={subject?._id}>
-                  <td>{subject?.order}</td>
-                  <td>{subject?.name}</td>
-                  <td>{subject?.class?.name}</td>
-                  <td>{subject?.category?.name}</td>
-                  <td>
-                    <div className="flex items-center gap-2 text-lg">
-                      <Link to={`/admin/academy/subject/edit/${subject?._id}`}>
-                        <FaEdit />
-                      </Link>
-                      <button onClick={() => handleDelete(subject?._id)}>
-                        <MdDeleteForever className="text-xl hover:text-red-500 duration-200" />
-                      </button>
-                    </div>
+              {subjects?.length > 0 ? (
+                subjects?.map((subject) => (
+                  <tr key={subject?._id}>
+                    <td>{subject?.order}</td>
+                    <td>{subject?.name}</td>
+                    <td>{subject?.class?.name}</td>
+                    <td>{subject?.category?.name}</td>
+                    <td>
+                      <div className="flex items-center gap-2 text-lg">
+                        <Link
+                          to={`/admin/academy/subject/edit/${subject?._id}`}
+                        >
+                          <FaEdit />
+                        </Link>
+                        <button onClick={() => handleDelete(subject?._id)}>
+                          <MdDeleteForever className="text-xl hover:text-red-500 duration-200" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td className="text-[15px] text-red-500">
+                    Subject Not Found
                   </td>
                 </tr>
-              ))}
+              )}
             </tbody>
           </table>
         </div>

@@ -3,15 +3,16 @@ import { useEffect, useState } from "react";
 import { MdDeleteForever } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
+import { useGetAcademyCategoriesQuery } from "/src/Redux/api/academy/categoryApi";
+import { useGetAcademyClassesQuery } from "/src/Redux/api/academy/classApi";
+import { useGetAcademySubjectsQuery } from "/src/Redux/api/academy/subjectApi";
+import { useGetAcademyChaptersQuery } from "/src/Redux/api/academy/chapterApi";
 import {
-  useDeleteAcademyChapterMutation,
-  useGetAcademyChaptersQuery,
-} from "../../../../Redux/api/academy/chapterApi";
-import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
-import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classApi";
-import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
+  useDeleteAcademySubChapterMutation,
+  useGetAcademySubChaptersQuery,
+} from "../../../../../Redux/api/academy/subChapterApi";
 
-export default function Chapters() {
+export default function SubChapters() {
   //----------Category
   const { data: category } = useGetAcademyCategoriesQuery();
   const categories = category?.data;
@@ -44,19 +45,38 @@ export default function Chapters() {
     setSelectedSubject(subject?.data[0]?._id);
   }, [subject?.data]);
 
+  //------------Chapter
   let chapterQuery = {};
   chapterQuery["subject"] = selectedSubject;
-  const { data, isLoading } = useGetAcademyChaptersQuery({ ...chapterQuery });
-  const chapters = data?.data;
+  const { data: chapter } = useGetAcademyChaptersQuery({
+    ...chapterQuery,
+  });
+  const chapters = chapter?.data;
+  const [selectedChapter, setSelectedChapter] = useState("");
 
-  const [deleteAcademyChapter] = useDeleteAcademyChapterMutation();
+  useEffect(() => {
+    setSelectedChapter(chapter?.data[0]?._id);
+  }, [chapter]);
+
+  // ------------------sub chapter
+  let subChapterQuery = {};
+  subChapterQuery["category"] = selectedCategory;
+  subChapterQuery["cls"] = selectedClass;
+  subChapterQuery["subject"] = selectedSubject;
+  subChapterQuery["chapter"] = selectedChapter;
+  const { data, isLoading } = useGetAcademySubChaptersQuery({
+    ...subChapterQuery,
+  });
+  const subChapters = data?.data;
+
+  const [deleteAcademySubChapter] = useDeleteAcademySubChapterMutation();
 
   const handleDelete = async (id) => {
     const isConfirm = window.confirm("Are you sure delete this chapter?");
     if (isConfirm) {
-      const res = await deleteAcademyChapter(id);
+      const res = await deleteAcademySubChapter(id);
       if (res?.data?.success) {
-        Swal.fire("", "chapter delete success", "success");
+        Swal.fire("", "sub chapter delete success", "success");
       } else {
         Swal.fire("", "something went wront!", "error");
       }
@@ -70,16 +90,17 @@ export default function Chapters() {
   return (
     <section className="bg-base-100 shadow rounded">
       <div className="border-b p-3 flex justify-between items-center">
-        <h2>Academy Chapter</h2>
-        <Link to="/admin/academy/chapter/add" className="primary_btn">
-          Add New Chapter
+        <h2>Academy Sub Chapter</h2>
+        <Link to="/admin/academy/sub-chapter/add" className="primary_btn">
+          Add New
         </Link>
       </div>
 
-      <div className="md:w-2/3 grid sm:grid-cols-3 gap-4 p-4">
+      <div className="grid sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 p-4">
         <select
           name="category"
           onChange={(e) => setSelectedCategory(e.target.value)}
+          value={selectedCategory}
         >
           {categories?.map((category) => (
             <option key={category?._id} value={category?._id}>
@@ -106,6 +127,17 @@ export default function Chapters() {
             </option>
           ))}
         </select>
+
+        <select
+          name="chapter"
+          onChange={(e) => setSelectedChapter(e.target.value)}
+        >
+          {chapters?.map((chapter) => (
+            <option key={chapter?._id} value={chapter?._id}>
+              {chapter?.name}
+            </option>
+          ))}
+        </select>
       </div>
 
       <div className="relative overflow-x-auto">
@@ -121,25 +153,35 @@ export default function Chapters() {
             </tr>
           </thead>
           <tbody>
-            {chapters?.map((chapter) => (
-              <tr key={chapter?._id}>
-                <td>{chapter?.order}</td>
-                <td>{chapter?.name}</td>
-                <td>{chapter?.category?.name}</td>
-                <td>{chapter?.class?.name}</td>
-                <td>{chapter?.subject?.name}</td>
-                <td>
-                  <div className="flex items-center gap-2 text-lg">
-                    <Link to={`/admin/academy/chapter/edit/${chapter?._id}`}>
-                      <FaEdit />
-                    </Link>
-                    <button onClick={() => handleDelete(chapter?._id)}>
-                      <MdDeleteForever className="text-xl hover:text-red-500 duration-200" />
-                    </button>
-                  </div>
+            {subChapters?.length > 0 ? (
+              subChapters?.map((chapter) => (
+                <tr key={chapter?._id}>
+                  <td>{chapter?.order}</td>
+                  <td>{chapter?.name}</td>
+                  <td>{chapter?.category?.name}</td>
+                  <td>{chapter?.class?.name}</td>
+                  <td>{chapter?.subject?.name}</td>
+                  <td>
+                    <div className="flex items-center gap-2 text-lg">
+                      <Link
+                        to={`/admin/academy/sub-chapter/edit/${chapter?._id}`}
+                      >
+                        <FaEdit />
+                      </Link>
+                      <button onClick={() => handleDelete(chapter?._id)}>
+                        <MdDeleteForever className="text-xl hover:text-red-500 duration-200" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td className="text-[15px] text-red-500">
+                  Sub-Chapters Not Found!
                 </td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

@@ -17,11 +17,13 @@ export default function AddChapter() {
   const categories = category?.data;
   const [selectedCategory, setSelectedCategory] = useState("");
   useEffect(() => {
-    setSelectedCategory(category?.data[0]?._id);
+    if (category?.data?.length > 0) setSelectedCategory(category?.data[0]?._id);
   }, [category?.data]);
 
   //------------------------Classes
-  const { data: cls } = useGetAcademyClassesQuery(selectedCategory);
+  let query = {};
+  query["category"] = selectedCategory;
+  const { data: cls } = useGetAcademyClassesQuery({ ...query });
   const classes = cls?.data;
   const [selectedClass, setSelectedClass] = useState("");
   useEffect(() => {
@@ -29,14 +31,19 @@ export default function AddChapter() {
   }, [cls?.data]);
 
   //---------------------Subject
-  const { data: subject } = useGetAcademySubjectsQuery(selectedClass);
+  let subjectQuery = {};
+  subjectQuery["category"] = selectedCategory;
+  subjectQuery["cls"] = selectedClass;
+  const { data: subject } = useGetAcademySubjectsQuery({ ...subjectQuery });
   const subjects = subject?.data;
   const [selectedSubject, setSelectedSubject] = useState("");
   useEffect(() => {
     setSelectedSubject(subject?.data[0]?._id);
   }, [subject?.data]);
 
-  const { data } = useGetAcademyChaptersQuery(selectedSubject);
+  let chapterQuery = {};
+  chapterQuery["subject"] = selectedSubject;
+  const { data } = useGetAcademyChaptersQuery({ ...chapterQuery });
   const chapters = data?.data;
 
   const [addAcademyChapter, { isLoading }] = useAddAcademyChapterMutation();

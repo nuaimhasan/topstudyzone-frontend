@@ -1,27 +1,18 @@
-import JoditEditor from "jodit-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useGetAcademyCategoriesQuery } from "/src/Redux/api/academy/categoryApi";
+import { useGetAcademyClassesQuery } from "/src/Redux/api/academy/classApi";
+import { useGetAcademyChaptersQuery } from "/src/Redux/api/academy/chapterApi";
+import { useGetAcademySubjectsQuery } from "/src/Redux/api/academy/subjectApi";
+import { useGetAcademySubChaptersQuery } from "../../../../../Redux/api/academy/subChapterApi";
+import {
+  useAddAcademySubSubChapterMutation,
+  useGetAcademySubSubChaptersQuery,
+} from "../../../../../Redux/api/academy/subSubChapterApi";
 
-import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
-import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classApi";
-import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
-import { useAddAcademyContentMutation } from "../../../../Redux/api/academy/contentApi";
-import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
-import { useGetAcademySubChaptersQuery } from "../../../../Redux/api/academy/subChapterApi";
-import { useGetAcademySubSubChaptersQuery } from "../../../../Redux/api/academy/subSubChapterApi";
-
-export default function AddContent() {
-  const editor = useRef(null);
+export default function AddSubSubChapter() {
   const navigate = useNavigate();
-  const [content, setContent] = useState("");
-
-  const config = {
-    uploader: {
-      insertImageAsBase64URI: true,
-      imagesExtensions: ["jpg", "png", "jpeg", "gif", "svg", "webp"],
-    },
-  };
 
   //------------------------Category
   const { data: category } = useGetAcademyCategoriesQuery();
@@ -60,9 +51,6 @@ export default function AddContent() {
   const { data: chapter } = useGetAcademyChaptersQuery({ ...chapterQuery });
   const chapters = chapter?.data;
   const [selectedChapter, setSelectedChapter] = useState("");
-  useEffect(() => {
-    setSelectedChapter(chapter?.data[0]?._id);
-  }, [chapter?.data]);
 
   // ------------------sub chapter
   let subChapterQuery = {};
@@ -75,6 +63,9 @@ export default function AddContent() {
   });
   const subChapters = subChapter?.data;
   const [selectedSubChapter, setSelectedSubChapter] = useState("");
+  useEffect(() => {
+    setSelectedSubChapter(subChapter?.data[0]?._id);
+  }, [subChapter]);
 
   //------------Sub Sub Chapter
   let subSubChapterQuery = {};
@@ -83,50 +74,53 @@ export default function AddContent() {
   subSubChapterQuery["subject"] = selectedSubject;
   subSubChapterQuery["chapter"] = selectedChapter;
   subSubChapterQuery["subChapter"] = selectedSubChapter;
-  const { data: subSubChapter } = useGetAcademySubSubChaptersQuery({
+  const { data } = useGetAcademySubSubChaptersQuery({
     ...subSubChapterQuery,
   });
-  const subSubChapters = subSubChapter?.data;
+  const subSubChapters = data?.data;
 
-  const [addAcademyContent, { isLoading }] = useAddAcademyContentMutation();
+  const [addAcademySubSubChapter, { isLoading }] =
+    useAddAcademySubSubChapterMutation();
 
   const handleAdd = async (e) => {
     e.preventDefault();
+    const name = e.target.name.value;
+    const order = e.target.order.value;
     const category = e.target.category.value;
     const clas = e.target.class.value;
     const subject = e.target.subject.value;
     const chapter = e.target.chapter.value;
     const subChapter = e.target.subChapter.value;
-    const subSubChapter = e.target.subSubChapter.value;
 
     const info = {
-      content,
+      name,
+      order,
       category,
       class: clas,
       subject,
       chapter,
       subChapter,
-      subSubChapter,
     };
 
-    const res = await addAcademyContent(info);
+    const res = await addAcademySubSubChapter(info);
 
     if (res?.data?.success) {
-      Swal.fire("", "content add success", "success");
-      navigate("/admin/academy/contents");
+      Swal.fire("", "sub sub chapter add success", "success");
+      navigate("/admin/academy/sub-sub-chapters");
     } else {
       Swal.fire("", "Something went wront!", "error");
-      console.log(res);
     }
   };
 
   return (
     <section>
       <div className="bg-base-100 rounded shadow">
-        <h2 className="p-2 border-b text-lg font-medium">Add Content</h2>
+        <h2 className="p-2 border-b text-lg font-medium">
+          Add Sub Sub Chapter
+        </h2>
 
         <form onSubmit={handleAdd} className="p-4">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+          <div className="grid sm:grid-cols-5 gap-4">
             <div>
               <p className="mb-1">Category Name</p>
               <select
@@ -188,15 +182,12 @@ export default function AddContent() {
             </div>
 
             <div>
-              <p className="mb-1 text-nowrap">
-                Sub Chapter{" "}
-                <small className="text-neutral-content">(optional)</small>
-              </p>
+              <p className="mb-1">Sub Chapter Name</p>
               <select
                 name="subChapter"
+                required
                 onChange={(e) => setSelectedSubChapter(e.target.value)}
               >
-                <option value="">select sub chapter</option>
                 {subChapters?.map((chapter) => (
                   <option key={chapter?._id} value={chapter?._id}>
                     {chapter?.name}
@@ -204,36 +195,31 @@ export default function AddContent() {
                 ))}
               </select>
             </div>
+          </div>
 
+          <div className="mt-4 grid sm:grid-cols-3 gap-4">
+            <div className="sm:col-span-2">
+              <p className="mb-1">Sub Sub Chapter Name</p>
+              <input type="text" name="name" required />
+            </div>
             <div>
-              <p className="mb-1 text-nowrap">
-                Sub Sub Chapter{" "}
-                <small className="text-neutral-content">(optional)</small>
-              </p>
-              <select name="subSubChapter">
-                <option value="">select sub sub chapter</option>
-                {subSubChapters?.map((chapter) => (
-                  <option key={chapter?._id} value={chapter?._id}>
-                    {chapter?.name}
-                  </option>
-                ))}
-              </select>
+              <p className="mb-1">Order</p>
+              <input
+                type="number"
+                name="order"
+                required
+                value={
+                  subSubChapters?.data?.length
+                    ? subSubChapters?.data?.length + 1
+                    : 1
+                }
+              />
             </div>
           </div>
 
-          <div className=" mt-3 content">
-            <p className="mb-1">Content</p>
-            <JoditEditor
-              ref={editor}
-              value=""
-              onBlur={(text) => setContent(text)}
-              config={config}
-            />
-          </div>
-
-          <div className="mt-2">
+          <div className="mt-4">
             <button className="primary_btn">
-              {isLoading ? "Loading..." : "Add Content"}
+              {isLoading ? "Loading..." : "Add Sub Chapter"}
             </button>
           </div>
         </form>

@@ -14,6 +14,8 @@ import { IoMdSettings } from "react-icons/io";
 import { TbPackages } from "react-icons/tb";
 import { IoSchool } from "react-icons/io5";
 import { BiSolidReceipt } from "react-icons/bi";
+import { RiListCheck3 } from "react-icons/ri";
+import { CgNotes } from "react-icons/cg";
 
 import SidebarItems from "./SidebarItems";
 
@@ -41,20 +43,19 @@ const adminSidebarItems = [
         path: "/admin/academy/subjects",
       },
       {
-        title: "Chapters",
-        path: "/admin/academy/chapters",
+        title: "Chapter",
+        subSubMenu: [
+          { title: "Chapters", path: "/admin/academy/chapters" },
+          { title: "Sub Chapters", path: "/admin/academy/sub-chapters" },
+          {
+            title: "Sub Sub Chapters",
+            path: "/admin/academy/sub-sub-chapters",
+          },
+        ],
       },
       {
         title: "Contents",
         path: "/admin/academy/contents",
-      },
-      {
-        title: "MCQ",
-        path: "/admin/academy/mcq",
-      },
-      {
-        title: "Writtens",
-        path: "/admin/academy/writtens",
       },
     ],
   },
@@ -64,42 +65,12 @@ const adminSidebarItems = [
     title: "Admission",
     subMenu: [
       {
-        title: "Subject Wise",
-        subSubMenu: [
-          {
-            title: "Subjects",
-            path: "/admin/admission/subjects",
-          },
-          {
-            title: "Chapters",
-            path: "/admin/admission/chapters",
-          },
-          {
-            title: "Contents",
-            path: "/admin/admission/contents",
-          },
-        ],
+        title: "Universities",
+        path: "/admin/admission/universities",
       },
       {
-        title: "University Wise",
-        subSubMenu: [
-          {
-            title: "Universities",
-            path: "/admin/admission/universities",
-          },
-          {
-            title: "Question Set",
-            path: "/admin/admission/question-set",
-          },
-        ],
-      },
-      {
-        title: "MCQ",
-        path: "/admin/admission/mcq",
-      },
-      {
-        title: "Written",
-        path: "/admin/admission/written",
+        title: "Question Set",
+        path: "/admin/admission/question-set",
       },
     ],
   },
@@ -109,42 +80,42 @@ const adminSidebarItems = [
     title: "Job Assistant",
     subMenu: [
       {
-        title: "Subject Wise",
-        subSubMenu: [
-          {
-            title: "Subjects",
-            path: "/admin/admission/job/subjects",
-          },
-          {
-            title: "Chapters",
-            path: "/admin/admission/job/chapter",
-          },
-          {
-            title: "Contents",
-            path: "/admin/admission/job/content",
-          },
-        ],
+        title: "Institutes",
+        path: "/admin/admission/institute/institutes",
       },
       {
-        title: "Institute Wise",
-        subSubMenu: [
-          {
-            title: "Institutes",
-            path: "/admin/admission/institute/institutes",
-          },
-          {
-            title: "Question Set",
-            path: "/admin/admission/institute/question-set",
-          },
-        ],
+        title: "Question Set",
+        path: "/admin/admission/institute/question-set",
+      },
+    ],
+  },
+
+  {
+    icon: <RiListCheck3 />,
+    title: "MCQ",
+    subMenu: [
+      {
+        title: "All MCQ",
+        path: "/admin/mcq/all",
       },
       {
-        title: "MCQ",
-        path: "/admin/institute/mcq",
+        title: "Add MCQ",
+        path: "/admin/mcq/add",
+      },
+    ],
+  },
+
+  {
+    icon: <CgNotes />,
+    title: "Written",
+    subMenu: [
+      {
+        title: "All Written",
+        path: "/admin/written/all",
       },
       {
-        title: "Written",
-        path: "/admin/institute/written",
+        title: "Add Written",
+        path: "/admin/written/add",
       },
     ],
   },

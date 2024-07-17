@@ -1,29 +1,32 @@
+import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import {
   useAddAcademyClassMutation,
   useGetAcademyClassesQuery,
 } from "../../../../Redux/api/academy/classApi";
-import { useNavigate, useParams } from "react-router-dom";
-import { useGetSingleAcademyCategoryQuery } from "../../../../Redux/api/academy/categoryApi";
+import { useNavigate } from "react-router-dom";
+import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
 
 export default function AddClass() {
-  const { categoryId } = useParams();
   const navigate = useNavigate();
+  const { data: category } = useGetAcademyCategoriesQuery();
+  const categories = category?.data;
+  const [selectedCategory, setSelectedCategory] = useState("");
+  useEffect(() => {
+    if (category?.data?.length > 0) setSelectedCategory(category?.data[0]?._id);
+  }, [category]);
 
-  const crgId = categoryId.split("-")[1];
-
-  const { data } = useGetAcademyClassesQuery(crgId);
+  let query = {};
+  query["category"] = selectedCategory;
+  const { data } = useGetAcademyClassesQuery({ ...query });
   const classes = data?.data;
-
-  const { data: categoryData } = useGetSingleAcademyCategoryQuery(crgId);
-  const category = categoryData?.data;
 
   const [addAcademyClass, { isLoading }] = useAddAcademyClassMutation();
 
   const handleAdd = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
-    const order = e.target.order.value;
+    const order = classes?.length ? classes?.length + 1 : 1;
     const category = e.target.category.value;
 
     const info = {
@@ -53,19 +56,19 @@ export default function AddClass() {
               <p className="mb-1">Class Name</p>
               <input type="text" name="name" required />
             </div>
-            <div>
-              <p className="mb-1">Order</p>
-              <input
-                type="number"
-                name="order"
-                required
-                defaultValue={classes?.length ? classes?.length + 1 : 1}
-              />
-            </div>
+
             <div>
               <p className="mb-1">Category Name</p>
-              <select name="category" required>
-                <option value={category?._id}>{category?.name}</option>
+              <select
+                name="category"
+                required
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                {categories?.map((category) => (
+                  <option key={category?._id} value={category?._id}>
+                    {category?.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

@@ -13,7 +13,7 @@ export default function AddCategory() {
   const handleAdd = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
-    const order = e.target.order.value;
+    const order = data?.data?.length ? data?.data?.length + 1 : 1;
 
     const info = {
       name,
@@ -40,15 +40,6 @@ export default function AddCategory() {
             <div>
               <p className="mb-1">Category Name</p>
               <input type="text" name="name" required />
-            </div>
-            <div>
-              <p className="mb-1">Order</p>
-              <input
-                type="number"
-                name="order"
-                defaultValue={data?.data?.length ? data?.data?.length + 1 : 1}
-                required
-              />
             </div>
           </div>
 
