@@ -1,10 +1,12 @@
 import { toast } from "react-toastify";
-import { useAddAdmissionSubjectMutation } from "../../../../../Redux/api/admission/subjectApi";
+import { useAddAdmissionUniversityMutation } from "../../../../Redux/api/admission/universityApi";
 import { useNavigate } from "react-router-dom";
 
-export default function AdmissionAddSubject() {
+export default function AddUniversity() {
   const navigate = useNavigate();
-  const [addAdmissionSubject, { isLoading }] = useAddAdmissionSubjectMutation();
+
+  const [addAdmissionUniversity, { isLoading }] =
+    useAddAdmissionUniversityMutation();
 
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -14,10 +16,10 @@ export default function AdmissionAddSubject() {
       name,
     };
 
-    const res = await addAdmissionSubject(info);
+    const res = await addAdmissionUniversity(info);
     if (res?.data?.success) {
       toast.success("subject add success");
-      navigate("/admin/admission/subjects");
+      navigate("/admin/admission/universities");
     } else {
       toast.error("something went wrong!");
     }
@@ -26,23 +28,23 @@ export default function AdmissionAddSubject() {
   return (
     <div className="bg-base-100 rounded shadow">
       <div className="p-4 border-b">
-        <h2>Add Admission Subject</h2>
+        <h2>Add University</h2>
       </div>
       <div className="p-4">
         <form onSubmit={handleAdd}>
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <p className="mb-1.5">Subject Name</p>
-              <input type="text" name="name" required />
+              <p className="mb-1.5">University Name</p>
+              <input type="text" name="name" />
             </div>
           </div>
 
           <div className="mt-4">
             <button
-              disabled={isLoading && "disabled"}
               className="secondary_btn"
+              disabled={isLoading && "disabled"}
             >
-              {isLoading ? "Loading..." : "Add Subject"}
+              {isLoading ? "Loading..." : "Add University"}
             </button>
           </div>
         </form>

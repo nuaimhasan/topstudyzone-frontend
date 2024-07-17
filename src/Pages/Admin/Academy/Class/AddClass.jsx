@@ -42,6 +42,7 @@ export default function AddClass() {
       navigate("/admin/academy/classes");
     } else {
       Swal.fire("", "Something went wront!", "error");
+      console.log(res);
     }
   };
 

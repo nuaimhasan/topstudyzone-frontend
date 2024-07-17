@@ -2,8 +2,12 @@ import { useGetAcademyCategoriesQuery } from "../../../Redux/api/academy/categor
 import CategoryClass from "./CategoryClass";
 
 export default function CategoryWise() {
-  const { data } = useGetAcademyCategoriesQuery();
+  const { data, isLoading } = useGetAcademyCategoriesQuery();
   const categories = data?.data;
+
+  if (isLoading) {
+    return <div className="bg-base-100 h-[80vh] shadow rounded"></div>;
+  }
 
   return (
     <section className="py-5">

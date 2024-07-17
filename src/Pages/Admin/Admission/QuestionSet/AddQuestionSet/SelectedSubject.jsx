@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetAcademyMCQQuery } from "../../../../../../Redux/api/academy/mcqApi";
+import { useGetAcademyMCQQuery } from "../../../../../Redux/api/academy/mcqApi";
 
 export default function SelectedSubject({
   subject,

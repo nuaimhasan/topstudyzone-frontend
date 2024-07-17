@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Select from "react-dropdown-select";
 import SelectedSubject from "./SelectedSubject";
-import { useGetAcademySubjectsQuery } from "../../../../../../Redux/api/academy/subjectApi";
+import { useGetAcademySubjectsQuery } from "../../../../../Redux/api/academy/subjectApi";
 import { toast } from "react-toastify";
 
 export default function AddQuestionSet() {

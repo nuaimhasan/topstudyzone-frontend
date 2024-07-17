@@ -3,7 +3,9 @@ import CatagoryAcademy from "/src/assets/images/catagory_academy.png";
 import { useGetAcademyClassesQuery } from "../../../Redux/api/academy/classApi";
 
 export default function CategoryClass({ category }) {
-  const { data } = useGetAcademyClassesQuery(category);
+  let query = {};
+  query["category"] = category;
+  const { data } = useGetAcademyClassesQuery({ ...query });
 
   return (
     <>

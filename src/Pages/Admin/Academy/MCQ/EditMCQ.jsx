@@ -94,7 +94,7 @@ export default function EditMCQ() {
 
     if (res?.data?.success) {
       Swal.fire("", "MCQ edit success", "success");
-      navigate("/admin/academy/mcq");
+      navigate("/admin/mcq/all");
     } else {
       Swal.fire("", "something went wront!", "error");
       console.log(res);

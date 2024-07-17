@@ -82,7 +82,7 @@ export default function AddMCQ() {
 
     if (res?.data?.success) {
       Swal.fire("", "MCQ add success", "success");
-      navigate("/admin/academy/mcq");
+      navigate("/admin/mcq/all");
     } else {
       Swal.fire("", "something went wront!", "error");
       console.log(res);

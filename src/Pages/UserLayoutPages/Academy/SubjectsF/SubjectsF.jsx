@@ -10,7 +10,9 @@ export default function SubjectsF() {
 
   const { data: clsData } = useGetSingleAcademyClassQuery(cls);
 
-  const { data } = useGetAcademySubjectsQuery(cls);
+  let query = {};
+  query["cls"] = cls;
+  const { data } = useGetAcademySubjectsQuery({ ...query });
   const subjects = data?.data;
 
   return (

@@ -6,27 +6,14 @@ import NotFound from "../Pages/NotFound/NotFound";
 import MainLayout from "../Layout/MainLayout";
 import Spinner from "../Components/Loader/Spinner/Spinner";
 
-import Universities from "../Pages/Admin/Admission/UniversityWise/Universities/Universities";
-import AddUniversity from "../Pages/Admin/Admission/UniversityWise/Universities/AddUniversity";
-import EditUniversity from "../Pages/Admin/Admission/UniversityWise/Universities/EditUniversity";
+import Universities from "../Pages/Admin/Admission/Universities/Universities";
+import AddUniversity from "../Pages/Admin/Admission/Universities/AddUniversity";
+import EditUniversity from "../Pages/Admin/Admission/Universities/EditUniversity";
 
-import QuestionSet from "../Pages/Admin/Admission/UniversityWise/QuestionSet/QuestionSet";
-import AddQuestionSet from "../Pages/Admin/Admission/UniversityWise/QuestionSet/AddQuestionSet/AddQuestionSet";
-import EditQuestionSet from "../Pages/Admin/Admission/UniversityWise/QuestionSet/EditQuestionSet/EditQuestionSet";
+import QuestionSet from "../Pages/Admin/Admission/QuestionSet/QuestionSet";
+import AddQuestionSet from "../Pages/Admin/Admission/QuestionSet/AddQuestionSet/AddQuestionSet";
+import EditQuestionSet from "../Pages/Admin/Admission/QuestionSet/EditQuestionSet/EditQuestionSet";
 
-import AdmissionMCQ from "../Pages/Admin/Admission/AdmissionMCQ/AdmissionMCQ";
-
-import AdmissionSubjects from "../Pages/Admin/Admission/SubjectWise/AdmissionSubjects/AdmissionSubjects";
-import AdmissionAddSubject from "../Pages/Admin/Admission/SubjectWise/AdmissionSubjects/AdmissionAddSubject";
-import AdmissionEditSubject from "../Pages/Admin/Admission/SubjectWise/AdmissionSubjects/AdmissionEditSubject";
-import AdmissionAddChapter from "../Pages/Admin/Admission/SubjectWise/AdmissionChapter/AdmissionAddChapter";
-import AdmissionEditChapter from "../Pages/Admin/Admission/SubjectWise/AdmissionChapter/AdmissionEditChapter";
-import AdmissionChapters from "../Pages/Admin/Admission/SubjectWise/AdmissionChapter/AdmissionChapters";
-import AdmissionContent from "../Pages/Admin/Admission/SubjectWise/AdmissionContent/AdmissionContent";
-import AdmissionAddContent from "../Pages/Admin/Admission/SubjectWise/AdmissionContent/AdmissionAddContent";
-import AdmissionEditContent from "../Pages/Admin/Admission/SubjectWise/AdmissionContent/AdmissionEditContent";
-import AddAdmissionMCQ from "../Pages/Admin/Admission/AdmissionMCQ/AddAdmissionMCQ";
-import EditAdmissionMCQ from "../Pages/Admin/Admission/AdmissionMCQ/EditAdmissionMCQ";
 import SubChapters from "../Pages/Admin/Academy/Chapter/SubChapters/SubChapters";
 import AddSubChapter from "../Pages/Admin/Academy/Chapter/SubChapters/AddSubChapter";
 import EditSubChapter from "../Pages/Admin/Academy/Chapter/SubChapters/EditSubChapter";
@@ -261,48 +248,7 @@ export default function Routers() {
           <Route path="academy/content/add" element={<AddContent />} />
           <Route path="academy/content/edit/:id" element={<EditContent />} />
 
-          <Route path="academy/mcq" element={<MCQ />} />
-          <Route path="academy/mcq/add" element={<AddMCQ />} />
-          <Route path="academy/mcq/edit/:id" element={<EditMCQ />} />
-
-          <Route path="academy/writtens" element={<Writtens />} />
-          <Route path="academy/written/add" element={<AddWritten />} />
-          <Route path="academy/written/edit/:id" element={<EditWritten />} />
-
           {/*-----------------Admission----------------------*/}
-
-          {/* subjects */}
-          <Route path="admission/subjects" element={<AdmissionSubjects />} />
-          <Route
-            path="admission/subjects/add"
-            element={<AdmissionAddSubject />}
-          />
-          <Route
-            path="admission/subjects/edit/:id"
-            element={<AdmissionEditSubject />}
-          />
-
-          {/* chapters */}
-          <Route path="admission/chapters" element={<AdmissionChapters />} />
-          <Route
-            path="admission/chapters/add"
-            element={<AdmissionAddChapter />}
-          />
-          <Route
-            path="admission/chapters/edit/:id"
-            element={<AdmissionEditChapter />}
-          />
-
-          {/* contents */}
-          <Route path="admission/contents" element={<AdmissionContent />} />
-          <Route
-            path="admission/contents/add"
-            element={<AdmissionAddContent />}
-          />
-          <Route
-            path="admission/contents/edit/:id"
-            element={<AdmissionEditContent />}
-          />
 
           {/* university */}
           <Route path="admission/universities" element={<Universities />} />
@@ -326,10 +272,15 @@ export default function Routers() {
             element={<EditQuestionSet />}
           />
 
-          {/* mcq */}
-          <Route path="admission/mcq" element={<AdmissionMCQ />} />
-          <Route path="admission/mcq/add" element={<AddAdmissionMCQ />} />
-          <Route path="admission/mcq/edit/:id" element={<EditAdmissionMCQ />} />
+          {/* -------------MCQ----------- */}
+          <Route path="mcq/all" element={<MCQ />} />
+          <Route path="mcq/add" element={<AddMCQ />} />
+          <Route path="mcq/edit/:id" element={<EditMCQ />} />
+
+          {/* -------------Written----------- */}
+          <Route path="academy/writtens" element={<Writtens />} />
+          <Route path="academy/written/add" element={<AddWritten />} />
+          <Route path="academy/written/edit/:id" element={<EditWritten />} />
 
           <Route path="packages" element={<Packsges />} />
           <Route path="packages/add" element={<AddPackage />} />

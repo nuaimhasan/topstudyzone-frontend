@@ -30,7 +30,9 @@ export default function MCQ() {
   }, [category?.data]);
 
   //----------Class
-  const { data: cls } = useGetAcademyClassesQuery(selectedCategory);
+  let clsQuery = {};
+  clsQuery["category"] = selectedCategory;
+  const { data: cls } = useGetAcademyClassesQuery({ ...clsQuery });
   const classes = cls?.data;
   const [selectedClass, setSelectedClass] = useState("");
 
@@ -39,7 +41,9 @@ export default function MCQ() {
   }, [cls?.data]);
 
   //------------Subject
-  const { data: subject } = useGetAcademySubjectsQuery(selectedClass);
+  let subjectQuery = {};
+  subjectQuery["cls"] = selectedClass;
+  const { data: subject } = useGetAcademySubjectsQuery({ ...subjectQuery });
   const subjects = subject?.data;
   const [selectedSubject, setSelectedSubject] = useState("");
 
@@ -47,8 +51,10 @@ export default function MCQ() {
     setSelectedSubject(subject?.data[0]?._id);
   }, [subject?.data]);
 
-  //------------Subject
-  const { data: chapter } = useGetAcademyChaptersQuery(selectedSubject);
+  //------------chapter
+  let chapterQuery = {};
+  chapterQuery["subject"] = selectedSubject;
+  const { data: chapter } = useGetAcademyChaptersQuery({ ...chapterQuery });
   const chapters = chapter?.data;
   const [selectedChapter, setSelectedChapter] = useState("");
 
@@ -130,7 +136,7 @@ export default function MCQ() {
 
       <div className="border-b p-3 flex justify-between items-center">
         <h2>Academy MCQ</h2>
-        <Link to="/admin/academy/mcq/add" className="primary_btn">
+        <Link to="/admin/mcq/add" className="primary_btn">
           Add New MCQ
         </Link>
       </div>
@@ -159,7 +165,7 @@ export default function MCQ() {
                 <td>{mcq?.chapter?.name}</td>
                 <td>
                   <div className="flex items-center gap-2 text-lg">
-                    <Link to={`/admin/academy/mcq/edit/${mcq?._id}`}>
+                    <Link to={`/admin/mcq/edit/${mcq?._id}`}>
                       <FaEdit />
                     </Link>
                     <button onClick={() => handleDelete(mcq?._id)}>

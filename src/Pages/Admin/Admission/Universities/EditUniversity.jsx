@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetSingleAdmissionUniversityQuery,
   useUpdateAdmissionUniversityMutation,
-} from "../../../../../Redux/api/admission/universityApi";
+} from "../../../../Redux/api/admission/universityApi";
 import { toast } from "react-toastify";
 
 export default function EditUniversity() {
