@@ -10,6 +10,8 @@ import {
 } from "../../../../Redux/api/academy/mcqApi";
 import Swal from "sweetalert2";
 import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
+import { useGetAcademySubChaptersQuery } from "../../../../Redux/api/academy/subChapterApi";
+import { useGetAcademySubSubChaptersQuery } from "../../../../Redux/api/academy/subSubChapterApi";
 
 export default function EditMCQ() {
   const { id } = useParams();
@@ -32,32 +34,71 @@ export default function EditMCQ() {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   //------------------------Classes
-  const { data: cls } = useGetAcademyClassesQuery(selectedCategory);
+  let query = {};
+  query["category"] = selectedCategory;
+  const { data: cls } = useGetAcademyClassesQuery({ ...query });
   const classes = cls?.data;
   const [selectedClass, setSelectedClass] = useState("");
 
   //---------------------Subject
-  const { data: subject } = useGetAcademySubjectsQuery(selectedClass);
+  let subjectQuery = {};
+  subjectQuery["cls"] = selectedClass;
+  const { data: subject } = useGetAcademySubjectsQuery({ ...subjectQuery });
   const subjects = subject?.data;
   const [selectedSubject, setSelectedSubject] = useState("");
 
+  //---------------------Chapter
+  let chapterQuery = {};
+  chapterQuery["category"] = selectedCategory;
+  chapterQuery["cls"] = selectedClass;
+  chapterQuery["subject"] = selectedSubject;
+  const { data: chapter } = useGetAcademyChaptersQuery({ ...chapterQuery });
+  const chapters = chapter?.data;
+  const [selectedChapter, setSelectedChapter] = useState("");
+
+  //---------------------Sub Chapter
+  let subChapterQuery = {};
+  subChapterQuery["category"] = selectedCategory;
+  subChapterQuery["cls"] = selectedClass;
+  subChapterQuery["subject"] = selectedSubject;
+  subChapterQuery["chapter"] = selectedChapter;
+  const { data: subChapter } = useGetAcademySubChaptersQuery({
+    ...subChapterQuery,
+  });
+  const subChapters = subChapter?.data;
+  const [selectedSubChapter, setSelectedSubChapter] = useState("");
+
+  //---------------------Sub Sub Chapter
+  let subSubChapterQuery = {};
+  subSubChapterQuery["category"] = selectedCategory;
+  subSubChapterQuery["cls"] = selectedClass;
+  subSubChapterQuery["subject"] = selectedSubject;
+  subSubChapterQuery["chapter"] = selectedChapter;
+  subSubChapterQuery["subChapter"] = selectedSubChapter;
+  const { data: subSubChapter } = useGetAcademySubSubChaptersQuery({
+    ...subSubChapterQuery,
+  });
+  const subSubChapters = subSubChapter?.data;
+
+  const [selectedSubSubChapter, setSelectedSubSubChapter] = useState("");
+
   useEffect(() => {
+    setSelectedCategory(mcq?.category);
+    setSelectedClass(mcq?.class);
+    setSelectedSubject(mcq?.subject);
+    setSelectedChapter(mcq?.chapter);
+    setSelectedSubChapter(mcq?.subChapter);
+    setSelectedSubSubChapter(mcq?.subSubChapter);
+
     setQuestion(mcq?.question);
     setPointA(mcq?.points[0]?.title);
     setPointB(mcq?.points[1]?.title);
     setPointC(mcq?.points[2]?.title);
     setPointD(mcq?.points[3]?.title);
+
     setAns(mcq?.ans);
     setExplain(mcq?.explain);
-
-    setSelectedCategory(mcq?.category);
-    setSelectedClass(mcq?.class);
-    setSelectedSubject(mcq?.subject);
   }, [mcq]);
-
-  //---------------------Chapter
-  const { data: chapter } = useGetAcademyChaptersQuery(selectedSubject);
-  const chapters = chapter?.data;
 
   const [updateAcademyMCQ, { isLoading }] = useUpdateAcademyMCQMutation();
 
@@ -69,6 +110,8 @@ export default function EditMCQ() {
     const cls = form.class.value;
     const subject = form.subject.value;
     const chapter = form.chapter.value;
+    const subChapter = form.subChapter.value;
+    const subSubChapter = form.subSubChapter.value;
     const videoLink = form.videoLink.value;
 
     const info = {
@@ -76,6 +119,8 @@ export default function EditMCQ() {
       class: cls,
       subject,
       chapter,
+      subChapter: subChapter ? subChapter : undefined,
+      subSubChapter: subSubChapter ? subSubChapter : undefined,
       question,
       points: [
         { name: "A", title: pointA },
@@ -89,8 +134,6 @@ export default function EditMCQ() {
     };
 
     const res = await updateAcademyMCQ({ id, info });
-
-    console.log(res);
 
     if (res?.data?.success) {
       Swal.fire("", "MCQ edit success", "success");
@@ -158,8 +201,40 @@ export default function EditMCQ() {
 
             <div>
               <p className="mb-1">Chapter Name</p>
-              <select name="chapter" required defaultValue={mcq?.chapter}>
+              <select
+                name="chapter"
+                required
+                onChange={(e) => setSelectedChapter(e.target.value)}
+              >
                 {chapters?.map((chapter) => (
+                  <option key={chapter?._id} value={chapter?._id}>
+                    {chapter?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <p className="mb-1">Sub Chapter</p>
+              <select
+                name="subChapter"
+                onChange={(e) => setSelectedSubChapter(e.target.value)}
+                value={selectedSubChapter}
+              >
+                <option value="">Selected Sub Chapter</option>
+                {subChapters?.map((chapter) => (
+                  <option key={chapter?._id} value={chapter?._id}>
+                    {chapter?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <p className="mb-1">Sub Sub Chapter</p>
+              <select name="subSubChapter" value={selectedSubSubChapter}>
+                <option value="">Selected Sub Sub Chapter</option>
+                {subSubChapters?.map((chapter) => (
                   <option key={chapter?._id} value={chapter?._id}>
                     {chapter?.name}
                   </option>

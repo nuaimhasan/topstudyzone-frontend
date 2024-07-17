@@ -1,12 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import JoditEditor from "jodit-react";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import Select from "react-dropdown-select";
 import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
 import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classApi";
 import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
 import { useAddAcademyMCQMutation } from "../../../../Redux/api/academy/mcqApi";
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+
 import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
+import { useGetAcademySubChaptersQuery } from "../../../../Redux/api/academy/subChapterApi";
+import { useGetAcademySubSubChaptersQuery } from "../../../../Redux/api/academy/subSubChapterApi";
 
 export default function AddMCQ() {
   const editor = useRef(null);
@@ -27,7 +31,9 @@ export default function AddMCQ() {
   }, [category?.data]);
 
   //------------------------Classes
-  const { data: cls } = useGetAcademyClassesQuery(selectedCategory);
+  let query = {};
+  query["category"] = selectedCategory;
+  const { data: cls } = useGetAcademyClassesQuery({ ...query });
   const classes = cls?.data;
   const [selectedClass, setSelectedClass] = useState("");
   useEffect(() => {
@@ -35,7 +41,9 @@ export default function AddMCQ() {
   }, [cls?.data]);
 
   //---------------------Subject
-  const { data: subject } = useGetAcademySubjectsQuery(selectedClass);
+  let subjectQuery = {};
+  subjectQuery["cls"] = selectedClass;
+  const { data: subject } = useGetAcademySubjectsQuery({ ...subjectQuery });
   const subjects = subject?.data;
 
   const [selectedSubject, setSelectedSubject] = useState("");
@@ -43,8 +51,53 @@ export default function AddMCQ() {
     setSelectedSubject(subject?.data[0]?._id);
   }, [subject?.data]);
 
-  const { data: chapter } = useGetAcademyChaptersQuery(selectedSubject);
+  //---------------------Chapter
+  let chapterQuery = {};
+  chapterQuery["category"] = selectedCategory;
+  chapterQuery["cls"] = selectedClass;
+  chapterQuery["subject"] = selectedSubject;
+  const { data: chapter } = useGetAcademyChaptersQuery({ ...chapterQuery });
   const chapters = chapter?.data;
+
+  const [selectedChapter, setSelectedChapter] = useState("");
+  useEffect(() => {
+    setSelectedChapter(chapter?.data[0]?._id);
+  }, [chapter?.data]);
+
+  //---------------------Sub Chapter
+  let subChapterQuery = {};
+  subChapterQuery["category"] = selectedCategory;
+  subChapterQuery["cls"] = selectedClass;
+  subChapterQuery["subject"] = selectedSubject;
+  subChapterQuery["chapter"] = selectedChapter;
+  const { data: subChapter } = useGetAcademySubChaptersQuery({
+    ...subChapterQuery,
+  });
+  const subChapters = subChapter?.data;
+
+  const [selectedSubChapter, setSelectedSubChapter] = useState("");
+
+  //---------------------Sub Sub Chapter
+  let subSubChapterQuery = {};
+  subSubChapterQuery["category"] = selectedCategory;
+  subSubChapterQuery["cls"] = selectedClass;
+  subSubChapterQuery["subject"] = selectedSubject;
+  subSubChapterQuery["chapter"] = selectedChapter;
+  subSubChapterQuery["subChapter"] = selectedSubChapter;
+  const { data: subSubChapter } = useGetAcademySubSubChaptersQuery({
+    ...subSubChapterQuery,
+  });
+  const subSubChapters = subSubChapter?.data;
+
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    if (categories?.length > 0 && classes?.length > 0) {
+      setTags([...categories, classes]);
+    }
+  }, [categories, classes]);
+
+  console.log(tags);
 
   const [addAcademyMCQ, { isLoading }] = useAddAcademyMCQMutation();
 
@@ -56,6 +109,8 @@ export default function AddMCQ() {
     const cls = form.class.value;
     const subject = form.subject.value;
     const chapter = form.chapter.value;
+    const subChapter = form.subChapter.value;
+    const subSubChapter = form.subSubChapter.value;
     const ans = form.ans.value;
     const videoLink = form.videoLink.value;
 
@@ -64,6 +119,8 @@ export default function AddMCQ() {
       class: cls,
       subject,
       chapter,
+      subChapter,
+      subSubChapter,
       question,
       points: [
         { name: "A", title: pointA },
@@ -77,8 +134,6 @@ export default function AddMCQ() {
     };
 
     const res = await addAcademyMCQ(info);
-
-    console.log(res);
 
     if (res?.data?.success) {
       Swal.fire("", "MCQ add success", "success");
@@ -143,8 +198,39 @@ export default function AddMCQ() {
 
             <div>
               <p className="mb-1">Chapter Name</p>
-              <select name="chapter" required>
+              <select
+                name="chapter"
+                required
+                onChange={(e) => setSelectedChapter(e.target.value)}
+              >
                 {chapters?.map((chapter) => (
+                  <option key={chapter?._id} value={chapter?._id}>
+                    {chapter?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <p className="mb-1">Sub Chapter</p>
+              <select
+                name="subChapter"
+                onChange={(e) => setSelectedSubChapter(e.target.value)}
+              >
+                <option value="">Selected Sub Chapter</option>
+                {subChapters?.map((chapter) => (
+                  <option key={chapter?._id} value={chapter?._id}>
+                    {chapter?.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <p className="mb-1">Sub Sub Chapter</p>
+              <select name="subSubChapter">
+                <option value="">Selected Sub Sub Chapter</option>
+                {subSubChapters?.map((chapter) => (
                   <option key={chapter?._id} value={chapter?._id}>
                     {chapter?.name}
                   </option>
@@ -216,6 +302,15 @@ export default function AddMCQ() {
               <span className="text-neutral-content">(optional)</span>
             </p>
             <input type="text" name="videoLink" />
+          </div>
+
+          <div className="mt-4">
+            <Select
+              options={tags}
+              labelField="name"
+              valueField="name"
+              onChange={(values) => this.setValues(values)}
+            />
           </div>
 
           <div className=" mt-4">

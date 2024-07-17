@@ -13,6 +13,8 @@ import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/cate
 import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classApi";
 import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
 import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
+import { useGetAcademySubChaptersQuery } from "../../../../Redux/api/academy/subChapterApi";
+import { useGetAcademySubSubChaptersQuery } from "../../../../Redux/api/academy/subSubChapterApi";
 
 export default function MCQ() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -62,8 +64,36 @@ export default function MCQ() {
     setSelectedChapter(chapter?.data[0]?._id);
   }, [chapter?.data]);
 
+  //---------------------Sub Chapter
+  let subChapterQuery = {};
+  subChapterQuery["category"] = selectedCategory;
+  subChapterQuery["cls"] = selectedClass;
+  subChapterQuery["subject"] = selectedSubject;
+  subChapterQuery["chapter"] = selectedChapter;
+  const { data: subChapter } = useGetAcademySubChaptersQuery({
+    ...subChapterQuery,
+  });
+  const subChapters = subChapter?.data;
+
+  const [selectedSubChapter, setSelectedSubChapter] = useState("");
+
+  //---------------------Sub Sub Chapter
+  let subSubChapterQuery = {};
+  subSubChapterQuery["category"] = selectedCategory;
+  subSubChapterQuery["cls"] = selectedClass;
+  subSubChapterQuery["subject"] = selectedSubject;
+  subSubChapterQuery["chapter"] = selectedChapter;
+  subSubChapterQuery["subChapter"] = selectedSubChapter;
+  const { data: subSubChapter } = useGetAcademySubSubChaptersQuery({
+    ...subSubChapterQuery,
+  });
+  const subSubChapters = subSubChapter?.data;
+  const [selectedSubSubChapter, setSelectedSubSubChapter] = useState("");
+
   query["subject"] = selectedSubject;
   query["chapter"] = selectedChapter;
+  query["subChapter"] = selectedSubChapter;
+  query["subSubChapter"] = selectedSubSubChapter;
 
   useEffect(() => {
     if (query?.subject) setCurrentPage(1);
@@ -130,7 +160,30 @@ export default function MCQ() {
               {chapter?.name}
             </option>
           ))}
-          <option value="">All</option>
+        </select>
+
+        <select
+          name="subChapter"
+          onChange={(e) => setSelectedSubChapter(e.target.value)}
+        >
+          <option value="">All Sub Chapter</option>
+          {subChapters?.map((chapter) => (
+            <option key={chapter?._id} value={chapter?._id}>
+              {chapter?.name}
+            </option>
+          ))}
+        </select>
+
+        <select
+          name="subSubChapter"
+          onChange={(e) => setSelectedSubSubChapter(e.target.value)}
+        >
+          <option value="">All Sub Sub Chapter</option>
+          {subSubChapters?.map((chapter) => (
+            <option key={chapter?._id} value={chapter?._id}>
+              {chapter?.name}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -147,10 +200,12 @@ export default function MCQ() {
             <tr>
               <th>SL</th>
               <th>MCQ</th>
-              <th>Category Name</th>
-              <th>Class Name</th>
-              <th>Subject Name</th>
-              <th>Chapter Name</th>
+              <th>Category</th>
+              <th>Class</th>
+              <th>Subject</th>
+              <th>Chapter</th>
+              <th>Sub Chapter</th>
+              <th>Sub Sub Chapter</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -163,6 +218,8 @@ export default function MCQ() {
                 <td>{mcq?.class?.name}</td>
                 <td>{mcq?.subject?.name}</td>
                 <td>{mcq?.chapter?.name}</td>
+                <td>{mcq?.subChapter?.name}</td>
+                <td>{mcq?.subSubChapter?.name}</td>
                 <td>
                   <div className="flex items-center gap-2 text-lg">
                     <Link to={`/admin/mcq/edit/${mcq?._id}`}>
