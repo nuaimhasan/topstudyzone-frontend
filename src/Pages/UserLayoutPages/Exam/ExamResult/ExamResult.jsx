@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useGetAcademyModelTestQuery } from "../../../../Redux/api/academy/modeltestApi";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import moment from "moment";
+import { MdInfo } from "react-icons/md";
 
 export default function ExamResult() {
   const { data } = useGetAcademyModelTestQuery();
@@ -36,10 +37,10 @@ export default function ExamResult() {
     0
   );
   const totalPass = mcqs?.filter(
-    (item) => item?.result?.resultType == "Pass"
+    (item) => item?.result?.resultType == "PASS"
   )?.length;
   const totalFail = mcqs?.filter(
-    (item) => item?.result?.resultType == "Fail"
+    (item) => item?.result?.resultType == "FAIL"
   )?.length;
 
   return (
@@ -176,7 +177,7 @@ export default function ExamResult() {
                 key={mcq?._id}
                 className="bg-base-100 rounded overflow-hidden shadow border border-primary"
               >
-                <div className="bg-gray-100 text-neutral p-4 flex justify-between items-center">
+                <div className="bg-gray-100 text-neutral p-4 py-3 flex justify-between items-center">
                   <div>
                     <h2 className="font-medium">On Demand Test</h2>
                     <p className="text-xs text-neutral-content">
@@ -281,6 +282,27 @@ export default function ExamResult() {
                       </p>
                     </div>
                   </div>
+                </div>
+
+                <div className="border-t px-3 py-2 flex justify-between items-center text-xs uppercase text-base-100">
+                  <div>
+                    {mcq?.result?.resultType == "PASS" ? (
+                      <span className="bg-primary px-2 py-1 rounded">
+                        Passes
+                      </span>
+                    ) : (
+                      <span className="bg-red-600 px-2 py-1 rounded">
+                        Failed
+                      </span>
+                    )}
+                  </div>
+
+                  <Link
+                    to={`/exam-result/${mcq?._id}`}
+                    className="bg-secondary px-2 py-1 rounded flex items-center gap-1"
+                  >
+                    <MdInfo className="text-[15px]" /> Details
+                  </Link>
                 </div>
               </div>
             ))}

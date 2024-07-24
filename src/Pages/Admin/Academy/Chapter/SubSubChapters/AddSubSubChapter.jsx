@@ -208,11 +208,7 @@ export default function AddSubSubChapter() {
                 type="number"
                 name="order"
                 required
-                value={
-                  subSubChapters?.data?.length
-                    ? subSubChapters?.data?.length + 1
-                    : 1
-                }
+                value={subSubChapters?.length ? subSubChapters?.length + 1 : 1}
               />
             </div>
           </div>

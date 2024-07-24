@@ -38,14 +38,14 @@ export default function UserSidebarLists() {
       <ul className="mt-5">
         <h2 className="text-neutral/80 mb-2">Exam</h2>
         <li>
-          <NavLink to="/exam/exam-list">
+          <NavLink to="/exam-list">
             <PiExam />
             Exam List
           </NavLink>
         </li>
 
         <li>
-          <NavLink to="/exam/exam-result">
+          <NavLink to="/exam-result">
             <PiExam />
             Exam Result
           </NavLink>

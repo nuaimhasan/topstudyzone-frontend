@@ -138,7 +138,7 @@ export default function AddChapter() {
                 type="number"
                 name="order"
                 required
-                value={chapters?.data?.length ? chapters?.data?.length + 1 : 1}
+                value={chapters?.length ? chapters?.length + 1 : 1}
               />
             </div>
           </div>

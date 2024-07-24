@@ -3,15 +3,17 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 import perser from "html-react-parser";
 
-import { FaShareAlt } from "react-icons/fa";
-import { FaCircleCheck, FaEye, FaHeart, FaVideo } from "react-icons/fa6";
-import { MdArrowRight } from "react-icons/md";
+import { FaCheckCircle, FaShareAlt } from "react-icons/fa";
+import { FaEye, FaHeart } from "react-icons/fa6";
+import { MdArrowRight, MdOutlineClose } from "react-icons/md";
 import { CgEditBlackPoint } from "react-icons/cg";
-import VideoModal from "./VideoModal";
+import { FaCheck } from "react-icons/fa6";
 
-export default function Mcq({ mcq, i }) {
+export default function MCQ({ question, i }) {
   const [explan, setExplan] = useState();
-  const [modal, setModal] = useState(false);
+  const mcq = question?.mcq;
+
+  console.log(question);
 
   const createdAt = mcq?.createdAt;
   const updatedAt = mcq?.updatedAt;
@@ -20,7 +22,7 @@ export default function Mcq({ mcq, i }) {
 
   return (
     <div className="bg-base-100 shadow rounded">
-      <div className="border-b p-3">
+      <div className="border-b p-3 bg-primary/20 rounded-t">
         <Link
           to={`/academy/mcq/${mcq?._id}`}
           className="hover:text-secondary duration-300 font-semibold text-[15px] flex items-start gap-1"
@@ -36,16 +38,36 @@ export default function Mcq({ mcq, i }) {
       <div className="p-4 pb-2 border-b">
         <div className="grid grid-cols-2 gap-2 text-[15px]">
           {mcq?.points?.map((point, i) => (
-            <p key={i} className="flex items-center gap-2">
-              {point?.name == mcq?.ans ? (
-                <FaCircleCheck className="text-sm text-primary" />
+            <div key={i} className="flex items-center gap-2">
+              {point?.name == question?.selectedAns ? (
+                <FaCheckCircle className="text-sm" />
               ) : (
                 <CgEditBlackPoint className="text-base" />
               )}
-              <span className={`${point?.name == mcq?.ans && "text-primary"}`}>
-                {point?.title && perser(point?.title)}
-              </span>
-            </p>
+
+              {point?.name == mcq?.ans ? (
+                <span className="text-primary">
+                  {point?.title && perser(point?.title)}
+                </span>
+              ) : point?.name == question?.selectedAns &&
+                question?.selectedAns != mcq?.ans ? (
+                <span className="text-red-500">
+                  {point?.title && perser(point?.title)}
+                </span>
+              ) : (
+                <span>{point?.title && perser(point?.title)}</span>
+              )}
+
+              {point?.name == question?.selectedAns &&
+              question?.selectedAns == mcq?.ans ? (
+                <FaCheck className="text-sm text-primary" />
+              ) : (
+                point?.name == question?.selectedAns &&
+                question?.selectedAns !== mcq?.ans && (
+                  <MdOutlineClose className="text-base text-red-500" />
+                )
+              )}
+            </div>
           ))}
         </div>
 
@@ -68,10 +90,6 @@ export default function Mcq({ mcq, i }) {
           </button>
         </div>
         <div className="flex items-center gap-6 text-neutral-content">
-          <button onClick={() => setModal(true)}>
-            <FaVideo className="text-lg" />
-          </button>
-          <VideoModal modal={modal} setModal={setModal} />
           <button className="flex items-center gap-1">
             <FaHeart /> <span className="text-sm">00</span>
           </button>

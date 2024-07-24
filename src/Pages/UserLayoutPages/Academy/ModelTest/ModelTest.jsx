@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import perser from "html-react-parser";
 
 import { FaQuestion } from "react-icons/fa6";
 import { FaBookmark } from "react-icons/fa";
@@ -13,16 +14,15 @@ import ExitTimeModal from "./ExitTimeModal";
 
 export default function ModelTest() {
   const navigate = useNavigate();
-  const { subjectId: id } = useParams();
-  const subjectId = id?.split("-")[1];
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const subjectId = queryParams.get("subject");
 
   let query = {};
   query["subject"] = subjectId;
   const { data: mcq } = useGetAcademyMCQQuery({ ...query });
   const mcqs = mcq?.data;
-
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
 
   const totalQuestion = queryParams.get("nq");
   const totalMark = queryParams.get("tm");
@@ -153,7 +153,7 @@ export default function ModelTest() {
     const res = await addAcademyModelTest(examInfo);
     if (res?.data?.success) {
       Swal.fire("", "Exam successfully submitted", "success");
-      navigate("/exam/exam-result");
+      navigate("/exam-result");
     } else {
       Swal.fire("", "something went wrong", "error");
     }
@@ -271,8 +271,8 @@ export default function ModelTest() {
               className="shadow bg-base-100 rounded overflow-hidden"
               key={mcq?._id}
             >
-              <h2 className="bg-secondary/20 font-medium p-3">
-                {i + 1}. {mcq?.question}
+              <h2 className="bg-secondary/20 font-medium p-3 flex items-start gap-1">
+                {i + 1}. {perser(mcq?.question)}
               </h2>
 
               <div className="p-3 grid grid-cols-2 gap-2 text-[15px]">
@@ -289,7 +289,7 @@ export default function ModelTest() {
                       <MdRadioButtonUnchecked />
                     )}
 
-                    <span>{point?.title}</span>
+                    <span>{perser(point?.title)}</span>
                   </button>
                 ))}
               </div>

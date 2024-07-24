@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import JoditEditor from "jodit-react";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import Select from "react-dropdown-select";
 import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
 import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classApi";
 import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
@@ -11,6 +10,7 @@ import { useAddAcademyMCQMutation } from "../../../../Redux/api/academy/mcqApi";
 import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
 import { useGetAcademySubChaptersQuery } from "../../../../Redux/api/academy/subChapterApi";
 import { useGetAcademySubSubChaptersQuery } from "../../../../Redux/api/academy/subSubChapterApi";
+import Tags from "./Tags";
 
 export default function AddMCQ() {
   const editor = useRef(null);
@@ -89,15 +89,7 @@ export default function AddMCQ() {
   });
   const subSubChapters = subSubChapter?.data;
 
-  const [tags, setTags] = useState([]);
-
-  useEffect(() => {
-    if (categories?.length > 0 && classes?.length > 0) {
-      setTags([...categories, classes]);
-    }
-  }, [categories, classes]);
-
-  console.log(tags);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const [addAcademyMCQ, { isLoading }] = useAddAcademyMCQMutation();
 
@@ -131,6 +123,7 @@ export default function AddMCQ() {
       ans,
       videoLink,
       explain,
+      tags: selectedTags,
     };
 
     const res = await addAcademyMCQ(info);
@@ -304,14 +297,7 @@ export default function AddMCQ() {
             <input type="text" name="videoLink" />
           </div>
 
-          <div className="mt-4">
-            <Select
-              options={tags}
-              labelField="name"
-              valueField="name"
-              onChange={(values) => this.setValues(values)}
-            />
-          </div>
+          <Tags setSelectedTags={setSelectedTags} />
 
           <div className=" mt-4">
             <p className="mb-1">ব্যাখ্যা</p>

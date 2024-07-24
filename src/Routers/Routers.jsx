@@ -20,6 +20,7 @@ import EditSubChapter from "../Pages/Admin/Academy/Chapter/SubChapters/EditSubCh
 import SubSubChapters from "../Pages/Admin/Academy/Chapter/SubSubChapters/SubSubChapters";
 import AddSubSubChapter from "../Pages/Admin/Academy/Chapter/SubSubChapters/AddSubSubChapter";
 import EditSubSubChapter from "../Pages/Admin/Academy/Chapter/SubSubChapters/EditSubSubChapter";
+import ExamResultDetails from "../Pages/UserLayoutPages/Exam/ExamResultDetails/ExamResultDetails";
 
 const Login = lazy(() => import("../Pages/Login/Login"));
 const Signup = lazy(() => import("../Pages/Signup/Signup"));
@@ -197,7 +198,8 @@ export default function Routers() {
           {/*-----------------Admission----------------------*/}
           <Route path="/admission" element={<Admission />} />
 
-          <Route path="/exam/exam-result" element={<ExamResult />} />
+          <Route path="/exam-result" element={<ExamResult />} />
+          <Route path="/exam-result/:id" element={<ExamResultDetails />} />
         </Route>
 
         {/* ---------Admin Routes----------- */}
