@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { FiHome } from "react-icons/fi";
 import { FaRegCircleQuestion } from "react-icons/fa6";
-import { TiBusinessCard, TiStarburst } from "react-icons/ti";
+import { TiStarburst } from "react-icons/ti";
 import { PiExam, PiStudent } from "react-icons/pi";
 import { BiCategory } from "react-icons/bi";
 import { MdNoteAlt } from "react-icons/md";
@@ -24,13 +24,6 @@ export default function UserSidebarLists() {
           <NavLink to="/discussions">
             <FaRegCircleQuestion />
             Ask Question?
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/business-account">
-            <TiBusinessCard />
-            Business Account
           </NavLink>
         </li>
       </ul>
@@ -71,26 +64,6 @@ export default function UserSidebarLists() {
           <NavLink to="/job-assistant">
             <BiCategory />
             Job Assistant
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to="/skill-development">
-            <BiCategory />
-            Skill Development
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/book-collection">
-            <BiCategory />
-            Book Collection
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/">
-            <BiCategory />
-            Video Content
           </NavLink>
         </li>
 

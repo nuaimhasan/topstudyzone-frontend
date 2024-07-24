@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { HiOutlineMenuAlt2 } from "react-icons/hi";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 
 export default function UserLayoutHeader({ setUserSidebar }) {
@@ -13,7 +13,7 @@ export default function UserLayoutHeader({ setUserSidebar }) {
     });
   }, []);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   return (
     <header className="sticky top-0 z-50 py-3 px-6 bg-base-100 text-neutral shadow">
@@ -45,7 +45,7 @@ export default function UserLayoutHeader({ setUserSidebar }) {
               </li>
 
               <li>
-                <NavLink to="/skill">Skill</NavLink>
+                <NavLink to="/package">Package</NavLink>
               </li>
             </ul>
           </nav>
@@ -64,7 +64,7 @@ export default function UserLayoutHeader({ setUserSidebar }) {
           {dropdown && (
             <div className="absolute top-[140%] right-0 w-40 bg-base-100 rounded shadow p-2">
               <button
-                onClick={() => dispatch(userLogout())}
+                // onClick={() => dispatch(userLogout())}
                 className="hover:bg-gray-100 text-red-500 w-full text-start px-2 py-1 rounded"
               >
                 Logout
