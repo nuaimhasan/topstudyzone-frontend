@@ -72,6 +72,14 @@ const adminSidebarItems = [
         title: "Question Set",
         path: "/admin/admission/question-set",
       },
+      {
+        title: "MCQ",
+        path: "/admin/admission/mcq",
+      },
+      {
+        title: "Written",
+        path: "/admin/admission/written",
+      },
     ],
   },
 

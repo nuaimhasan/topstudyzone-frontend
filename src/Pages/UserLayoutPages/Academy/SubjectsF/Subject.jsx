@@ -1,4 +1,4 @@
-import { FaBook, FaPrint } from "react-icons/fa";
+import { FaBook } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useGetAcademyMCQQuery } from "../../../../Redux/api/academy/mcqApi";
 import { useGetAcademyWrittenQuery } from "../../../../Redux/api/academy/writtenApi";

@@ -33,7 +33,6 @@ export default function ChaptersF() {
 
   const { data: subjectData } = useGetSingleAcademySubjectQuery(subject);
 
-  console.log(subjectData);
   const clsId = subjectData?.data?.class?._id;
 
   let query = {};
