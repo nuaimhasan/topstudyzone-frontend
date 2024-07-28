@@ -22,6 +22,10 @@ import AddSubSubChapter from "../Pages/Admin/Academy/Chapter/SubSubChapters/AddS
 import EditSubSubChapter from "../Pages/Admin/Academy/Chapter/SubSubChapters/EditSubSubChapter";
 import ExamResultDetails from "../Pages/UserLayoutPages/Exam/ExamResultDetails/ExamResultDetails";
 import QuestionBankPage from "../Pages/UserLayoutPages/Admission/QuestionBankPage/QuestionBankPage";
+import AdmissionMCQ from "../Pages/Admin/Admission/AdmissionMCQ/AdmissionMCQ";
+import AddAdmissionMCQ from "../Pages/Admin/Admission/AdmissionMCQ/AddAdmissionMCQ";
+import QuestionBankDetails from "../Pages/UserLayoutPages/Admission/QuestionBankDetails/QuestionBankDetails";
+// import EditAdmissionMCQ from "../Pages/Admin/Admission/AdmissionMCQ/EditAdmissionMCQ";
 
 const Login = lazy(() => import("../Pages/Login/Login"));
 const Signup = lazy(() => import("../Pages/Signup/Signup"));
@@ -202,6 +206,10 @@ export default function Routers() {
             path="/admission/question-bank"
             element={<QuestionBankPage />}
           />
+          <Route
+            path="admission/question-bank/:id"
+            element={<QuestionBankDetails />}
+          />
 
           {/* --------------Exam----------------*/}
           <Route path="/exam-result" element={<ExamResult />} />
@@ -279,6 +287,11 @@ export default function Routers() {
             path="admission/question-set/edit/:id"
             element={<EditQuestionSet />}
           />
+
+          {/* Admission MCQ */}
+          <Route path="admission/mcq" element={<AdmissionMCQ />} />
+          <Route path="admission/mcq/add" element={<AddAdmissionMCQ />} />
+          {/* <Route path="admission/mcq/edit/:id" element={<EditAdmissionMCQ />} /> */}
 
           {/* -------------MCQ----------- */}
           <Route path="mcq/all" element={<MCQ />} />

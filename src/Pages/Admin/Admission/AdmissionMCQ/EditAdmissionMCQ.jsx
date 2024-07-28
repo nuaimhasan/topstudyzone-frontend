@@ -1,29 +1,40 @@
 import { useEffect, useState } from "react";
 import Select from "react-dropdown-select";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SelectedSubject from "./SelectedSubject";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
 import { useGetAdmissionUniversitiesQuery } from "../../../../Redux/api/admission/universityApi";
 import { useGetAdmissionAllQuestionSetQuery } from "../../../../Redux/api/admission/questionSetApi";
-import { useAddAdmissionMcqMutation } from "../../../../Redux/api/admission/admissionMcqApi";
+import {
+  useAddAdmissionMcqMutation,
+  useGetSingleAdmissionMcqQuery,
+} from "../../../../Redux/api/admission/admissionMcqApi";
 
-export default function AddAdmissionMCQ() {
+export default function EditAdmissionMCQ() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { data } = useGetSingleAdmissionMcqQuery(id);
 
   const [selectedSubjects, setSelectedSubjects] = useState([]);
   const [selectedMcqs, setSelectedMcqs] = useState([]);
 
-  const { data } = useGetAdmissionUniversitiesQuery();
-  const universities = data?.data;
+  const { data: university } = useGetAdmissionUniversitiesQuery();
+  const universities = university?.data;
 
   const [selectedUniversity, setSelectedUniversity] = useState("");
+  const [selectedSet, setSelectedSet] = useState("");
+
   useEffect(() => {
-    if (universities?.length > 0) {
-      setSelectedUniversity(universities[0]?._id);
+    if (data?.success) {
+      setSelectedUniversity(data?.data?.university?._id);
+      setSelectedSet(data?.data?.questionSet?._id);
+      setSelectedSubjects(data?.data?.subjects);
     }
-  }, [universities]);
+  }, [data]);
+
+  console.log(data?.data);
 
   let setQuery = {};
   setQuery["university"] = selectedUniversity;
@@ -71,7 +82,7 @@ export default function AddAdmissionMCQ() {
   return (
     <div className="bg-base-100 rounded shadow">
       <div className="p-4 border-b">
-        <h2>Add Question Set</h2>
+        <h2>Edit Question Set</h2>
       </div>
       <div className="p-4">
         <form onSubmit={handleAdd} className="flex flex-col gap-3">
@@ -94,7 +105,12 @@ export default function AddAdmissionMCQ() {
 
             <div>
               <p className="mb-1">Question Set</p>
-              <select name="questionSet" required>
+              <select
+                name="questionSet"
+                required
+                value={selectedSet}
+                onChange={(e) => setSelectedSet(e.target.value)}
+              >
                 {questionSets?.map((set) => (
                   <option key={set?._id} value={set?._id}>
                     {set?.name}
@@ -110,8 +126,9 @@ export default function AddAdmissionMCQ() {
               <Select
                 multi
                 options={subjects}
-                labelField="name"
+                labelField="subject.name"
                 valueField="_id"
+                values={selectedSubjects}
                 onChange={(values) => setSelectedSubjects(values)}
               />
             </div>
@@ -133,7 +150,7 @@ export default function AddAdmissionMCQ() {
               disabled={isLoading && "disabled"}
               className="secondary_btn"
             >
-              {isLoading ? "Loading..." : "Add Question Set"}
+              {isLoading ? "Loading..." : "Edit Question Set"}
             </button>
           </div>
         </form>

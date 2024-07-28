@@ -1,12 +1,18 @@
-// import { toast } from "react-toastify";
-
+import { toast } from "react-toastify";
+import { useAddAdmissionQuestionSetMutation } from "../../../../../Redux/api/admission/questionSetApi";
 import { useGetAdmissionUniversitiesQuery } from "../../../../../Redux/api/admission/universityApi";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 export default function AddQuestionSet() {
+  const navigate = useNavigate();
   const { data } = useGetAdmissionUniversitiesQuery();
   const universities = data?.data;
 
-  const handleAdd = (e) => {
+  const [addAdmissionQuestionSet, { isLoading }] =
+    useAddAdmissionQuestionSetMutation();
+
+  const handleAdd = async (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const university = e.target.university.value;
@@ -18,7 +24,14 @@ export default function AddQuestionSet() {
       university,
     };
 
-    console.log(info);
+    const res = await addAdmissionQuestionSet(info);
+    if (res?.data?.success) {
+      toast.success("Question set add success");
+      navigate("/admin/admission/question-set");
+    } else {
+      Swal.fire("", "something went wrong!", "error");
+      console.log(res);
+    }
   };
 
   return (
@@ -48,6 +61,7 @@ export default function AddQuestionSet() {
                 <option value="2002">2002</option>
                 <option value="2003">2003</option>
                 <option value="2004">2004</option>
+                <option value="2024">2024</option>
               </select>
             </div>
           </div>
@@ -58,7 +72,12 @@ export default function AddQuestionSet() {
           </div>
 
           <div>
-            <button className="secondary_btn">Add Question Set</button>
+            <button
+              disabled={isLoading && "disabled"}
+              className="secondary_btn"
+            >
+              {isLoading ? "Loading..." : "Add Question Set"}
+            </button>
           </div>
         </form>
       </div>

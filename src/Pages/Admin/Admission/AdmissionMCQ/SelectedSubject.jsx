@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGetAcademyMCQQuery } from "../../../../../Redux/api/academy/mcqApi";
+import { useGetAcademyMCQQuery } from "../../../../Redux/api/academy/mcqApi";
 
 export default function SelectedSubject({
   subject,
@@ -33,13 +33,13 @@ export default function SelectedSubject({
     if (!isExid) {
       setSelectedMcqs([
         ...selectedMcqs,
-        { subject: subject?._id, mcq: randomMcq?.map((item) => item?._id) },
+        { subject: subject?._id, mcqs: randomMcq?.map((item) => item?._id) },
       ]);
     } else {
       setSelectedMcqs(
         selectedMcqs.map((item) =>
           item.subject === subject?._id
-            ? { ...item, mcq: randomMcq?.map((item) => item?._id) }
+            ? { ...item, mcqs: randomMcq?.map((item) => item?._id) }
             : item
         )
       );
