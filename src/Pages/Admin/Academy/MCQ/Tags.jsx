@@ -1,42 +1,25 @@
 import { useEffect, useState } from "react";
 import Select from "react-dropdown-select";
-import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
-import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classApi";
+
 import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
 import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
 import { useGetAcademySubChaptersQuery } from "../../../../Redux/api/academy/subChapterApi";
 import { useGetAcademySubSubChaptersQuery } from "../../../../Redux/api/academy/subSubChapterApi";
 import { useGetAdmissionUniversitiesQuery } from "../../../../Redux/api/admission/universityApi";
+import { useGetAdmissionAllQuestionSetQuery } from "../../../../Redux/api/admission/questionSetApi";
 
-export default function Tags({ setSelectedTags }) {
+export default function Tags({ setSelectedTags, selectedTags }) {
   const [tags, setTags] = useState([]);
 
-  const { data: category } = useGetAcademyCategoriesQuery();
-  const { data: cls } = useGetAcademyClassesQuery({});
   const { data: subject } = useGetAcademySubjectsQuery({});
   const { data: chapter } = useGetAcademyChaptersQuery({});
   const { data: subChapter } = useGetAcademySubChaptersQuery({});
   const { data: subSubChapter } = useGetAcademySubSubChaptersQuery({});
 
   const { data: university } = useGetAdmissionUniversitiesQuery({});
+  const { data: set } = useGetAdmissionAllQuestionSetQuery({});
 
   useEffect(() => {
-    if (category?.data?.length > 0) {
-      let categories = category?.data?.map((item) => ({
-        name: item?.name,
-        _id: item?._id,
-      }));
-      setTags((prevTags) => [...prevTags, ...categories]);
-    }
-
-    if (cls?.data?.length > 0) {
-      let classes = cls?.data?.map((item) => ({
-        name: item?.name,
-        _id: item?._id,
-      }));
-      setTags((prevTags) => [...prevTags, ...classes]);
-    }
-
     if (subject?.data?.length > 0) {
       let subjects = subject?.data?.map((item) => ({
         name: item?.name,
@@ -76,7 +59,15 @@ export default function Tags({ setSelectedTags }) {
       }));
       setTags((prevTags) => [...prevTags, ...universities]);
     }
-  }, [category, cls, subject, chapter, subChapter, subSubChapter, university]);
+
+    if (set?.data?.length > 0) {
+      let sets = set?.data?.map((item) => ({
+        name: item?.name,
+        _id: item?._id,
+      }));
+      setTags((prevTags) => [...prevTags, ...sets]);
+    }
+  }, [subject, chapter, subChapter, subSubChapter, university, set]);
 
   return (
     <div className="mt-4">
@@ -86,6 +77,7 @@ export default function Tags({ setSelectedTags }) {
         options={tags}
         labelField="name"
         valueField="name"
+        values={selectedTags}
         onChange={(values) => setSelectedTags(values)}
       />
     </div>

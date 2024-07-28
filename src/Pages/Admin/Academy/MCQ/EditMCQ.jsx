@@ -12,11 +12,14 @@ import Swal from "sweetalert2";
 import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
 import { useGetAcademySubChaptersQuery } from "../../../../Redux/api/academy/subChapterApi";
 import { useGetAcademySubSubChaptersQuery } from "../../../../Redux/api/academy/subSubChapterApi";
+import Tags from "./Tags";
 
 export default function EditMCQ() {
   const { id } = useParams();
   const { data } = useGetSingleAcademyMCQQuery(id);
   const mcq = data?.data;
+
+  console.log(mcq);
 
   const editor = useRef(null);
   const navigate = useNavigate();
@@ -82,6 +85,8 @@ export default function EditMCQ() {
 
   const [selectedSubSubChapter, setSelectedSubSubChapter] = useState("");
 
+  const [selectedTags, setSelectedTags] = useState([]);
+
   useEffect(() => {
     setSelectedCategory(mcq?.category);
     setSelectedClass(mcq?.class);
@@ -98,7 +103,11 @@ export default function EditMCQ() {
 
     setAns(mcq?.ans);
     setExplain(mcq?.explain);
+
+    setSelectedTags(mcq?.tags);
   }, [mcq]);
+
+  console.log(selectedTags);
 
   const [updateAcademyMCQ, { isLoading }] = useUpdateAcademyMCQMutation();
 
@@ -131,6 +140,7 @@ export default function EditMCQ() {
       ans,
       videoLink,
       explain,
+      tags: selectedTags,
     };
 
     const res = await updateAcademyMCQ({ id, info });
@@ -311,6 +321,8 @@ export default function EditMCQ() {
             </p>
             <input type="text" name="videoLink" defaultValue={mcq?.videoLink} />
           </div>
+
+          <Tags setSelectedTags={setSelectedTags} selectedTags={selectedTags} />
 
           <div className=" mt-4">
             <p className="mb-1">ব্যাখ্যা</p>

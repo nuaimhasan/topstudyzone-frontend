@@ -5,9 +5,11 @@ export default function SelectedSubject({
   subject,
   selectedMcqs,
   setSelectedMcqs,
+  selectedSet,
 }) {
   let query = {};
   query["subject"] = subject?._id;
+  query["set"] = selectedSet;
 
   const [error, setError] = useState("");
 
@@ -48,7 +50,12 @@ export default function SelectedSubject({
 
   return (
     <div className="mt-2 border rounded p-4">
-      <h2 className="text-lg text-secondary">{subject?.name}</h2>
+      <h2 className="text-lg text-secondary">
+        {subject?.name}{" "}
+        <small className="text-neutral-content text-xs">
+          Available MCQ: {mcqs?.length}
+        </small>
+      </h2>
       <div className="flex items-center gap-2">
         <p className="mb-1.5">MCQs:</p>
         <div>

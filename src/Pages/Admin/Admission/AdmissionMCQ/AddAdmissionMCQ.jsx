@@ -30,6 +30,13 @@ export default function AddAdmissionMCQ() {
   const { data: set } = useGetAdmissionAllQuestionSetQuery({ ...setQuery });
   let questionSets = set?.data;
 
+  const [selectedSet, setSelectedSet] = useState("");
+  useEffect(() => {
+    if (questionSets?.length > 0) {
+      setSelectedSet(questionSets[0]?._id);
+    }
+  }, [questionSets]);
+
   let query = {};
   query["classuuid"] = 200;
   const { data: subject } = useGetAcademySubjectsQuery({ ...query });
@@ -94,7 +101,12 @@ export default function AddAdmissionMCQ() {
 
             <div>
               <p className="mb-1">Question Set</p>
-              <select name="questionSet" required>
+              <select
+                name="questionSet"
+                required
+                onChange={(e) => setSelectedSet(e.target.value)}
+                value={selectedSet}
+              >
                 {questionSets?.map((set) => (
                   <option key={set?._id} value={set?._id}>
                     {set?.name}
@@ -124,6 +136,7 @@ export default function AddAdmissionMCQ() {
                 subject={subject}
                 selectedMcqs={selectedMcqs}
                 setSelectedMcqs={setSelectedMcqs}
+                selectedSet={selectedSet}
               />
             ))}
           </div>

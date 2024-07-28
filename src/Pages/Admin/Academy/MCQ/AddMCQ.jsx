@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import JoditEditor from "jodit-react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import Tags from "./Tags";
+
 import { useGetAcademyCategoriesQuery } from "../../../../Redux/api/academy/categoryApi";
 import { useGetAcademyClassesQuery } from "../../../../Redux/api/academy/classApi";
 import { useGetAcademySubjectsQuery } from "../../../../Redux/api/academy/subjectApi";
@@ -10,7 +12,6 @@ import { useAddAcademyMCQMutation } from "../../../../Redux/api/academy/mcqApi";
 import { useGetAcademyChaptersQuery } from "../../../../Redux/api/academy/chapterApi";
 import { useGetAcademySubChaptersQuery } from "../../../../Redux/api/academy/subChapterApi";
 import { useGetAcademySubSubChaptersQuery } from "../../../../Redux/api/academy/subSubChapterApi";
-import Tags from "./Tags";
 
 export default function AddMCQ() {
   const editor = useRef(null);
@@ -297,7 +298,7 @@ export default function AddMCQ() {
             <input type="text" name="videoLink" />
           </div>
 
-          <Tags setSelectedTags={setSelectedTags} />
+          <Tags setSelectedTags={setSelectedTags} selectedTags={selectedTags} />
 
           <div className=" mt-4">
             <p className="mb-1">ব্যাখ্যা</p>
